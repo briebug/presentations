@@ -6,6 +6,6 @@ This repo contains a collection of public presentations and articles created by 
 
 ### Transitioning to Angular 2.0: TypeScript
 
-This presentation was given on September 9 and the Rock Mountain AngularJS meetup. In it, we talk about what's coming in Angular 2, how TypeScript fits into the picture, and why building your Angular 1.x applications in TypeScript will make it easier to convert to Angular 2 when it is released.
+[View the slide deck](http://presentations.briebugconsulting.com/ngmeetup-typescript.slide)
 
-[View the slide deck online](http://presentations.briebugconsulting.com/ngmeetup-typescript.slide)
+This presentation was given on September 9 and the Rock Mountain AngularJS meetup. In it, we talk about what's coming in Angular 2, how TypeScript fits into the picture, and why building your Angular 1.x applications in TypeScript will make it easier to convert to Angular 2 when it is released.
