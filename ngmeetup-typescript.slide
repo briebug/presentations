@@ -1,0 +1,304 @@
+#+theme=briebug
+
+Transitioning to Angular 2.0: TypeScript
+9 Sep 2015
+
+Dave Laursen
+CTO, BrieBug Solutions
+
+http://www.briebug.com
+http://github.com/davelaursen
+dave.laursen@briebug.com
+@davelaursen
+
+
+* Previously on...
+
+We talked about:
+
+- moving logic out of controllers and into directives
+- utilizing a component-based design
+- HelloWorld: refactored Hot Towel starter project
+- videos: [[http://bit.ly/briebug_youtube]]
+
+Today we will talk about:
+
+- using TypeScript
+- HelloWorld.TS
+
+
+* Why should I do this?
+
+Why use directives over controllers?
+
+Why use a component-based design?
+
+Why use TypeScript?
+
+Why not use ECMAScript 6?
+
+How does all of this help to get me ready for Angular 2?
+
+
+* A quick look at Angular 2
+
+Angular 2 is a complete rewrite of AngularJS, and it's a very different animal:
+
+- it does not have controllers
+- it does not have scopes
+- an app is a component tree
+- the code base is written in TypeScript
+
+Why such a drastic change?
+AngularJS is 6 years old, and web technologies have evolved a lot since then
+
+Angular 2 applications can be written in ECMAScript 5 (e.g. JavaScript), but using TypeScript/ECMAScript 7 features will result in a cleaner implementation
+
+
+* AngularJS example
+
+    angular
+        .module('myApp', [])
+        .factory('mySvc', function() {
+            return {
+                getName: function() { return 'World'; }
+            };
+        })
+        .controller('MyCtrl', ['mySvc', function(svc) {
+            var vm = this;
+            vm.name = svc.getName();
+        }])
+        .directive('myDir', function() {
+            return {
+                restrict: 'E',
+                template: '<h1>Hello {{vm.name}}</h1>',
+                scope: { name: '@' },
+                controllerAs: 'vm',
+                controller: function() {},
+                bindToController: true
+            };
+        });
+
+
+* Angular 2 example: ECMAScript 5
+
+    var MySvc = ng.Class({
+        getName: function() {
+            return 'World';
+        }
+    });
+
+    var MyAppComponent = ng
+        .Component({
+            selector: 'my-app',
+            viewInjector: [MySvc]
+        })
+        .View({
+            template: '<h1>Hello {{name}}</h1>'
+        })
+        .Class({
+            constructor: [MySvc, function(svc) {
+                this.name = svc.getName();
+            }]
+        });
+
+
+* Angular 2 example: ECMAScript 7
+
+    @Injectable()
+    class MySvc {
+        getName() {
+            return 'World';
+        }
+    }
+
+    @Component({
+        selector: 'my-app'
+    })
+    @View({
+        template: '<h1>Hello {{name}}</h1>'
+    })
+    class MyAppComponent {
+        constructor(@Inject(MySvc) svc) {
+            this.name = svc.getName();
+        }
+    }
+
+
+* Angular 2 example: TypeScript
+
+    @Injectable()
+    class MySvc {
+        getName(): string {
+            return 'World';
+        }
+    }
+
+    @Component({
+        selector: 'my-app'
+    })
+    @View({
+        template: '<h1>Hello {{name}}</h1>'
+    })
+    class MyAppComponent {
+        name: string;
+        constructor(svc: MySvc) {
+            this.name = svc.getName();
+        }
+    }
+
+
+* ECMAScript 6
+
+ES6 introduces:
+
+- classes
+- modules
+- arrow functions (e.g. lambdas)
+- destructuring
+- promises
+- iterators
+- more
+
+Decorators are not part of ES6 - they are an ES7 proposal
+
+Even when ES6 is fully adopted, you'll need to use a transpiler (i.e. Traceur, Babel)
+
+
+* TypeScript
+
+_"a_typed_superset_of_JavaScript_that_compiles_to_plain_JavaScript"_
+
+TypeScript currently includes almost all of the features of ES6, plus additional ones:
+
+- decorators
+- types
+- interfaces
+- abstract classes
+- generics
+- more
+
+So it has additional features associated with staticly-typed languages, plus decorators - so what?
+
+Why would I want to write my Angular 2 app in TypeScript instead of using ES7 & a transpiler?
+
+
+* Benefits of Types
+
+TypeScript offers several advantages:
+
+- it ensures type safety while you're writing your code (no runtime type errors)
+- it allows you to develop by contract
+- the code is more explicit and easier to understand
+
+You can still take advantage of JavaScript's dynamic typing
+
+- _any_ type can be used to indicate a variable that accepts any value
+
+    var a: any = 'test';
+    a = 1;  //ok
+
+- can define multiple types that can be accepted:
+
+    var isEnabled: boolean|number;
+    isEnabled = true;   //ok
+    isEnabled = 1;      //ok
+    isEnabled = 'true'; //error
+
+
+* AngularJS example revisited
+
+    function mySvc() {
+        return {
+            getName: function() { return 'World'; }
+        };
+    }
+    function MyCtrl(svc) {
+        var vm = this;
+        vm.name = svc.getName();
+    }
+    function myDir() {
+        return {
+            restrict: 'E',
+            template: '<h1>Hello {{vm.name}}</h1>',
+            scope: { name: '@' },
+            controllerAs: 'vm',
+            controller: function() {},
+            bindToController: true
+        };
+    }
+    angular.module('myApp', [])
+        .factory('mySvc', mySvc)
+        .controller('MyCtrl', ['mySvc', MyCtrl])
+        .directive('myDir', myDir);
+
+
+* AngularJS example: TypeScript
+
+    class MySvc {
+        getName(): string { return 'World'; }
+    }
+    class MyCtrl {
+        name: string;
+        static $inject = ['mySvc'];
+        constructor(svc: MySvc) {
+            this.name = svc.getName();
+        }
+    }
+    class MyDir {
+        restrict: 'E';
+        template: '<h1>Hello {{vm.name}}</h1>';
+        scope: { name: '@' };
+        controllerAs: 'vm';
+        bindToController: true;
+    }
+    angular.module('myApp', [])
+        .service('mySvc', MySvc);
+        .controller('MyCtrl', MyCtrl);
+        .directive('myDir', MyDir);
+
+
+* The Code
+
+Let's look at some code:
+
+*Angular*2* ([[https://github.com/angular/angular]])
+
+*HelloWord.JS* ([[https://github.com/briebugconsulting/helloWorld]])
+ _vs_
+*HelloWorld.TS* ([[https://github.com/briebugconsulting/helloWorld-typescript]])
+
+
+* Converting to TypeScript
+
+Conversion can be done gradually:
+
+- since TypeScript is a superset of JavaScript, the first step is simply renaming your *.js files to *.ts
+- you can then start refactoring your code to include types, classes, interfaces, etc.
+
+Almost all major 3rd party JavaScript libraries have type definition files, which allow you to use them in a type-safe manor in your TypeScript code - they can be found and installed from Definitely Typed ([[http://definitelytyped.org]])
+
+TSD (TypeScript Definition Manager) is a command line tool that you can use to easily configure your TypeScript project and import definition files ([[http://definitelytyped.org/tsd]])
+
+
+* Learning TypeScript
+
+Some popular resources for learning TypeScript:
+
+- TypeScript website: [[http://www.typescriptlang.org]]
+- PluralSight: [[http://www.pluralsight.com/tag/typescript]]
+- edX: [[https://www.edx.org/course/introduction-typescript-microsoft-dev201x-0]]
+- various online tutorials of varying depth
+
+
+* Playing with TypeScript
+
+TypeScript has an online playground that will compile your TypeScript to JavaScript as you type
+
+.link http://www.typescriptlang.org/Playground
+
+Most major editors have built-in or plugin support for TypeScript, though three of the most popular are:
+
+- [[https://code.visualstudio.com/][Visual Studio Code]]
+- [[http://www.sublimetext.com/][Sublime Text]]
+- [[https://www.jetbrains.com/webstorm/][WebStorm]]

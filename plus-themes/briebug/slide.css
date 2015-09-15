@@ -1,0 +1,103 @@
+section {
+    background-color: #1a1a1a;
+}
+
+.slides > article {
+    font-family: Varela, 'Open Sans', 'Helvetica Nueue', Helvetica, Arial, sans-serif;
+    color: #222;
+    background-image: url(briebug-bg.jpg);
+
+    transition: transform .3s ease-out, opacity .3s ease-out;
+    -o-transition: -o-transform .3s ease-out, opacity .3s ease-out;
+    -moz-transition: -moz-transform .3s ease-out, opacity .3s ease-out;
+    -webkit-transition: -webkit-transform .3s ease-out, opacity .3s ease-out;
+}
+article::after {
+    content: "";
+    background: url(briebug-logo1.png);
+    background-size: auto 60px;
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    opacity: 0.6;
+    top: 0;
+    left: 0;
+    bottom: 30px;
+    right: 30px;
+    position: absolute;
+    z-index: -1;
+}
+
+article.past,
+article.next {
+    opacity: 0.25;
+}
+article.far-past,
+article.far-next {
+    opacity: 0.1;
+}
+
+h1, h3, .presenter {
+    font-family: Raleway, 'Open Sans', 'Helvetica Nueue', Helvetica, Arial, sans-serif;
+    letter-spacing: 0;
+}
+
+.presenter p,
+.presenter p.link {
+    font-size: 0.9em;
+}
+
+article h3 {
+    font-size: 2em;
+    padding: 0 0 .5em .1em;
+    border-bottom: 1px solid #bbb;
+    margin-bottom: 0.75em;
+}
+article ul {
+    margin-top: 5px;
+}
+article li {
+    margin: 0 0 0 0;
+}
+
+article.first-slide {
+    background-size: cover;
+}
+article.first-slide::after {
+    content: "";
+    background: url(briebug-logo2.png);
+    background-size: auto 110px;
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    opacity: 1.0;
+    top: 0;
+    left: 0;
+    right: 50px;
+    position: absolute;
+    z-index: -1;
+}
+article.first-slide h1 {
+    margin-top: 150px;
+}
+
+article.first-slide h3,
+article.last-slide h3 {
+    font-size: 1.5em;
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+article.first-slide h3.date {
+    padding-top: 15px;
+    margin-top: 20px;
+}
+article.last-slide {
+    padding: 5em;
+}
+
+div.code {
+    background-color: #F0F0F0;
+    border: 1px solid #bbb;
+    border-radius: 0px;
+    margin-right: 40px;
+}
+
