@@ -1,0 +1,86 @@
+#+theme=briebug
+
+Simple Ionic/ngCordova GeoLocation App
+15 Sep 2015
+
+Anthony Jones
+Software Engineer, BrieBug Solutions
+
+http://www.briebug.com
+http://github.com/anthonymjones
+anthony.jones@briebug.com
+@theanthonyjones
+
+* Getting Started
+
+We're going to build a simple GeoLocation app from a blank ionic template
+
+From your Terminal or Command Line:
+
+    $: ionic start geoLocator blank
+
+    cd geoLocator
+
+    ionic platform add iOS (automatic on mac)
+
+    ionic platform add android
+
+* Initial Set Up
+
+In your project:
+
+    bower install ngCordova --save
+
+inject ‘ngCordova’ into app.module
+
+
+add <script src="lib/ngCordova/dist/ng-cordova.min.js"></script> to index,
+right above cordova.js
+
+    cordova plugin add cordova-plugin-geolocation
+
+* Emulation
+
+For iOS:
+
+    ionic emulate iOS -l -c (-l = live reload, -c = console log)
+
+Android:
+
+    ionic run android -l -c
+
+Browser:
+
+    ionic serve
+
+* Build It
+
+- Change your title & ng-app
+
+- Instead of cluttering up the app.js & index.html, we'll create a config to reference a controller.js & template.html
+
+- Create your templates directory in www/
+
+- Move <ion-content> to main.html, and replace with <ion-nav-view>
+
+- Create your controllers.js and directives.js in js/, inject them into the index.html
+
+* Build It (..continued)
+
+    bower install angular-google-maps --save
+- Include Google Maps API script tag in index.html
+
+- add #map-canvas to css, give a height of 75%
+
+
+* Deploy
+
+Initialize your app to generate an app_id
+
+    ionic io init
+
+Upload to the Ionic Server
+
+    ionic upload
+
+View Your App in the Ionic View App

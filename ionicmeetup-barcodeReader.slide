@@ -1,0 +1,117 @@
+#+theme=briebug
+
+Simple Ionic/ngCordova Barcode Reader App
+15 Sep 2015
+
+Anthony Jones
+Software Engineer, BrieBug Solutions
+
+http://www.briebug.com
+http://github.com/anthonymjones
+anthony.jones@briebug.com
+@theanthonyjones
+
+* Getting Started
+
+We're going to build a simple Barcode Reader app from a blank ionic template
+
+From your Terminal or Command Line:
+
+    $: ionic start barcodeReader blank
+
+    cd barcodeReader
+
+    ionic platform add iOS (automatic on mac)
+
+    ionic platform add android
+
+* Initial Set Up
+
+In your project:
+
+    bower install ngCordova --save
+
+inject ‘ngCordova’ into app.module
+
+
+add <script src="lib/ngCordova/dist/ng-cordova.min.js"></script> to index,
+right above cordova.js
+
+    cordova plugin add cordova-plugin-barcodescanner
+
+* Emulation
+
+For iOS:
+
+    ionic emulate iOS -l -c (-l = live reload, -c = console log)
+
+Android:
+
+    ionic run android -l -c
+
+Browser:
+
+    ionic serve
+
+* Build It - Controller
+In app.js under .run:
+
+    barcodeExample.controller('BarcodeExampleController', function($http, $scope,
+        $cordovaBarcodeScanner) {
+      $scope.scanBarcode = function () {
+        $cordovaBarcodeScanner.scan()
+          .then(function(imageData) {
+            var CODE = imageData.text,
+              APIKEY = 'd2a3f7eb24595b136ecb5d4657bef2fe';
+
+            $http.get('http://api.upcdatabase.org/json/' + APIKEY + '/' + CODE)
+              .then(function(response) {
+                $scope.product = response.data;
+              }, function (error) {
+                alert(error);
+              });
+          }, function (error) {
+            alert('an error has occurred: ' + error);
+          });
+      };
+    });
+
+* Build It - View
+In the index.html inside the <ion-pane> tag:
+
+      <ion-header-bar class="bar-calm">
+        <h1 class="title">Scan It</h1>
+      </ion-header-bar>
+      <ion-content ng-controller="BarcodeExampleController">
+        <div class="scanBtn">
+          <button class="button button-outline button-large button-calm"
+          ng-click="scanBarcode()">Click to Scan!</button>
+        </div>
+        <div ng-show="product.itemname || product.description" class="card">
+          <div class="item item-text-wrap">
+            <h1>{{product.itemname}}</h1>
+            <h3>{{product.description}}</h3>
+            <h4>{{product.avg_price}}</h4>
+          </div>
+        </div>
+      </ion-content>
+
+* Build It - CSS
+CSS:
+
+    .scanBtn {
+        text-align: center;
+        padding-top: 10%;
+    }
+
+* Deploy
+
+Initialize your app to generate an app_id
+
+    ionic io init
+
+Upload to the Ionic Server
+
+    ionic upload
+
+View Your App in the Ionic View App
