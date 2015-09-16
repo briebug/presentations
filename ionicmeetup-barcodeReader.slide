@@ -15,6 +15,8 @@ anthony.jones@briebug.com
 
 We're going to build a simple Barcode Reader app from a blank ionic template
 
+https://github.com/briebugconsulting/barcodeReader
+
 From your Terminal or Command Line:
 
     $: ionic start barcodeReader blank
