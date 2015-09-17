@@ -100,4 +100,8 @@ div.code {
     border-radius: 0px;
     margin-right: 40px;
 }
+code {
+    background-color: #F0F0F0;
+    border-bottom: 1px solid #aaa;
+}
 
