@@ -1,0 +1,162 @@
+#+theme=briebug
+
+Transitioning to Angular 2.0: Building an Angular 2 App
+28 Oct 2015
+
+Dave Laursen
+CTO, BrieBug Solutions
+
+http://www.briebug.com
+http://github.com/davelaursen
+dave.laursen@briebug.com
+@davelaursen
+
+
+* Previously on...
+
+We talked about:
+
+- moving logic out of controllers and into directives
+- utilizing a component-based design
+- HelloWorld: refactored Hot Towel starter project
+- [[https://github.com/briebugconsulting/helloWorld-typescript][HelloWorld.TS]]: refactored HelloWorld implemented in TypeScript
+
+Today we will talk about:
+
+- how to construct an Angular 2 application
+- [[https://github.com/briebugconsulting/helloWorld-angular2][HelloWorld.Ng2]]: refactored HelloWorld.TS implemented with Angular 2
+
+
+* Angular 2
+
+Angular 2 is a complete rewrite of AngularJS, and it's a very different animal:
+
+- it does not have controllers
+- it does not have scopes
+- an app is a component tree
+- the code base is written in TypeScript
+
+Angular 2 is currently an alpha product, and many features are still in development
+
+
+* AngularJS example
+
+    class MySvc {
+        getName(): string { return 'World'; }
+    }
+    class MyCtrl {
+        name: string;
+        static $inject = ['mySvc'];
+        constructor(svc: MySvc) {
+            this.name = svc.getName();
+        }
+    }
+    class MyDir {
+        restrict: 'E';
+        template: '<h1>Hello {{vm.name}}</h1>';
+        scope: { name: '@' };
+        controllerAs: 'vm';
+        bindToController: true;
+    }
+    angular.module('myApp', [])
+        .service('mySvc', MySvc);
+        .controller('MyCtrl', MyCtrl);
+        .directive('myDir', MyDir);
+
+
+* Angular 2 example
+
+    @Injectable()
+    class MySvc {
+        getName(): string {
+            return 'World';
+        }
+    }
+
+    @Component({
+        selector: 'my-app'
+    })
+    @View({
+        template: '<h1>Hello {{name}}</h1>'
+    })
+    class MyAppComponent {
+        name: string;
+        constructor(svc: MySvc) {
+            this.name = svc.getName();
+        }
+    }
+
+
+* A New HelloWorld
+
+*HelloWorld.TS* ([[https://github.com/briebugconsulting/helloWorld-typescript]])
+ _vs_
+*HelloWorld.Ng2* ([[https://github.com/briebugconsulting/helloWorld-angular2]])
+
+What we'll look at today:
+- bootstrapping an application
+- routing
+- component tree
+- transclusion
+
+
+* Boostrapping
+
+Loading an Angular 2 app in a page
+
+- an Angular 2 app is a component
+- it is the root component, and usually contains other components, forming a component tree
+- to load an Angular 2 app in a page, simply drop the root component tag in the HTML and use Angular's bootstrap function to load the component
+- the entire component tree, and any dependencies (i.e. services) are loaded as well
+- no need to register components or services
+
+_Code:_index.html,_app.ts_
+
+
+* Routing
+
+Setting up routes for different views
+
+- define routes in a @RouteConfig annotation
+- inject ROUTER_DIRECTIVES into the component
+- use <router-outlet> element in the HTML template where the view should be rendered
+
+_Code:_hello-world.component.ts,_hello-world.html_
+
+
+* Component Tree
+
+An Angular 2 application is a component tree
+
+To add a child component:
+
+- add it to the `directives` array in the parent's @Component annotation
+- include the child component element in the parent's HTML template
+
+_Code:_hello-world.component.ts,_hello-world.html_
+
+
+* Transclusion
+
+Dynmaically including one component inside of another
+
+In Angular 1.x, this is called translusion, and you would use the 'trasclude' property on a directive.
+
+In Angular 2, the solution is based on web components:
+
+- use the <ng-content> tag
+- can include 'select' attribute in the tag to include different content in different places
+
+_Code:_container.component.ts,_container.html,_dashboard.component.ts,_dashboard.html_
+
+
+* Learning Angular 2
+
+Angular 2 is an alpha product
+Weekly releases, new features make it difficult to find up-to-date tutorials
+
+Best resources:
+
+- Angular 2 Home: [[https://angular.io]]
+- Angular 2 Repo: [[https://github.com/angular/angular]]
+- Angular 2 Education: [[https://github.com/timjacobi/angular2-education]]
