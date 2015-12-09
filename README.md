@@ -17,3 +17,7 @@ This presentation was given on September 15, 2015 at the [Denver Cordova/Ionic M
 #### Transitioning to Angular 2.0: TypeScript
 
 This presentation discusses what's coming in Angular 2, how TypeScript fits into the picture, what TypeScript has to offer, and why building your Angular 1.x applications in TypeScript will make it easier to convert to Angular 2 when it is released. It was presented on September 9, 2015 at the [Rocky Mountain AngularJS Meetup](http://www.meetup.com/RockyMountainAngularJS/events/224673983/).
+
+#### Testing Directives Effectively
+
+A short presentation examining various styles of testing AngularJS 1.x directives, including unit, template and integration testing. It was presented on December 9, 2015 at the [Rocky Mountain AngularJS Meetup](http://www.meetup.com/RockyMountainAngularJS/events/227002995/).
