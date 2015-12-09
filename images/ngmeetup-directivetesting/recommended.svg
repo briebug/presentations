@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="898px" height="740px" viewBox="0 0 898 740" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.4.3 (16618) - http://www.bohemiancoding.com/sketch -->
+    <title>graph 2</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path id="path-1" d="M863.034517,696.90281 L0.711072576,696.90281 L431.872795,0 L863.034517,696.90281 Z"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="graph-2" sketch:type="MSArtboardGroup">
+            <g id="Group" sketch:type="MSLayerGroup" transform="translate(22.085917, 38.824572)">
+                <mask id="mask-2" sketch:name="Mask" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <use id="Mask" fill="#D8D8D8" sketch:type="MSShapeGroup" xlink:href="#path-1"></use>
+                <g mask="url(#mask-2)" sketch:type="MSShapeGroup">
+                    <g transform="translate(-76.966072, -2.935546)">
+                        <rect id="Rectangle-1" fill="#1B8E93" x="2.93554611" y="349.329987" width="1010.82731" height="349.329987"></rect>
+                        <rect id="Rectangle-1-Copy" fill="#8DD3CE" x="2.06910612" y="77.116917" width="1010.82731" height="278.759456"></rect>
+                        <rect id="Rectangle-1-Copy-2" fill="#B9EFED" x="2.93554611" y="0" width="1010.82731" height="78.4965022"></rect>
+                    </g>
+                </g>
+            </g>
+            <text id="50%" sketch:type="MSTextLayer" font-family="Helvetica Neue" font-size="48" font-weight="normal" letter-spacing="0.799999952" fill="#666666">
+                <tspan x="756" y="459">50%</tspan>
+            </text>
+            <text id="40%" sketch:type="MSTextLayer" font-family="Helvetica Neue" font-size="48" font-weight="normal" letter-spacing="0.799999952" fill="#666666">
+                <tspan x="604.464315" y="189.184402">40%</tspan>
+            </text>
+            <text id="10%" sketch:type="MSTextLayer" font-family="Helvetica Neue" font-size="48" font-weight="normal" letter-spacing="0.799999952" fill="#666666">
+                <tspan x="517.727107" y="83.171875">10%</tspan>
+            </text>
+        </g>
+    </g>
+</svg>
