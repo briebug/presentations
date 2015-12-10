@@ -147,7 +147,7 @@ A suite of tests provide the most value when:
 
 * Component Integration Tests
 
-Component Integration Testing takes an AngularJS component, compiles it, and executes a series of tests against it's template. This method of testing can also be used to test the integration of two or more AngularJS components.
+Component Integration Testing takes an AngularJS component, compiles it, and executes a series of tests against its template. This method of testing can also be used to test the integration of two or more AngularJS components.
 
 * Component Integration Tests
 
