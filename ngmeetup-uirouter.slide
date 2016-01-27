@@ -211,3 +211,74 @@ There are multiple ways that a state can be activated.
 *url-route* | Standard url 
 
 	localhost:8001/#/state_name
+	
+	
+	
+	
+	
+* $stateParams
+
+*Declaring*
+
+Add params / queries to the url of the states config object. 
+
+	.state( 'STATE_NAME', {
+		url: '/state_name/:state_param_1/?state_query_1&state_query_2,
+		controller: 'someController',
+		templateUrl: '<h1> state params example </h1>'
+	});
+
+You can also add them as a params-object.
+
+	.state( 'STATE_NAME', {
+		url: '/state_name,
+		params: {
+			state_param_1: { value: 'DEFAULT_VALUE' },	 // Declares param / sets default
+			state_param_2: { array: true },				// Treats all params as an array
+			state_param_3: 'DEFAULT_VALUE' 			    // Short-hand for default-value
+		}
+		controller: 'someController',
+		templateUrl: '<h1> state params example </h1>'
+	});
+	
+	
+	
+	
+	
+* $stateParams
+
+*Passing*
+
+To pass along parameters, add them as an object after the state-name.
+
+	<a ui-sref='STATE_NAME({ state_param_1: 'param_1' })'> GO </a>
+	
+	<a href="/state_name/state_param_1_value/state_param_2_value"> GO </a>
+	
+	$state.go('STATE_NAME', { "state_param_1": "state_param_1_value" }); 
+
+
+
+* $stateParams
+
+*Extracting*
+
+Extract state-params via $stateParams.
+
+	function someController ($scope, $stateParams) {
+		//extract state-params
+		$scope.state_param_1 = $stateParams.state_param_1;
+		
+		//extract state-queries
+		$scope.state_query_1 = $stateParams.state_query_1;
+		$scope.state_query_2 = $stateParams.state_query_2;
+	}
+
+
+* Helpful links
+
+.link http://angular-ui.github.io/ui-router/ UI-Router
+
+.link https://github.com/angular-ui/ui-router github.com/angular-ui/ui-router
+
+.link https://scotch.io/tutorials/angular-routing-using-ui-router Scotch.io demo
