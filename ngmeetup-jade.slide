@@ -18,7 +18,7 @@ Jade is a template engine used as a short hand for html
 
 * Set up
 
-https://github.com/HayleeJo/jade-template-meetup
+.link https://github.com/HayleeJo/jade-template-meetup
 
 In your project:
 
@@ -110,14 +110,14 @@ With while you create a loop to iterate over.
 
 * Comments Ids and Plain Text
 
--Comments are written with the same syntax as they are in JavaScript
+- Comments are written with the same syntax as they are in JavaScript
 
--Ids are created just by placing a # in front
+- Ids are created just by placing a # in front
 
--Plain text can be created just by adding a space in between it and the tag
+- Plain text can be created just by adding a space in between it and the tag
 
-*Links
+* Links
 
--http://jade-lang.com/
+.link http://jade-lang.com/
 
--https://github.com/pugjs/jade
+.link https://github.com/pugjs/jade
