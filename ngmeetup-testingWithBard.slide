@@ -1,0 +1,90 @@
+#+theme=briebug
+
+Unit Testing With bardjs
+25 Jan, 2016
+
+Reid Villeneuve
+Software Engineer, BrieBug Solutions
+
+http://www.briebug.com
+http://github.com/reidsvilleneuve
+reid.villeneuve@briebug.com
+
+* Initial Set Up
+
+    git clone https://github.com/reidsvilleneuve/meetup-bard-testing
+
+    cd meetup-bard-testing
+
+    npm install
+
+* What Is bardjs?
+
+_https://github.com/wardbell/bardjs:_
+
+*"* bardjs is a small library of functions to help you write Angular v.1.x application tests... whether you write them in mocha or jasmine or QUnit.
+
+What kind of help? Help with routine tasks that would otherwise clutter your tests and obscure their intent.
+
+The poster child in this respect is the inject method. It can easily remove 10 or more lines of boilerplate so you spend less time with setup and more time with your tests. *"*
+
+* Significant Methods - appModule
+
+    beforeEach(bard.appModule('app.myComponent', 'app.myService'));
+
+Same as angular.mock.module, with a few stubbed services:
+
+- Toastr
+- RouterHelperProvider
+- RouteProvider
+- StateProvider
+
+(No worries if your app is not using any of these! No harm will be done.)
+
+If any of these are needed for your test, fall back to the usual:
+
+    beforeEach(module('app.myComponent', 'app.myService'));
+
+* Significant Methods - inject
+
+    bard.inject([this], '$q', '$rootScope', 'myService');
+
+Replaces the verbose usual injection approach:
+
+    beforeEach(inject(function(_$q_, _$rootScope_, _myService_) {
+        $q = _$q_;
+        $rootScope = _$rootScope_;
+        dataservice = _dataservice_;
+    }));
+
+All objects are placed on the global scope, so _this_ can optionally be specified as the first parameter. This allows bardjs to play nice with global leak detectors such as mocha.checkLeaks().
+
+bardjs will delete these objects from the global namespace after every test, so cross-test pollution is not an issue!
+
+* Significant Methods - mockService
+
+    bard.mockService(myService, {
+        getAll: $q.when(['Mock data!']),
+        _default: $q.when([])
+    });
+
+Easy mocks with default endpoint value specification and optional automatic sinon spy wrappage. (Is that even a word?)
+
+Without a default, all non-specified methods become sinon spies. This is very useful for services where spying is common, such as logging/notification functionality:
+
+    bard.mockService(myToastService, {});
+    // ...
+    expect(myToastService.notifySuccess.calledWith('You did it!')).to.be.true;
+
+(With a blank object, all endpoints are spied on.)
+
+* Significant Methods - verifyNoOutstandingHttpRequests
+
+    bard.verifyNoOutstandingHttpRequests();
+
+Simply executes:
+
+    afterEach(angular.mock.inject(function($httpBackend) {
+        $httpBackend.verifyNoOutstandingExpectation();
+        $httpBackend.verifyNoOutstandingRequest();
+    }));
