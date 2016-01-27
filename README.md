@@ -21,3 +21,18 @@ This presentation discusses what's coming in Angular 2, how TypeScript fits into
 #### Testing Directives
 
 A short presentation examining various styles of testing AngularJS 1.x directives, including unit, template and integration testing. It also presents a different approach to integration testing called Component Integration Testing. It was presented on December 9, 2015 at the [Rocky Mountain AngularJS Meetup](http://www.meetup.com/RockyMountainAngularJS/events/227002995/).
+
+#### Unit Testing with bardjs
+
+A lightning talk covering unit testing with bardjs with code samples.
+Presented on January 27, 2016 at the [Rocky Mountain AngularJS Meetup](http://www.meetup.com/RockyMountainAngularJS/events/228211615/).
+
+#### Intro to AngularUI Router
+
+A lightning talk covering an introduction to AngularUI router.
+Presented on January 27, 2015 at the [Rocky Mountain AngularJS Meetup](http://www.meetup.com/RockyMountainAngularJS/events/228211615/).
+
+#### Simple Jade Template
+
+A lightning talk covering Jade templating with code samples.
+Presented on January 27, 2015 at the [Rocky Mountain AngularJS Meetup](http://www.meetup.com/RockyMountainAngularJS/events/228211615/).
