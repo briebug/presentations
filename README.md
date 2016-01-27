@@ -30,9 +30,9 @@ Presented on January 27, 2016 at the [Rocky Mountain AngularJS Meetup](http://ww
 #### Intro to AngularUI Router
 
 A lightning talk covering an introduction to AngularUI router.
-Presented on January 27, 2015 at the [Rocky Mountain AngularJS Meetup](http://www.meetup.com/RockyMountainAngularJS/events/228211615/).
+Presented on January 27, 2016 at the [Rocky Mountain AngularJS Meetup](http://www.meetup.com/RockyMountainAngularJS/events/228211615/).
 
 #### Simple Jade Template
 
 A lightning talk covering Jade templating with code samples.
-Presented on January 27, 2015 at the [Rocky Mountain AngularJS Meetup](http://www.meetup.com/RockyMountainAngularJS/events/228211615/).
+Presented on January 27, 2016 at the [Rocky Mountain AngularJS Meetup](http://www.meetup.com/RockyMountainAngularJS/events/228211615/).
