@@ -20,7 +20,7 @@ reid.villeneuve@briebug.com
 
 * What Is bardjs?
 
-_https://github.com/wardbell/bardjs:_
+.link https://github.com/wardbell/bardjs https://github.com/wardbell/bardjs:
 
 *"* bardjs is a small library of functions to help you write Angular v.1.x application tests... whether you write them in mocha or jasmine or QUnit.
 
