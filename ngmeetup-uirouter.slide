@@ -12,12 +12,11 @@ warren.lynes@briebug.com
 
 
 
-
 * AngularUI Router
 
 AngularUI Router is a state organized routing framework for Angular JS. Unlike the
 $route service in the Angular ngRoute module which is organized around url routes, 
-UI-Router is organized around states.  A state organized router offers a gaggle of benifitits such as nested views and states.
+UI-Router is organized around states.
 
 *State*
 
