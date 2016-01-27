@@ -1,0 +1,123 @@
+#+theme=briebug
+
+Simple Jade Template
+25 January 2016
+
+Haylee Heilman
+Software Engineer, BrieBug Solutions
+
+http://www.briebug.com
+http://github.com/hayleejo
+haylee.heilman@briebug.com
+
+* Introduction
+
+In this presentation we're going to build a small Jade view from a sample todo page
+
+Jade is a template engine used as a short hand for html
+
+* Set up
+
+https://github.com/HayleeJo/jade-template-meetup
+
+In your project:
+
+   npm install jade
+
+   npm install
+
+* Jade
+
+Our sample Jade template
+
+   section.mainbar(ng-init='vm.init()')
+       section.matter
+           div.container
+               div.row
+                   div.widget(ng-class='vm.wColor')
+                       ht-widget-header(title='{{vm.title}}')
+
+                       //To Do Table
+                       div.widget-content.text-center.text-info
+                           table.table.table-condensed.table-striped
+                               thead
+                               tr
+                                   each val in ['Item', 'Assigned To', 'Completed?', 'Delete']
+                                       th= val
+                               tbody
+                               tr
+                                   td Buy groceries
+                                   td Bob
+                                   td
+                                       input#checkbox(type='checkbox')
+                                   td
+                                       a(href='#') [x]
+
+* HTML
+
+Becomes
+
+   <section ng-init="vm.init()" class="mainbar">
+       <section class="matter">
+           <div class="container">
+               <div class="row">
+                   <div ng-class="vm.wColor" class="widget">
+                       <ht-widget-header title="{{vm.title}}"></ht-widget-header><!--To Do Table-->
+                       <div class="widget-content text-center text-info">
+                           <table class="table table-condensed table-striped">
+                               <thead></thead>
+                               <tr>
+                                   <th>Item</th>
+                                   <th>Assigned To</th>
+                                   <th>Completed?</th>
+                                   <th>Delete</th>
+                               </tr>
+                               <tbody></tbody>
+                               <tr>
+                                   <td>Buy groceries</td>
+                                   <td>Bob</td>
+                                   <td><input id="checkbox" type="checkbox"/></td>
+                                   <td><a href="#">[x]</a></td>
+                               </tr>
+                           </table>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </section>
+   </section>
+
+* Tags Classes and Attributes
+
+-There is no need to close tags in Jade. If you want to nest a tag you only need to indent it.
+
+-Classes are created just by placing a dot in front.
+
+-Attributes are created by placing them inside parentheses.
+
+* Iteration
+
+There are two kinds of iteration in Jade, each and while.
+
+Each will iterate over arrays and objects within the template.
+
+With while you create a loop to iterate over.
+
+   - var n = 1
+   ul
+     while n < 1
+       li= n++
+
+* Comments Ids and Plain Text
+
+-Comments are written with the same syntax as they are in JavaScript
+
+-Ids are created just by placing a # in front
+
+-Plain text can be created just by adding a space in between it and the tag
+
+*Links
+
+-http://jade-lang.com/
+
+-https://github.com/pugjs/jade
