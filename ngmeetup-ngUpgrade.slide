@@ -1,0 +1,135 @@
+#+theme=briebug
+
+ngUpgrade
+24 Feb 2016
+
+Anthony Jones
+Software Engineer, Briebug Solutions
+
+http://www.briebug.com
+http://github.com/anthonymjones
+anthony.jones@briebug.com
+@theanthonyjones
+
+* Upgrading with ngUpgrade
+
+With the release of the Angular 2 beta, we get ngUpgrade.
+
+The `upgrade` module included in Angular 2 allows us to mix and match Angular 1 and 2 components in the same application.
+
+That means we don't have to upgrade everything at once, since the components are able to coexist.
+
+* How it works 
+
+The primary tool provided by the `upgrade` module is called the `UpgradeAdapter`. 
+
+This is a service that can bootstrap and manage hybrid applications. 
+
+When we use `UpgradeAdapter`, what we're really doing is running both versions of Angular at the same time. 
+
+They're still seperate frameworks, so Angular 2 code runs in the Angular 2 framework, and Angular 1 code in the Angular 1 framework.
+    
+* There is no ng-app in Angular 2.
+
+Angular 1 applications can be bootstrapped in two ways: 
+	- by using an ng-app directive somewhere in the HTML page
+	- or by calling angular.bootstrap from JavaScript. 
+
+In Angular 2, only the second method is possible - there is no `ng-app` in Angular 2. 
+
+This is also the case for hybrid applications. So the first step to upgrading an application using the `UpgradeAdapter` is to bootstrap it as a hybrid that supports both Angular 1 and Angular 2.
+
+* We'll remove the ng-app
+
+	<!DOCTYPE html>
+	<html ng-app="angular-legacy">
+	<head>
+		...
+	</head>
+	<body>
+		...
+	</body>
+	</html>
+->
+
+	<!DOCTYPE html>
+	<html>
+	<head>
+		...
+	</head>
+	<body>
+		...
+	</body>
+	</html>
+
+* Now add the angular.bootstrap
+
+	angular.element(document).ready(function () {
+		angular.bootstrap(document.body, ['angular-legacy']);
+	});
+
+Your Angular 1 app should be working as it did before
+
+* Install Angular 2
+
+Follow the instructions in the Angular 2 Docs [['https://angular.io/docs/ts/latest/quickstart.html'][(the QuickStart)]] for some pointers on this.
+
+Once we have Angular 2 installed, we can import and instantiate the `UpgradeAdapter`, and then call it's bootstrap method. 
+
+It's designed to take the exact same arguments as angular.bootstrap, so that it is easy to make the switch.
+
+* We'll replace the Angular 1 bootstrap with the `upgrade` module's bootstrap method
+
+	angular.module('angular-legacy',[]);
+
+	angular.element(document).ready(function () {
+		angular.bootstrap(document.body, ['angular-legacy']);
+	});
+
+->
+
+	var adapter = new ng.upgrade.UpgradeAdapter();
+
+	angular.module('angular-legacy', []);
+
+	adapter.bootstrap(document.body, ['angular-legacy']);
+
+At this point, we'll be running a hybrid Angular 1 + 2 application. All the existing Angular 1 code will work as it always did, but we are now ready to run Angular 2 code as well.
+
+* Create an app component
+
+Angular 2 needs an app component with a reference to the directives it uses
+  
+	var AppComponent = ng.core.Component({
+	    selector: 'app',
+	    template: '<foo></foo> <foo2></foo2>',
+
+We'll include all directives, even the ones written in angular 1
+
+	    directives: [adapter.upgradeNg1Component('foo'), Foo2]})
+	    .Class({
+	    	constructor: function () { }
+	    	});  
+
+Here we'll downgrade the app component, so it can be used in the Angular 1 project. Basically, we're turning it into an Angular 1 directive.
+
+	angular.module('angular-legacy').directive('app', adapter.downgradeNg2Component(AppComponent));
+
+And you're good to go!
+
+
+* Resources
+
+This presentation was heavily inspired by:
+
+[[https://angular.io/docs/ts/latest/guide/upgrade.html#!#upgrading-with-the-upgrade-adapter][Angular 2 Docs]]
+
+[[http://blog.thoughtram.io/angular/2015/10/24/upgrading-apps-to-angular-2-using-ngupgrade.html][Thoughtram.io article - Upgrading apps to Angular 2 using ngUpgrade]]
+
+
+
+
+
+
+
+
