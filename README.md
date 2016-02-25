@@ -36,3 +36,8 @@ Presented on January 27, 2016 at the [Rocky Mountain AngularJS Meetup](http://ww
 
 A lightning talk covering Jade templating with code samples.
 Presented on January 27, 2016 at the [Rocky Mountain AngularJS Meetup](http://www.meetup.com/RockyMountainAngularJS/events/228211615/).
+
+#### ngUpgrade
+
+This presentation discusses the new ngUpgrade module, and how to use Angular 2 components in your Angular 1 application.
+Presented on February 24, 2016 at the [Rocky Mountain AngularJS Meetup](http://www.meetup.com/RockyMountainAngularJS/events/228735348/)
