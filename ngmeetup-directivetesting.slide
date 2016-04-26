@@ -1,0 +1,202 @@
+#+theme=briebug
+
+Testing Directives
+09 Dec 2015
+
+Scott Engle
+Senior Software Engineer
+BrieBug Solutions
+
+http://www.briebug.com
+http://github.com/scottengle
+scott.engle@briebug.com
+@scotteatwork
+
+* Introduction
+
+In this presentation, we're going to talk about various ways to test AngularJS 1.x directives.
+
+We'll start off with a quick intro to a "typical" application that we will use as the basis for discussion. We will then briefly talk about standard types of testing (unit, integration and e2e), and afterwards we'll move on to a discussion on a type of testing we (at BrieBug) refer to as Component Integration Testing.
+
+* The Sample App
+
+This contents of this presentation are based off of a Contact Manager demo application [1]:
+
+.image images/ngmeetup-directivetesting/ContactMgrApp.png _ 800
+
+* Components of the Sample App
+
+The sample app code is structured according to the John Papa style guide [2], and is relatively concise. It has all the standard application pieces (router, module definitions, "back-end" data service).
+
+The application has a few custom components (directives) that are tied together into a composite directive:
+
+- Contacts Grid
+- Search Filters
+- Pagination Controls
+
+* How Should We Test This?
+
+Typically speaking, you want a blend of different types of tests.
+
+Google suggests a distribution of 70% unit, 20% integration and 10% e2e [6]:
+
+.image images/ngmeetup-directivetesting/minimum.svg _ 300
+
+* But...
+
+A few questions come to mind, though:
+
+- How do you know what type of testing to use for a given piece of code?
+- Isn't there the possibility for overlap between tests (and as a result, extra effort without added benefit)?
+
+* Testing Anti-Patterns
+
+- Inverted Pyramid
+
+.image images/ngmeetup-directivetesting/inverted.svg _ 300
+
+* Testing Anti-Patterns
+
+- Hourglass
+
+.image images/ngmeetup-directivetesting/hourglass.svg _ 300
+
+* Tools in the Toolkit
+
+Test frameworks are just tools in the toolkit. Use the correct tool for the job at hand.
+
+* Unit Tests
+
+The AngularJS site has a good guide on unit testing [3]. As it states, "unit testing is about testing individual units of code". One benefit of unit tests is to help you understand if your program logic is sound.
+
+* Unit Tests
+
+A suite of good unit tests... [4]
+
+- are extremely valuable, especially when things change later.
+- help to document your design
+- make refactors easier
+
+* Unit Tests
+
+A suite of bad unit tests... [4]
+
+- cause many pain points
+- are fragile
+- inhibit refactors
+
+* Integration Tests
+
+An integration test is any test whose outcome relies on two or more functional units.
+
+We usually refer to tests that hit the database for data as integration tests, but these are more accurately end-to-end tests.
+
+These type of tests typically rely on problematic methods to execute correctly: "magic" config data, complex set up and tear down scripts, special databases...
+
+* Integration Tests
+
+There are a few different approaches to writing integrated tests. [5]
+
+- "Big Bang"
+- Bottom Up
+- Top Down
+- Sandwich
+- Risky
+
+* Integration Tests
+
+A suite of good integration tests has one major advantage over unit tests: if you cannot get two components to integrate correctly, then there's no need to write an end-to-end test; it saves you time and helps you vet your architecture.
+
+* End-To-End Tests
+
+End-To-End tests are accurately named... you start your test at one end of the system and move through the system to the other end. AngularJS gives us Protractor, which is based on Web Driver.
+
+* End-To-End Tests
+
+Protractor tests provide the advantage of being able to write an automated test that behaves like a user, but come with their own share of pain points:
+
+- requires more "magic" data
+- take a long time to execute
+- are easy to write but difficult to keep reliable
+
+* When Good Tests Go Bad
+
+When tests start to impede, rather than enable development, a risky and unfortunate side effect occurs: emphasis on testing decreases.
+
+- Unit tests get commented out
+- Integration tests are ditched in favor of more end-to-end tests
+- End-To-End tests stop being executed with each build. They move to nightly, then weekly and then get turned off
+
+* When Good Tests Go Bad
+
+"I needed to get the build working again..."
+
+"We don't have enough time to write both integration tests and end-to-end tests..."
+
+"The end-to-end tests are time consuming and unreliable..."
+
+* When Good Tests Go Bad
+
+A suite of tests provide the most value when:
+
+- the tests are reliable
+- the tests execute quickly
+- the tests run at build time
+- the tests enable development and refactors
+- the tests HELP DEVELOPERS DISCOVER CODE ISSUES EARLY
+
+* Component Integration Tests
+
+Component Integration Testing takes an AngularJS component, compiles it, and executes a series of tests against its template. This method of testing can also be used to test the integration of two or more AngularJS components.
+
+* Component Integration Tests
+
+All components contain templates that, when compiled, generate HTML. A lot of the time, components contain logic that dynamically changes the structure of the HTML.
+
+You use these tests to quickly validate your components and their templates without the need to run expensive end-to-end tests.
+
+* Component Integration Tests
+
+In the case of two or more components, you would use this testing strategy to validate interactions between them.
+
+* Component Integration Tests
+
+A good Component Integration Test...
+
+- executes fast
+- is quick to write
+- allows you to test complex logic inside a component in a "unit test" way
+- helps you save time
+
+* Component Integration Tests
+
+Let's look at some code...
+
+* The 50/40/10 Rule
+
+With the inclusion of Component Integration Tests, we find that a better test distribution is more along the lines of 50/40/10. This puts increased emphasis on the integration between components, and reduces the reliance on problematic end-to-end tests.
+
+.image images/ngmeetup-directivetesting/recommended.svg _ 300
+
+* Our Recommendations
+
+- At a minimum, follow the 70/20/10 "rule", but strive for 50/40/10
+- Opt for Component Integration Tests vs. E2E tests
+- E2E tests ARE important. Use them to "smoke test" your application, but don't go overboard.
+- Avoid testing anti-patterns
+
+* References
+
+[0] [[https://github.com/davelaursen/present-plus][https://github.com/davelaursen/present-plus]]
+
+[1] [[https://github.com/briebugconsulting/contact-mgr-demo][https://github.com/briebugconsulting/contact-mgr-demo]]
+
+[2] [[https://github.com/johnpapa/angular-styleguide][https://github.com/johnpapa/angular-styleguide]]
+
+[3] [[https://docs.angularjs.org/guide/unit-testing][https://docs.angularjs.org/guide/unit-testing]]
+
+[4] [[http://blog.stevensanderson.com/2009/08/24/writing-great-unit-tests-best-and-worst-practises/][http://blog.stevensanderson.com/2009/08/24/writing-great-unit-tests-best-and-worst-practises/]]
+
+[5] [[https://en.wikipedia.org/wiki/Integration_testing][https://en.wikipedia.org/wiki/Integration_testing]]
+
+[6] [[http://googletesting.blogspot.com/2015/04/just-say-no-to-more-end-to-end-tests.html][http://googletesting.blogspot.com/2015/04/just-say-no-to-more-end-to-end-tests.html]]

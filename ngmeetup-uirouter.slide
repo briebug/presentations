@@ -1,0 +1,284 @@
+#+theme=briebug
+
+Intro to AngularUI Router
+24 Jan 2015
+
+Shay Lynes
+Junior Developer, BrieBug Solutions
+
+http://www.briebug.com
+http://github.com/warrenlynes
+warren.lynes@briebug.com
+
+
+
+* AngularUI Router
+
+AngularUI Router is a state organized routing framework for Angular JS. Unlike the
+$route service in the Angular ngRoute module which is organized around url routes, 
+UI-Router is organized around states.
+
+*State*
+
+- A state corresponds to a "place" in the application in terms of the overall UI and navigation.
+- A state describes (via the controller / template / view properties) what the UI looks like and does at that place.
+- States are bound to a name, and a view.
+
+
+
+
+
+* Install / inject
+
+Install via bower
+
+	<!-- terminal -->
+	
+	$ bower install --save angular-ui-router 
+
+Inject into project
+
+	<!--index.html -->
+	
+	<script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+	
+	
+	
+	
+* Ui.View
+
+`ui.view` is an Angular directive that defines a view for `Ui.Router`. 
+
+To use, simply add `ui.view` to an Element (section, div...) as an attribute.
+
+	<!-- index.html -->  
+	<body>
+		
+		<div ui-view ></div> // View
+		
+	</body>
+
+When a state is activated, it's template HTML is inserted into the `ui-view`.
+
+
+
+
+
+* configure
+
+	angular
+		.module('app', [ 'ui.router' ] ) <!-- Inject -->
+		.config( ConfigureStates );
+	
+	function ConfigureStates( $stateProvider, $urlRouterProvider ){
+	
+		<!-- Define states -->
+		
+	}
+
+- Injected `ui.router` into our module `app`
+- Passed function `ConfigureStates` into `app.config()`
+
+
+
+
+
+* $stateProvider
+
+`$stateProvider` is a service in `ui.router.state` that provides an interface for us to declare states in our app.
+
+*Methods*
+
+	state ( name, stateConfig )
+
+*name*
+
+- The name of the state
+
+*stateConfig*
+
+- State config object
+
+
+
+
+
+* Defining a State
+
+To define a state you need two things.
+
+*State* *Name*
+
+- Used to transition to the state.
+- Also used to define a states position in the state hierarchy.
+
+*Template*
+
+- Designates HTML code to be used. 
+
+We attach our state(s) to *$stateProvider*.
+
+	angular.module('app').configure( ConfigureStates );
+	
+	function ConfigureStates( $stateProvider, $urlRouterProvider ) {
+	
+		$stateProvider.state( 'state_name', {
+			template: '<h1> I AM A TEMPLATE </h1>'
+		});		
+	}
+
+
+
+
+
+* Defining a State
+
+In addition to state name, and template, a state can also define:
+
+- A Url-route
+- A Controller to use
+- Route-params
+- Resolves
+	{
+		url: "/state_name',
+		template: '<h1> I AM A TEMPLATE </h1>',
+		controller: 'thisStatesController',
+		resolve: {
+			resolvedItem: function () { return 'hi';}
+	}
+		
+		
+		
+		
+				
+* Defining a Template
+
+There are multiple ways to difine a states template.
+
+*template* | Accepts a string containing template HTML.
+
+	template: '<h1> simple </h1>'
+
+*templateUrl* | Path from the index.html to the template HTML
+
+	templateUrl: '/templates/this_states_template'
+
+*templateProvider* | Function with access to local values that returns template HTML. 
+
+	templateProvider: function ($timeout) {
+		return $timeout(function() {
+			return '<h1>' + local_val + '</h1>';
+		}, 100);
+	}
+	
+	
+	
+	
+* $urlRouterProvider
+
+`$urlRouterProvider` is a service in `ui.router.router` that adds all the apps urls into a UrlMatcher object, and  watches $location for changes.
+
+*Methods*
+
+$urlRouterProvider provides us with bunch of useful methods.  Today we are going to focus on the otherwise method.
+
+	$urlRouterProvider.otherwise( route );
+
+*route*
+
+- A string containing the url-route of the state that the app will use as the default / fallback state.
+- This is also the state that the user will land on. 
+
+
+
+
+
+* Changing states
+
+There are multiple ways that a state can be activated.
+
+*ui-sref* | Angular directive that accepts a state name
+	
+	<a ui-sref="home" > home </a>
+
+*$state.go* | An injectable dependency
+
+	some_controller.$inject = [ '$state' ];
+	function some_controller ( $state ) {
+		$state.go ( 'home' ); // change to state 'home'
+	}  
+
+*url-route* | Standard url 
+
+	localhost:8001/#/state_name
+	
+	
+	
+	
+	
+* $stateParams
+
+*Declaring*
+
+Add params / queries to the url of the states config object. 
+
+	.state( 'STATE_NAME', {
+		url: '/state_name/:state_param_1/?state_query_1&state_query_2,
+		controller: 'someController',
+		templateUrl: '<h1> state params example </h1>'
+	});
+
+You can also add them as a params-object.
+
+	.state( 'STATE_NAME', {
+		url: '/state_name,
+		params: {
+			state_param_1: { value: 'DEFAULT_VALUE' },	 // Declares param / sets default
+			state_param_2: { array: true },				// Treats all params as an array
+			state_param_3: 'DEFAULT_VALUE' 			    // Short-hand for default-value
+		}
+		controller: 'someController',
+		templateUrl: '<h1> state params example </h1>'
+	});
+	
+	
+	
+	
+	
+* $stateParams
+
+*Passing*
+
+To pass along parameters, add them as an object after the state-name.
+
+	<a ui-sref='STATE_NAME({ state_param_1: 'param_1' })'> GO </a>
+	
+	<a href="/state_name/state_param_1_value/state_param_2_value"> GO </a>
+	
+	$state.go('STATE_NAME', { "state_param_1": "state_param_1_value" }); 
+
+
+
+* $stateParams
+
+*Extracting*
+
+Extract state-params via $stateParams.
+
+	function someController ($scope, $stateParams) {
+		//extract state-params
+		$scope.state_param_1 = $stateParams.state_param_1;
+		
+		//extract state-queries
+		$scope.state_query_1 = $stateParams.state_query_1;
+		$scope.state_query_2 = $stateParams.state_query_2;
+	}
+
+
+* Helpful links
+
+.link http://angular-ui.github.io/ui-router/ UI-Router
+
+.link https://github.com/angular-ui/ui-router github.com/angular-ui/ui-router
+
+.link https://scotch.io/tutorials/angular-routing-using-ui-router Scotch.io demo

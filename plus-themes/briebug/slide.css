@@ -100,4 +100,12 @@ div.code {
     border-radius: 0px;
     margin-right: 40px;
 }
+div.code pre {
+    line-height: 1.4em;
+    font-size: 0.65em;
+}
+code {
+    background-color: #F0F0F0;
+    border-bottom: 1px solid #aaa;
+}
 

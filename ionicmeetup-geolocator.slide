@@ -15,6 +15,8 @@ anthony.jones@briebug.com
 
 We're going to build a simple GeoLocation app from a blank ionic template
 
+https://github.com/briebugconsulting/geoLocator
+
 From your Terminal or Command Line:
 
     $: ionic start geoLocator blank
@@ -84,3 +86,5 @@ Upload to the Ionic Server
     ionic upload
 
 View Your App in the Ionic View App
+
+GeoLocator App ID: 42967176
