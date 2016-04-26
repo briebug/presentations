@@ -1,0 +1,199 @@
+#+theme=briebug
+
+Angular 2.0: The New Component Router
+April 26 2016
+
+Jesse Sanders
+CEO, BrieBug Solutions
+
+http://www.briebug.com
+jesse.sanders@briebug.com
+
+
+* Angular 2 is here...
+
+Beta - Things are starting to get stable:
+
+- Tutorials
+- Documentation
+- Style Guides
+- Angular 2 support libraries - Bootstrap, etc
+- RC should be coming soon
+
+* A New Router
+
+UI Router vs Angular Router?
+
+Structuring Apps with Components
+
+-
+
+* Setup Is Easy
+
+Quickstart tutorial
+
+- tsconfig.json
+- typings.json
+- package.json
+
+These three files setup my project to easily work with typescript and pull in angular.
+
+package.json scripts:
+- setup for typescript transpiling, lite server, etc.
+
+* Add The Router
+
+Add this script tag just below angular bundle:
+
+    <script src="node_modules/angular2/bundles/router.dev.js"></script>
+
+Base Href
+    <head>
+    <base href="/">
+
+- We must add a <base href> element tag to the index.html to make pushState routing work. The browser also needs the base href value to prefix relative URLs when downloading and linking to css files, scripts, and images.
+
+* Add The Router to a Component
+
+-Import the router
+
+    import { RouteConfig, ROUTER_DIRECTIVES, ROUTER_PROVIDERS } from 'angular2/router';
+
+-Inject the router
+    directives: [ROUTER_DIRECTIVES],
+    providers: [
+      ROUTER_PROVIDERS,
+      HeroService
+    ]
+
+- Configure
+    @RouteConfig([
+      {
+        path: '/heroes',
+        name: 'Heroes',
+        component: HeroesComponent
+      }
+    ])
+
+@RouteConfig takes an array of route definitions
+
+* Router Outlet
+
+    <!-- Routed views go here -->
+    <router-outlet></router-outlet>
+
+- RouterOutlet is a component from the router library. The router displays views within the bounds of the <router-outlet> tags.
+
+- A template may hold exactly one unnamed <router-outlet>.
+
+* Creating Links
+
+    <a [routerLink]="['CrisisCenter']">Crisis Center</a>
+    <a [routerLink]="['Heroes']">Heroes</a>
+    <a [routerLink]="['HeroDetail', { id: hero.id }]">Hero Details<a>
+
+The template expression to the right of the equals (=) returns a link parameters array
+
+A link parameters array holds the ingredients for router navigation:
+
+- the name of the route that prescribes the destination component and a path for the URL
+- the optional route and query parameters that go into the route URL
+
+* Route Parameters
+
+How do I read route parameters?
+
+    import { RouteParams } from 'angular2/router';
+
+    constructor(
+      private _routeParams:RouteParams,
+      private _service:HeroService){}
+
+    ngOnInit() {
+        let id = +this._routeParams.get('id');
+        this._heroService.getHero(id)
+            .then(hero => this.hero = hero)
+    }
+
+* Child Routing
+
+    @RouteConfig([
+        {
+            path: '/crisis-center/...',
+            name: 'CrisisCenter',
+            component: CrisisCenterComponent
+        }
+    ])
+
+- NOTE: path ends with a slash and three trailing periods (/...).
+
+This is an incomplete route (a non-terminal route). The finished route will be some combination of the parent /crisis-center/route and a route from the child router that belongs to the designated component.
+
+This component creates a page within a page that inherits its parents routing properties.
+
+* Child Routes
+
+CrisisCenterComponent:
+
+    @RouteConfig([
+        {path:'/list',    name: 'CrisisList',   component: CrisisListComponent, useAsDefault: true},
+        {path:'/detail/:id', name: 'CrisisDetail', component: CrisisDetailComponent}
+    ])
+
+CrisisCenterComponent HTML:
+    <h2 my-highlight="blue">CRISIS CENTER</h2>
+    <crisis-nav></crisis-nav>
+    <router-outlet></router-outlet>
+
+* Router Lifecycle Hooks
+
+No more stateChangeStart, stateChangeSuccess, etc...
+
+CanActivate, OnActivate, and CanDeactivate
+
+- provide hooks via the router to perform actions at these three lifecycle stages.
+
+
+* CanDeactivate
+
+Handle unsaved changes gracefully - stop the navigation from happening.
+
+    import {CanDeactivate, ComponentInstruction} from 'angular2/router';
+    import {DialogService} from '../dialog.service';
+
+    @Component({templateUrl: "mytemplate.html"})
+
+    export class CrisisDetailComponent implements OnInit, CanDeactivate {
+        crisis: Crisis;
+        editName: string;
+
+        constructor(private _dialog: DialogService) { }
+
+        routerCanDeactivate(next: ComponentInstruction, prev: ComponentInstruction) : any {
+            // Allow synchronous navigation (`true`) if no crisis or the crisis is unchanged.
+            if (!this.crisis || this.crisis.name === this.editName) {
+                return true;
+            }
+
+            // Otherwise ask the user with the dialog service and return its
+            // promise which resolves to true or false when the user decides
+            return this._dialog.confirm('Discard changes?');
+        }
+    }
+
+* Route Parameters or Query Parameters?
+
+There is no hard-and-fast rule. In general,
+
+prefer a route parameter when
+- the value is required.
+- the value is necessary to distinguish one route path from another.
+
+prefer a query parameter when
+- the value is optional.
+- the value is complex and/or multi-variate.
+
+Matrix URL Notation
+
+localhost:3000/crisis-center/;id=3;foo=foo
+The query string parameters are no longer separated by "?" and "&". They are separated by semicolons (;).
