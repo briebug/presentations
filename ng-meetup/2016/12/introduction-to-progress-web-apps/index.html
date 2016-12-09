@@ -4,10 +4,11 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Introduction to Progressive Web Apps</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
+    <link rel="stylesheet" href="css/extensions.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -24,8 +25,151 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+
+        <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+          <h2 style="color: #4d4d4d;">Introduction to Progressive Web Apps</h2>
+          <small>
+            Adam Armour<br>
+            https://github.com/aarmour
+          </small>
+          <div class="logo">
+            <img src="images/briebug-logo2.png" class="plain">
+          </div>
+        </section>
+
+        <section data-background="images/vulture.jpeg">
+          <h1>Are native apps doomed?</h1>
+          <a href="https://medium.com/javascript-scene/native-apps-are-doomed-ac397148a2c0#.8otkg85xu" class="fragment"><i>Eric Elliott: JavaScript Scene</i></a>
+        </section>
+
+        <section data-background="#f9f9f9">
+          <img src="images/us-smartphone-users-number-of-app-downloads-per-month.png">
+          <div>
+            <small>
+              <a href="https://www.comscore.com/Insights/Press-Releases/2014/8/comScore-s-US-Mobile-App-Report-Available-for-Download">comScore: U.S. Mobile App Report</a>
+            </small>
+          </div>
+        </section>
+
+				<section data-background="#ffffff">
+          <img src="images/rejected.png" class="plain">
+        </section>
+
+        <section data-background="#ffffff">
+          <img src="images/money.jpg" class="plain">
+        </section>
+
+        <section data-background="#ffffff">
+          <img src="images/app-store-updates.png" class="plain" style="height: 300px;">
+        </section>
+
+        <section>
+          <h2>"Progressive Web Apps"</h2>
+          <a href="https://infrequently.org/2015/06/progressive-apps-escaping-tabs-without-losing-our-soul/" class="fragment">Escaping Tabs Without Losing Our Soul</a>
+        </section>
+
+        <section>
+          <ul>
+            <li><b>Responsive</b> <span class="fragment">- Fits any form factor</span></li>
+            <li class="fragment"><b>Works offline</b> <span class="fragment">- Uses <a href="https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API">Service Worker</a> to function without the network</span></li>
+            <li class="fragment"><b>Safe</b> <span class="fragment">- Always served over HTTPS</span></li>
+            <li class="fragment"><b>Discoverable</b> <span class="fragment">- Identifiable as an "application" through <a href="https://w3c.github.io/manifest/">Web App Manifest</a> and Service Worker registration scope</span></li>
+            <li class="fragment"><b>Installable</b> <span class="fragment">- Installs to the device home screen</span></li>
+            <li class="fragment"><b>Re-engageable</b> <span class="fragment">- Leverage the OS to re-engage users, e.g. via <a href="https://developers.google.com/web/fundamentals/engage-and-retain/push-notifications/">Push Notifications</a></span></li>
+            <li class="fragment"><b>Linkable</b> <span class="fragment">- Easy to share</span></li>
+          </ul>
+        </section>
+
+        <section data-background="#cccccc">
+          <img src="images/sweet-spot.svg" class="plain">
+        </section>
+
+        <section>
+          <img src="images/pwa-technologies.svg" style="width: 780px;" class="plain">
+        </section>
+
+        <section>
+          <h3>Minimum Requirements</h3>
+          <ul>
+            <li class="fragment">Must be served over HTTPS.</li>
+						<li class="fragment">Must have a valid web app manifest with the required properties.</li>
+						<li class="fragment">Must have a service worker.</li>
+						<li class="fragment">Must always load (at least) the start URL, even if offline (using a service worker).</li>
+						<li class="fragment">Must supply its own navigation.</li>
+						<li class="fragment">Should be responsive to different screen sizes and orientations.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Web App Manifest</h3>
+          <pre><code>
+{
+  "name": "HackerWeb",
+  "short_name": "HackerWeb",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "A simply readable Hacker News app.",
+  "icons": [{
+    "src": "images/touch/homescreen48.png",
+    "sizes": "48x48",
+    "type": "image/png"
+  }, &hellip;],
+  &hellip;
+}
+          </code></pre>
+          <a href="https://developer.mozilla.org/en-US/docs/Web/Manifest">https://developer.mozilla.org/en-US/docs/Web/Manifest</a>
+        </section>
+
+        <section data-background="#ffffff">
+          <h3>Service Worker</h3>
+          <img src="images/service-worker-cache.png" class="plain">
+        </section>
+
+        <section>
+          <h3>Application Shell</h3>
+          <i>Minimum set of HTML, CSS, JavaScript needed to render the user interface.</i>
+        </section>
+
+        <section data-background="#ffffff">
+          <img src="images/appshell-1.jpg" class="plain">
+        </section>
+
+        <section>
+          <h3>Tooling</h3>
+          <ul>
+            <li><code><a href="https://github.com/GoogleChrome/sw-precache">sw-precache</a></code> for the application shell.</li>
+            <li><code><a href="https://github.com/GoogleChrome/sw-toolbox">sw-toolbox</a></code> for runtime caching.</li>
+            <li><code><a href="https://github.com/angular/mobile-toolkit/tree/master/app-shell">angular/app-shell</a> to show/hide certain elements in a pre-rendered component.</code>
+            <li><code><a href="https://github.com/angular/universal">angular/universal</a> to render Angular on the server.</code>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Angular CLI: State of the Union</h3>
+          <p><code>--mobile</code> flag disabled with the migration to <a href="https://webpack.github.io/">webpack</a></p>
+          <p class="fragment">
+            <a href="https://mobile.angular.io/">Angular Mobile Toolkit</a> guides are outdated: <code>1.0.0&#8209;beta.4</code><br>
+            <a href="https://github.com/angular/mobile-toolkit/issues/108">#108</a>,
+            <a href="https://github.com/angular/mobile-toolkit/issues/109">#109</a>
+          </p>
+        </section>
+
+        <section data-background="#eeeeee">
+          <a href="https://jakearchibald.github.io/isserviceworkerready/">Is Service Worker Ready?</a>
+          <img src="images/webkit-service-worker-status.png">
+        </section>
+
+        <section>
+          <h3><small>References</small></h3>
+          <ul class="list-unstyled">
+            <li><small>Alex Russell: <a href="https://infrequently.org/2015/06/progressive-apps-escaping-tabs-without-losing-our-soul/">Escaping Tabs Without Losing Our Soul</a></small></li>
+            <li><small>Google Developers: <a href="https://developers.google.com/web/progressive-web-apps/">Progressive Web Apps</a></small></li>
+            <li><small>Smashing Magazine: <a href="https://www.smashingmagazine.com/2016/08/a-beginners-guide-to-progressive-web-apps/">A Beginner's Guide to Progressive Web Apps</a></small></li>
+            <li><small>Smashing Magazine: <a href="https://www.smashingmagazine.com/2016/09/the-building-blocks-of-progressive-web-apps/">The Building Blocks of Progressive Web Apps</a></small></li>
+            <li><small>Eric Elliott: <a href="https://medium.com/javascript-scene/native-apps-are-doomed-ac397148a2c0#.5qsby4cf7">JavaScript Scene: Native Apps are Doomed</a></small></li>
+          </ul>
+        </section>
 			</div>
 		</div>
 
