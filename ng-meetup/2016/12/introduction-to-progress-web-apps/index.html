@@ -4,10 +4,11 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Introduction to Progressive Web Apps</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
+    <link rel="stylesheet" href="css/extensions.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -24,8 +25,54 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+
+        <section data-background="images/vulture.jpeg">
+          <h1>Are native apps doomed?</h1>
+          <a href="https://medium.com/javascript-scene/native-apps-are-doomed-ac397148a2c0#.8otkg85xu" class="fragment"><i>Eric Elliott: JavaScript Scene</i></a>
+        </section>
+
+        <section data-background="#f9f9f9">
+          <img src="images/us-smartphone-users-number-of-app-downloads-per-month.png">
+          <div>
+            <small>
+              <a href="https://www.comscore.com/Insights/Press-Releases/2014/8/comScore-s-US-Mobile-App-Report-Available-for-Download">comScore: U.S. Mobile App Report</a>
+            </small>
+          </div>
+        </section>
+
+				<section data-background="#ffffff">
+          <img src="images/rejected.png" class="plain">
+        </section>
+
+        <section data-background="#ffffff">
+          <img src="images/money.jpg" class="plain">
+        </section>
+
+        <section data-background="#ffffff">
+          <img src="images/app-store-updates.png" class="plain" style="height: 300px;">
+        </section>
+
+        <section>
+          <h2>"Progressive Web Apps"</h2>
+          <a href="https://infrequently.org/2015/06/progressive-apps-escaping-tabs-without-losing-our-soul/" class="fragment">Escaping Tabs Without Losing Our Soul</a>
+        </section>
+
+        <section>
+          <ul>
+            <li><b>Responsive</b> <span class="fragment">- Fits any form factor</span></li>
+            <li class="fragment"><b>Works offline</b> <span class="fragment">- Uses <a href="https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API">Service Worker</a> to function without the network</span></li>
+            <li class="fragment"><b>Safe</b> <span class="fragment">- Always served over HTTPS</span></li>
+            <li class="fragment"><b>Discoverable</b> <span class="fragment">- Identifiable as an "application" through <a href="https://w3c.github.io/manifest/">Web App Manifest</a> and Service Worker registration scope</span></li>
+            <li class="fragment"><b>Installable</b> <span class="fragment">- Installs to the device home screen</span></li>
+            <li class="fragment"><b>Re-engageable</b> <span class="fragment">- Leverage the OS to re-engage users, e.g. via <a href="https://developers.google.com/web/fundamentals/engage-and-retain/push-notifications/">Push Notifications</a></span></li>
+            <li class="fragment"><b>Linkable</b> <span class="fragment">- Easy to share</span></li>
+          </ul>
+        </section>
+
+        <section>
+          <!-- TODO: sweet spot -->
+        </section>
+
 			</div>
 		</div>
 
