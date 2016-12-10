@@ -3,3 +3,8 @@ section img.plain {
   border: 0;
   background: transparent;
 }
+
+.reveal ul.list-unstyled {
+  margin: 0;
+  list-style-type: none;
+}
