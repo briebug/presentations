@@ -1,4 +1,5 @@
 section img.plain {
   box-shadow: none;
   border: 0;
+  background: transparent;
 }
