@@ -8,3 +8,8 @@ section img.plain {
   margin: 0;
   list-style-type: none;
 }
+
+div.logo {
+  width: 200px;
+  margin: 50px auto -50px auto;
+}
