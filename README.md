@@ -4,4 +4,9 @@ A collection of BrieBug presentations. Looking for an older presentation? Check 
 
 #### December 14th: [Rocky Mountain AngularJS Meetup](https://www.meetup.com/RockyMountainAngularJS/events/235881445/)
   * [Introduction to Progressive Web Apps](https://briebugconsulting.github.io/presentations/ng-meetup/2016/12/introduction-to-progress-web-apps)
+  * [Angular 2 Modules](http://slides.com/briebug/angular-2-modules)
 
+### 2017
+
+#### January 25th: [Rocky Mountain AngularJS Meetup](https://www.meetup.com/RockyMountainAngularJS/events/236449311/)
+  * [Angular 2 Testing](http://slides.com/briebug/angular-2-testing)
