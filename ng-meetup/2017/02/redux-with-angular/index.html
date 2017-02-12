@@ -13,6 +13,15 @@
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
 
+    <!-- Theme additions -->
+    <style>
+      img.plain {
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+      }
+    </style>
+
 		<!-- Printing and PDF exports -->
 		<script>
 			var link = document.createElement( 'link' );
@@ -85,17 +94,42 @@
           <img src="images/flux-one-way-data-flow.png">
         </section>
 
-				<section>
-					<h1>Store</h1>
-				</section>
+        <section data-background="#eee">
+          <p>Transactional state model</p>
+          <img src="images/transactional-state-model.png" class="plain">
+        </section>
 
 				<section>
-					<h1>Reducers</h1>
+					<h1>Store</h1>
+          <p>Source of record for the application state.</p>
 				</section>
 
 				<section>
 					<h1>Actions</h1>
+          <pre><code class="hljs">
+            {
+              type: ADD_TODO,
+              text: 'Build my first Redux app'
+            }
+          </code></pre>
+          <p class="fragment">A "record" of the state transaction.</p>
+          <p class="fragment">Describes what happened.</p>
+          <p class="fragment">The <em>only</em> source of information for the store.</p>
 				</section>
+
+        <section>
+					<h1>Reducers</h1>
+          <p>
+            Actions describe the fact that <em>something happened</em>.
+            <span class="fragment">They <strong>don't</strong> specify how the application's state changes in response.</span>
+            <span class="fragment"><strong>This is the job of reducers.</strong></span>
+          </p>
+				</section>
+
+        <section>
+          <img src="images/reducer.png" class="plain">
+          <p class="fragment">Reducers <em><strong>must always</strong></em> be pure functions. No exceptions.</p>
+        </section>
 
 				<section>
 					<h1>"Smart" components</h1>
