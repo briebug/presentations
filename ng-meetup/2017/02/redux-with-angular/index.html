@@ -128,27 +128,48 @@
 
         <section>
           <img src="images/reducer.png" class="plain">
-          <p class="fragment">Reducers <em><strong>must always</strong></em> be pure functions. No exceptions.</p>
+          <p class="fragment">Reducers <em><strong>must</strong></em> be pure functions.</p>
         </section>
 
         <section data-background="white">
           <img src="images/no-mutation.png" class="plain">
+          <p>Reducers <em><strong>must not</strong></em> mutate state.</p>
         </section>
 
         <section data-background="white">
           <img src="images/no-side-effects.png" class="plain">
+          <p>Reducers <em><strong>must not</strong></em> produce side effects.</p>
+        </section>
+
+        <section data-background="white">
+          <img src="images/no-non-pure-function-calls.png" class="plain">
+          <p>Reducers <em><strong>must not</strong></em> call non-pure functions.</p>
+        </section>
+
+				<section data-background="images/smart.png">
+					<h2 style="margin-bottom: 7em; color: #000;">"Smart" components</h2>
+				</section>
+
+        <section>
+          <p>Also known as <strong>container</strong> components.</p>
+          <p class="fragment">Concerned with <em>how things work</em>.</p>
+          <p class="fragment">Listen to application state changes via the store.</p>
+          <p class="fragment">Dispatch actions.</p>
+        </section>
+
+				<section data-background="images/dumb.jpg">
+					<h2 style="margin-bottom: 7em; color: #000;">"Dumb" components</h2>
+				</section>
+
+        <section>
+          <p>Also known as <strong>presentational</strong> components.</p>
+          <p class="fragment">Concerned with <em>how things look</em>.</p>
+          <p class="fragment">Are not dependent on the store.</p>
+          <p class="fragment">Do not dispatch actions.</p>
         </section>
 
 				<section>
-					<h1>"Smart" components</h1>
-				</section>
-
-				<section data-background="images/dumb.jpg">
-					<h1>"Dumb" components</h1>
-				</section>
-
-				<section>
-					<h1>Side effects</h1>
+					<h1>Async actions</h1>
 				</section>
 
         <section>
