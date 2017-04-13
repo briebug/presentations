@@ -12,6 +12,14 @@
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
 
+    <!-- Theme additions -->
+    <style>
+      img.plain {
+        box-shadow: none;
+        border: 0;
+      }
+    </style>
+
 		<!-- Printing and PDF exports -->
 		<script>
 			var link = document.createElement( 'link' );
@@ -25,15 +33,45 @@
 		<div class="reveal">
 			<div class="slides">
         <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
-          <h1>ng-conf 2017: Recap</h1>
+          <h3>ng-conf 2017 Recap</h3>
         </section>
         <section data-background-color="#ffffff">
-          <h3>Angular 1.x &#8680;  AngularJS</h3>
-          <img src="images/angularjs-badge.jpg">
+          <h3>1.x&nbsp;&nbsp;&nbsp;&#8680;&nbsp;&nbsp;&nbsp;<span style="color: #bb0000;">AngularJS</span></h3>
+          <img src="images/angularjs-badge.jpg" class="plain">
         </section>
         <section data-background-color="#ffffff">
-          <h3>Angular >= 2.x: Angular</h3>
-          <img src="images/angular-badge.png">
+          <h3>>= 2.x&nbsp;&nbsp;&nbsp;&#8680;&nbsp;&nbsp;&nbsp;<span style="color: #bb0000;">Angular</span></h3>
+          <img src="images/angular-badge.png" class="plain">
+        </section>
+        <section>
+          <h3>Angular as a <span style="color: cornflowerblue">platform</span></h3>
+          <ul>
+            <li>@angular/core, @angular/router, &hellip;</li>
+            <li>CLI</li>
+            <li>Style guide</li>
+            <li>Language service</li>
+            <li>Specification for building modules and libraries</li>
+            <li>Standard release schedule</li>
+          </ul>
+        </section>
+        <section>
+          <h3>v4</h3>
+        </section>
+        <section>
+          <h3>CLI</h3>
+          <ul>
+            <li>1.0</li>
+            <li><code>ng eject</code></li>
+          </ul>
+        </section>
+        <section>
+          <h3>Release schedule</h3>
+          <ul>
+            <li class="fragment">Semantic versioning</li>
+            <li class="fragment">Time-based releases</li>
+            <li class="fragment">LTS support starting with v4</li>
+          </ul>
+        </section>
 			</div>
 		</div>
 
