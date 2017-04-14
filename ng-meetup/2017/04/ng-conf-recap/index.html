@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>ng-conf Recap</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Theme additions -->
+    <style>
+      img.plain {
+        box-shadow: none;
+        border: 0;
+				background: transparent !important;
+      }
+    </style>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+        <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+          <h3>ng-conf 2017 Recap</h3>
+        </section>
+        <section data-background-color="#ffffff">
+          <h3>1.x&nbsp;&nbsp;&nbsp;&#8680;&nbsp;&nbsp;&nbsp;<span style="color: #bb0000;">AngularJS</span></h3>
+          <img src="images/angularjs-badge.jpg" class="plain">
+        </section>
+        <section data-background-color="#ffffff">
+          <h3>>= 2.x&nbsp;&nbsp;&nbsp;&#8680;&nbsp;&nbsp;&nbsp;<span style="color: #bb0000;">Angular</span></h3>
+          <img src="images/angular-badge.png" class="plain">
+        </section>
+        <section>
+          <h3>Angular as a <span style="color: cornflowerblue">platform</span></h3>
+          <ul>
+            <li>@angular/core, @angular/router, &hellip;</li>
+            <li>CLI</li>
+            <li>Style guide</li>
+            <li>Language service</li>
+            <li>Specification for building modules and libraries</li>
+						<li>Material component dev kit</li>
+            <li>Standard release schedule</li>
+          </ul>
+        </section>
+        <section>
+          <h3>v4</h3>
+        </section>
+				<section>
+					<ul>
+						<li>AOT improvements to reduce generated code, up to 60% smaller in most cases</li>
+						<li>Separate package for animations</li>
+						<li>Improved *ngIf and *ngFor</li>
+						<li>Community-built Angular Universal adopted by the Angular team: @angular/platform-server</li>
+						<li>TypeScript 2.2 compatibility</li>
+					</ul>
+				</section>
+        <section>
+          <h3>CLI</h3>
+          <ul>
+            <li>1.0</li>
+            <li><code>ng eject</code></li>
+          </ul>
+        </section>
+        <section>
+          <h3>Release schedule</h3>
+        </section>
+				<section data-background="#000">
+					<h3>Semantic versioning</h3>
+					<img src="images/semantic-versioning.svg" class="plain">
+				</section>
+				<section>
+					<h3>Time-based release cycles</h3>
+					<ul>
+						<li>Patch release every week</li>
+						<li>About three minor releases every six months</li>
+						<li>Major release every six months</li>
+					</ul>
+				</section>
+				<section>
+					<p>Long Term Support (LTS), beginning with v4</p>
+				</section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
