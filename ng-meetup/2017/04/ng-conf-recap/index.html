@@ -35,6 +35,9 @@
 			<div class="slides">
         <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
           <h3>ng-conf 2017 Recap</h3>
+          <small>
+            <a href="http://briebug.github.io/presentations/ng-meetup/2017/04/ng-conf-recap/">http://briebug.github.io/presentations/ng-meetup/2017/04/ng-conf-recap/</a>
+          </small>
         </section>
         <section>
           <p>
@@ -77,11 +80,26 @@
 					</ul>
 				</section>
         <section>
-          <img class="plain" src="images/typescript-logo.svg">
-          <p>Officially supported language internally at Google</p>
-          <small>
-            <a href="http://angularjs.blogspot.com/2017/04/official-languages-at-google.html">http://angularjs.blogspot.com/2017/04/official-languages-at-google.html</a>
-          </small>
+          <h3>Improved <code>*ngIf</code> and <code>*ngFor</code> syntax</h3>
+        </section>
+        <section>
+  <pre><code class="hljs">
+  &lt;div *ngIf="userList | async as users; else loading"&gt;
+    &lt;user-profile *ngFor="let user of users; count as count; index as i" [user]="user"&gt;
+      User {{i}} of {{count}}
+    &lt;/user-profile&gt;
+  &lt;/div&gt;
+  &lt;ng-template #loading&gt;Loading...&lt;/ng-template&gt;
+  </code></pre>
+        </section>
+        <section>
+          <h3>v5</h3>
+        </section>
+        <section>
+          <ul>
+            <li>Simplicity: make AoT the default. <span class="fragment">Single compilation process for dev and production.</span></li>
+            <li class="fragment">Speed and size: compiler improvements, including better tree shaking.</li>
+          </ul>
         </section>
         <section>
           <h3>CLI</h3>
@@ -89,6 +107,22 @@
             <li>1.0</li>
             <li><code>ng eject</code></li>
           </ul>
+        </section>
+        <section>
+          <h3>CLI: looking forward</h3>
+          <ul>
+            <li>SDK</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Other Stuff</h3>
+        </section>
+        <section>
+          <img class="plain" src="images/typescript-logo.svg">
+          <p>Officially supported language internally at Google</p>
+          <small>
+            <a href="http://angularjs.blogspot.com/2017/04/official-languages-at-google.html">http://angularjs.blogspot.com/2017/04/official-languages-at-google.html</a>
+          </small>
         </section>
         <section>
           <h3>Release schedule</h3>
@@ -108,19 +142,6 @@
 				<section>
 					<p>Long Term Support (LTS), beginning with v4</p>
 				</section>
-        <section>
-          <h3>Improved <code>*ngIf</code> and <code>*ngFor</code> syntax</h3>
-        </section>
-        <section>
-  <pre><code class="hljs">
-  &lt;div *ngIf="userList | async as users; else loading"&gt;
-    &lt;user-profile *ngFor="let user of users; count as count; index as i" [user]="user"&gt;
-      User {{i}} of {{count}}
-    &lt;/user-profile&gt;
-  &lt;/div&gt;
-  &lt;ng-template #loading&gt;Loading...&lt;/ng-template&gt;
-  </code></pre>
-        </section>
         <section data-background="images/md-bg.png">
           <h3>Angular Material</h3>
           <h4>Component Dev Kit</h4>
