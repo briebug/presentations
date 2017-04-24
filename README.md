@@ -16,3 +16,8 @@ A collection of BrieBug presentations. Looking for an older presentation? Check 
 #### February 22: [Rocky Mountain AngularJS Meetup](https://www.meetup.com/RockyMountainAngularJS/events/)
 
   * [Redux with Angular](https://briebug.github.io/presentations/ng-meetup/2017/02/redux-with-angular)
+
+#### April 25: [Rocky Mountain AngularJS Meetup](https://www.meetup.com/RockyMountainAngular/events/238758809/)
+
+  * [ng-conf Recap](http://briebug.github.io/presentations/ng-meetup/2017/04/ng-conf-recap/#/)
+  * [Optimizing Angular](https://ratwerks.tech/presentations/angular-optimization/#/)
