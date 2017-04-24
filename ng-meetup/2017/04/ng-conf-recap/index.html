@@ -108,6 +108,19 @@
 				<section>
 					<p>Long Term Support (LTS), beginning with v4</p>
 				</section>
+        <section>
+          <h3>Improved <code>*ngIf</code> and <code>*ngFor</code> syntax</h3>
+        </section>
+        <section>
+  <pre><code class="hljs">
+  &lt;div *ngIf="userList | async as users; else loading"&gt;
+    &lt;user-profile *ngFor="let user of users; count as count; index as i" [user]="user"&gt;
+      User {{i}} of {{count}}
+    &lt;/user-profile&gt;
+  &lt;/div&gt;
+  &lt;ng-template #loading&gt;Loading...&lt;/ng-template&gt;
+  </code></pre>
+        </section>
         <section data-background="images/md-bg.png">
           <h3>Angular Material</h3>
           <h4>Component Dev Kit</h4>
