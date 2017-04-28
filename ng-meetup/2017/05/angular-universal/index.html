@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Angular Universal</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Theme additions -->
+    <style>
+      img.plain {
+        box-shadow: none;
+        border: 0;
+				background: transparent !important;
+      }
+
+      .done {
+        color: green;
+      }
+
+      .in-progress {
+        color: yellow;
+      }
+    </style>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+        <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+          <h3>First Look at Angular Universal</h3>
+          <div>
+            <small>
+              <a href="https://briebug.github.io/presentations/ng-meetup/2017/05/angular-universal">https://briebug.github.io/presentations/ng-meetup/2017/05/angular-universal</a>
+            </small>
+          </div>
+          <div>
+            {Presenter Name}<br>
+            {Presenter Contact (Github, email, etc)}
+          </div>
+        </section>
+        <section>
+          <h3>What?</h3>
+          <p>
+            <span class="fragment">Universal:</span> <span class="fragment">JavaScript code that can execute on the <em>client</em> and the <em>server</em>.</span>
+          </p>
+          <p class="fragment">
+            <a href="https://medium.com/@mjackson/universal-javascript-4761051b7ae9">(formerly "isomorphic")</a>
+          </p>
+        </section>
+        <section>
+          <h3>Why?</h3>
+          <ul>
+            <li class="fragment">Performance</li>
+            <li class="fragment">SEO</li>
+            <li class="fragment">Preview pages for Twitter, Facebook, and other social media</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Angular 4.0</h3>
+          <ul>
+            <li>Integrate the platform API into core <span class="done">Done</span></li>
+            <li>Support Title and Meta services on the server <span class="done">Done</span></li>
+            <li>Write documentation for core API <span class="in-progress">In Progress</span></li>
+            <li>Develop Express, ASP.NET Core,<br>Hapi engines <span class="in-progress">In Progress</span></li>
+          </ul>
+        </section>
+        <section>
+          <h3>Angular 4.1+</h3>
+          <ul>
+            <li>Hooks in renderModule* to do stuff just before rendering to string</li>
+            <li>Generic state transfer API in the platform</li>
+            <li>Http Transfer State Module that uses HTTP interceptors and state transfer API</li>
+            <li>Better internal performance and stress tests</li>
+            <li>Make it easier to write unit tests for Universal components</li>
+          </ul>
+        </section>
+         <section>
+          <h3>Angular 4.1+</h3>
+          <ul>
+            <li>Support AppShell use cases</li>
+            <li>Unified Document Service that combines Meta and Title services and adds more features</li>
+            <li>Angular CLI support for Universal</li>
+            <li>Material 2 works on Universal</li>
+            <li>Provide a solution for Java backends</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Angular 5.0 and beyond</h3>
+          <ul>
+            <li>Full client rehydration strategy that reuses DOM elements/CSS rendered on the server</li>
+            <li>Make it easier to support other 3rd part libraries like jQuery/d3 that aren't Universal aware</li>
+            <li>Node.js bridge protocol to communicate with different language backends - Django, Go, PHP etc.</li>
+          </ul>
+        </section>
+        <section>
+          <h1>Gotchas</h1>
+        </section>
+        <section>
+          <p>
+            Browser types like <code>window</code>, <code>document</code>, and <code>navigator</code> do not
+            exist on the server.
+          </p>
+          <p class="fragment">
+            If you need them, you can use the Object injected using the <code>PLATFORM_ID</code> token to
+            check whether the current platform is browser or server.
+          </p>
+        </section>
+        <section>
+          <pre><code>
+import { PLATFORM_ID } from '@angular/core';
+import {
+  isPlatformBrowser,
+  isPlatformServer
+} from '@angular/common';
+
+constructor(@Inject(PLATFORM_ID) private platformId: Object) { ... }
+
+ngOnInit() {
+  if (isPlatformBrowser(this.platformId)) {
+    // Client only code.
+  }
+  if (isPlatformServer(this.platformId)) {
+    // Server only code.
+  }
+}
+          </code></pre>
+        </section>
+        <section>
+          <h4>References</h4>
+          <ul>
+            <li></li>
+          </ul>
+        </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
