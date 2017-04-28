@@ -1,0 +1,288 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>First Look at Angular Universal</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Theme additions -->
+    <style>
+      img.plain {
+        box-shadow: none;
+        border: 0;
+				background: transparent !important;
+      }
+
+      div.logo {
+        height: 100px;
+        margin-top: 30px;
+      }
+
+      .done {
+        color: green;
+      }
+
+      .in-progress {
+        color: yellow;
+      }
+    </style>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+        <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+          <h3>First Look at Angular Universal</h3>
+          <div>
+            <small>
+              <a href="https://briebug.github.io/presentations/ng-meetup/2017/05/angular-universal">https://briebug.github.io/presentations/ng-meetup/2017/05/angular-universal</a>
+            </small>
+          </div>
+          <div>
+            Kevin Schuchard <a href="https://github.com/schuchard">https://github.com/schuchard</a><br>
+            Adam Armour <a href="https://github.com/aarmour">https://github.com/aarmour</a>
+          </div>
+          <div class="logo">
+            <img src="images/briebug-logo.png" class="plain">
+          </div>
+        </section>
+        <section>
+          <h3>What?</h3>
+          <p>
+            <span class="fragment">Universal:</span> <span class="fragment">JavaScript code that can execute on the <em>client</em> and the <em>server</em>.</span>
+          </p>
+          <p class="fragment">
+            <a href="https://medium.com/@mjackson/universal-javascript-4761051b7ae9">(formerly "isomorphic")</a>
+          </p>
+        </section>
+        <section>
+          <h1>Why?</h1>
+        </section>
+        <section>
+          <h3>Performance</h3>
+        </section>
+        <section data-background="white">
+          <h4>Startup Time</h4>
+          <img src="images/startup-perf.png" style="width: 600px;">
+        </section>
+        <section>
+          <h3>Performance</h3>
+          <ul>
+            <li class="fragment">Not just for the initial render</li>
+            <li class="fragment">Slow API - cache fully rendered version of the partial HTML</li>
+            <li class="fragment">Certain visualizations which require a lot of data and heavy computations such as graphs and charts</li>
+          </ul>
+        </section>
+        <section>
+          <h3>SEO</h3>
+          <ul>
+            <li class="fragment">JS incapabilities or timing issues with async loading lead to an imperfect index</li>
+            <li class="fragment">The crawler can determine exactly how long it takes before the user sees content (Document Complete)</li>
+            <li class="fragment">Server side rendering is not the future for SEO, but for now it’s hard to beat</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Browser Support</h3>
+          <ul>
+            <li class="fragment">Use latest web technologies while still supporting older browsers</li>
+            <li class="fragment">Give legacy browsers a completely server rendered site while evergreen browsers get the full client side app</li>
+            <li class="fragment">Helps with accessibility as screen readers generally work with server rendered content better than dynamic client rendered content</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Link Previews</h3>
+          <ul>
+            <li class="fragment">Websites and apps like Facebook, Twitter, G+, LinkedIn, etc. that generate previews from links rely on server rendering.</li>
+          </ul>
+        </section>
+        <section>
+          <p>What's available today...</p>
+          <p class="fragment">...and what's coming (soon) in future versions.</p>
+        </section>
+        <section>
+          <h3>Angular 4.0</h3>
+          <ul>
+            <li>Integrate the platform API into core <span class="done">Done</span></li>
+            <li>Support Title and Meta services on the server <span class="done">Done</span></li>
+            <li>Write documentation for core API <span class="in-progress">In Progress</span></li>
+            <li>Develop Express, ASP.NET Core,<br>Hapi engines <span class="in-progress">In Progress</span></li>
+          </ul>
+        </section>
+        <section>
+          <h3>Angular 4.1+</h3>
+          <ul>
+            <li>Hooks in renderModule* to do stuff just before rendering to string</li>
+            <li>Generic state transfer API in the platform</li>
+            <li>Http Transfer State Module that uses HTTP interceptors and state transfer API</li>
+            <li>Better internal performance and stress tests</li>
+            <li>Make it easier to write unit tests for Universal components</li>
+          </ul>
+        </section>
+         <section>
+          <h3>Angular 4.1+</h3>
+          <ul>
+            <li>Support AppShell use cases</li>
+            <li>Unified Document Service that combines Meta and Title services and adds more features</li>
+            <li>Angular CLI support for Universal</li>
+            <li>Material 2 works on Universal</li>
+            <li>Provide a solution for Java backends</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Angular 5.0 and beyond</h3>
+          <ul>
+            <li>Full client rehydration strategy that reuses DOM elements/CSS rendered on the server</li>
+            <li>Make it easier to support other 3rd part libraries like jQuery/d3 that aren't Universal aware</li>
+            <li>Node.js bridge protocol to communicate with different language backends - Django, Go, PHP etc.</li>
+          </ul>
+        </section>
+        <section data-background="#ffffff">
+          <h3>Angular Material Design</h3>
+          <img src="images/material2-universal-github-issue.png">
+          <a href="https://github.com/angular/material2/issues/308">https://github.com/angular/material2/issues/308</a>
+        </section>
+        <section>
+          <h1>Gotchas</h1>
+        </section>
+        <section>
+          <p>
+            Browser types like <code>window</code>, <code>document</code>, and <code>navigator</code> do not
+            exist on the server.
+          </p>
+          <p class="fragment">
+            If you need them, you can use the Object injected using the <code>PLATFORM_ID</code> token to
+            check whether the current platform is browser or server.
+          </p>
+        </section>
+        <section>
+          <pre><code>
+import { PLATFORM_ID } from '@angular/core';
+import {
+  isPlatformBrowser,
+  isPlatformServer
+} from '@angular/common';
+
+constructor(@Inject(PLATFORM_ID) private platformId: Object) { ... }
+
+ngOnInit() {
+  if (isPlatformBrowser(this.platformId)) {
+    // Client only code.
+  }
+  if (isPlatformServer(this.platformId)) {
+    // Server only code.
+  }
+}
+          </code></pre>
+        </section>
+        <section>
+          <p>Don't manipulate the <code>nativeElement</code> directly</p>
+          <div class="fragment">
+            <p>Use the <code>Renderer</code>. This ensures that in any environment we're able to change our view.</p>
+            <pre><code>
+constructor(element: ElementRef, renderer: Renderer) {
+  renderer.setElementStyle(element.nativeElement, 'font-size', 'x-large');
+}
+            </code></pre></div>
+        </section>
+        <section>
+          <h3>Preboot</h3>
+          <ul>
+            <li class="fragment">Record and playback events - Which events and how they are replayed are configurable</li>
+            <li class="fragment">Respond immediately to events</li>
+            <li class="fragment">Maintain focus even if page is re-rendered</li>
+            <li class="fragment">Buffer client-side re-rendering for smoother transition</li>
+            <li class="fragment">Freeze page until bootstrap completes if user clicks button</li>
+          </ul>
+        </section>
+        <section>
+          <h1>Demo App</h1>
+        </section>
+        <section>
+          <p>What about the CLI?</p>
+        </section>
+        <section data-background="images/eject.jpg">
+        </section>
+        <section>
+          An official example <em>should</em> be available soon at <a href="https://github.com/angular/universal-starter">https://github.com/angular/universal-starter</a>&hellip;
+          <p class="fragment">&hellip;but for now: <a href="https://github.com/FrozenPandaz/ng-universal-demo">https://github.com/FrozenPandaz/ng-universal-demo</a></p>
+        </section>
+        <section>
+          Also <a href="https://angular.io/docs/ts/latest/guide/universal.html">https://angular.io/docs/ts/latest/guide/universal.html</a>
+          <p class="fragment">Builds on the TOH tutorial.</p>
+        </section>
+        <section>
+          <a href="https://www.npmjs.com/package/@nguniversal/express-engine">@nguniversal/express-engine</a>
+          <pre><code>
+app.engine('html', ngExpressEngine({
+  bootstrap: ServerAppModule
+}));
+          </code></pre>
+        </section>
+        <section>
+          <pre><code>
+@NgModule({
+  ...
+  imports: [
+    BrowserModule.withServerTransition({
+      appId: 'my-app-id'
+    }),
+    ...
+  ]
+})
+export class ServerAppModule { }
+          </code></pre>
+        </section>
+        <section>
+          <p>Defines a shared id so that the client-side Angular app can replace the DOM rendered on the server during application bootstrap.</p>
+        </section>
+        <section>
+          <h3>Transfer State</h3>
+          <p>Write data into the document so that it can be read by the client-side Angular app.</p>
+          <p class="fragment"><code>window['TRANSFER_STATE']</code></p>
+        </section>
+        <section>
+          <h4>References</h4>
+          <ul>
+            <li><a href="https://universal.angular.io/">Angular Universal</a></li>
+            <li><a href="https://docs.google.com/document/d/1q6g9UlmEZDXgrkY88AJZ6MUrUxcnwhBGS0EXbVlYicY/edit#heading=h.442ppinnqx9a">Angular Universal design doc</a></li>
+            <li><a href="https://github.com/angular/preboot">Preboot</a></li>
+            <li><a href="https://github.com/FrozenPandaz/ng-universal-demo">https://github.com/FrozenPandaz/ng-universal-demo<a/></li>
+          </ul>
+        </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
