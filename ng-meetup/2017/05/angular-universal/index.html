@@ -71,11 +71,36 @@
           </p>
         </section>
         <section>
-          <h3>Why?</h3>
+          <h1>Why?</h1>
+        </section>
+        <section>
+          <h3>Performance</h3>
           <ul>
-            <li class="fragment">Performance</li>
-            <li class="fragment">SEO</li>
-            <li class="fragment">Preview pages for Twitter, Facebook, and other social media</li>
+            <li class="fragment">Not just for the initial render</li>
+            <li class="fragment">Slow API - cache fully rendered version of the partial HTML</li>
+            <li class="fragment">Certain visualizations which require a lot of data and heavy computations such as graphs and charts</li>
+          </ul>
+        </section>
+        <section>
+          <h3>SEO</h3>
+          <ul>
+            <li class="fragment">JS incapabilities or timing issues with async loading lead to an imperfect index</li>
+            <li class="fragment">The crawler can determine exactly how long it takes before the user sees content (Document Complete)</li>
+            <li class="fragment">Server side rendering is not the future for SEO, but for now it’s hard to beat</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Browser Support</h3>
+          <ul>
+            <li class="fragment">Use latest web technologies while still supporting older browsers</li>
+            <li class="fragment">Give legacy browsers a completely server rendered site while evergreen browsers get the full client side app</li>
+            <li class="fragment">Helps with accessibility as screen readers generally work with server rendered content better than dynamic client rendered content</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Link Previews</h3>
+          <ul>
+            <li class="fragment">Programs that show website previews for provided links rely on server rendering (Facebook, G+ or LinkedIn)</li>
           </ul>
         </section>
         <section>
@@ -154,9 +179,31 @@ ngOnInit() {
           </code></pre>
         </section>
         <section>
+          <p>Don't manipulate the <code>nativeElement</code> directly</p>
+          <div class="fragment">
+            <p>Use the <code>Renderer</code>. This ensures that in any environment we're able to change our view.</p>
+            <pre><code>
+constructor(element: ElementRef, renderer: Renderer) {
+  renderer.setElementStyle(element.nativeElement, 'font-size', 'x-large');
+}
+            </code></pre></div>
+        </section>
+        <section>
+          <h3>Preboot</h3>
+          <ul>
+            <li class="fragment">Record and playback events - Which events and how they are replayed are configurable</li>
+            <li class="fragment">Respond immediately to events</li>
+            <li class="fragment">Maintain focus even if page is re-rendered</li>
+            <li class="fragment">Buffer client-side re-rendering for smoother transition</li>
+            <li class="fragment">Freeze page until bootstrap completes if user clicks button</li>
+          </ul>
+        </section>
+        <section>
           <h4>References</h4>
           <ul>
-            <li></li>
+            <li><a href="https://universal.angular.io/">Angular Universal</a></li>
+            <li><a href="https://docs.google.com/document/d/1q6g9UlmEZDXgrkY88AJZ6MUrUxcnwhBGS0EXbVlYicY/edit#heading=h.442ppinnqx9a">Angular Universal design doc</a></li>
+            <li><a href="https://github.com/angular/preboot">Preboot</a></li>
           </ul>
         </section>
 			</div>
