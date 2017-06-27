@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>ngrx: Forms and Data</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Theme additions -->
+    <style>
+      img.plain {
+        box-shadow: none;
+        border: 0;
+				background: transparent !important;
+      }
+      div.logo {
+        height: 100px;
+        margin-top: 30px;
+      }
+    </style>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+        <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+          <h3>ngrx: Forms and Data</h3>
+          <div>
+            <small>
+              <a href="http://briebug.github.io/presentations/ng-meetup/2017/06/ngrx-forms">http://briebug.github.io/presentations/ng-meetup/2017/06/ngrx-forms</a>
+            </small>
+          </div>
+          <div>
+            <small>
+              Adam Armour<br>
+              <a href="https://github.com/aarmour">https://github.com/aarmour</a><br>
+              adam.armour@briebug.com<br>
+              Denver Devs Slack: @adamarmour
+            </small>
+          </div>
+          <div class="logo">
+            <img src="images/briebug-logo.png" class="plain">
+          </div>
+        </section>
+        <section>
+          <h1>Before we begin&hellip;</h1>
+        </section>
+        <section data-background="#fff">
+          <h3 style="display: flex; align-items: center; justify-content: center;"><span style="margin-right: 1em;">Webpack 3 released</span><img src="images/party-popper.png" class="plain"></h3>
+          <small>
+            <a href="https://medium.com/webpack/webpack-3-official-release-15fd2dd8f07b">https://medium.com/webpack/webpack-3-official-release-15fd2dd8f07b</a>
+          </small>
+          <ul>
+            <li class="fragment">Scope hoisting</li>
+            <li class="fragment">"Magic comments"</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Angular 4.2 released</h3>
+          <small>
+            <a href="http://angularjs.blogspot.com/2017/06/angular-42-now-available.html">http://angularjs.blogspot.com/2017/06/angular-42-now-available.html</a>
+          </small>
+          <ul>
+            <li class="fragment"><a href="https://angular.io" target="_blank">angular.io</a> refresh</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Angular Material beta 7 released</h3>
+          <small>
+            <a href="https://github.com/angular/material2/releases/tag/2.0.0-beta.7">https://github.com/angular/material2/releases/tag/2.0.0-beta.7</a>
+          </small>
+          <ul>
+            <li class="fragment">New components: <code>md-expansion-panel</code> and <code>md-accordion</code> (documentation coming soon)</li>
+            <li class="fragment">New typography extension to the theming API</li>
+            <li class="fragment">Better support for <code>@angular/platform-server</code> (universal)</li>
+          </ul>
+        </section>
+        <section>
+          <h3>Node.js 8 / NPM 5</h3>
+          <small>
+            <a href="http://angularjs.blogspot.com/2017/06/angular-42-now-available.html">http://angularjs.blogspot.com/2017/06/angular-42-now-available.html</a>
+          </small>
+          <ul>
+            <li class="fragment">More support for ES6 / ES7</li>
+            <li class="fragment">NPM performance improvements</li>
+          </ul>
+        </section>
+        <section data-background="#fff">
+          <img src="images/not-redux-101.svg" class="plain" style="height: 10em;">
+        </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
