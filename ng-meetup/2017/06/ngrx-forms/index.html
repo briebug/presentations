@@ -112,6 +112,42 @@
           <img src="images/redux-with-effects.svg" class="plain">
         </section>
         <section>
+          <pre><code style="max-height: 640px; font-size: 0.85em;">
+&hellip;
+import { Actions, Effect } from '@ngrx/effects';
+
+@Injectable()
+export class AuthEffects {
+  constructor(private http: Http, private actions$: Actions) { }
+
+  @Effect() login$ = this.actions$
+    // Listen for the 'LOGIN' action
+    .ofType('LOGIN')
+    // Map the payload into JSON to use as the request body
+    .map(action => JSON.stringify(action.payload))
+    .switchMap(payload => this.http.post('/auth', payload)
+      // If successful, dispatch success action with result
+      .map(res => ({ type: 'LOGIN_SUCCESS', payload: res.json() }))
+      // If request fails, dispatch failed action
+      .catch(() => Observable.of({ type: 'LOGIN_FAILED' }))
+    );
+}
+          </code></pre>
+        </section>
+        <section>
+          <pre><code style="max-height: 640px; font-size: 0.85em;">
+import { EffectsModule } from '@ngrx/effects';
+import { AuthEffects } from './effects/auth';
+
+@NgModule({
+  imports: [
+    EffectsModule.run(AuthEffects)
+  ]
+})
+export class AppModule { }
+          </code></pre>
+        </section>
+        <section>
           <p>Let's look at some examples with Firebase</p>
         </section>
         <section>
