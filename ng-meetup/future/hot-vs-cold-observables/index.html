@@ -1,0 +1,143 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Hot vs. Cold Observables</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Theme additions -->
+    <style>
+      img.plain {
+        box-shadow: none;
+        border: 0;
+				background: transparent !important;
+      }
+      div.logo {
+        height: 100px;
+        margin-top: 30px;
+      }
+    </style>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+        <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+          <h3>Hot vs. Cold Observables</h3>
+          <div>
+            <small>
+              <a href="http://briebug.github.io/presentations/ng-meetup/{path}">http://briebug.github.io/presentations/ng-meetup/{path}</a>
+            </small>
+          </div>
+          <div>
+            {Presenter Name}<br>
+            {Presenter Contact (Github, email, etc)}
+          </div>
+          <div class="logo">
+            <img src="images/briebug-logo.png" class="plain">
+          </div>
+        </section>
+
+        <section data-background="images/hot-cold.jpg">
+        </section>
+
+        <section data-background="images/cold.jpg">
+        </section>
+
+        <section>
+          <pre><code>
+const source = Rx.Observable.interval(1000);
+source.subscribe(value => console.log(value));
+source.subscribe(value => console.log(value));
+
+          </code></pre>
+          <small><a href="http://embed.plnkr.co/fLXZETUlWK8udqhZZfA9/" target="_blank">http://embed.plnkr.co/fLXZETUlWK8udqhZZfA9/</a></small>
+        </section>
+
+        <section>
+          <p>Cold observables start running on subscription.</p>
+          <p class="fragment">Values are not shared among subscribers.</p>
+        </section>
+
+        <section data-background="images/hot.jpg">
+        </section>
+
+        <section>
+          <pre><code>
+const source = Rx.Observable.interval(1000).publish();
+source.connect();
+source.subscribe(value => console.log(value));
+source.subscribe(value => console.log(value));
+
+          </code></pre>
+          <small><a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
+        </section>
+
+        <section>
+          <p><span style="color: aqua;">Cold</span> The observable <em>creates</em> the producer</p>
+          <p><span style="color: crimson;">Hot</span> The observable <em>closes over</em> the producer</p>
+        </section>
+
+        <section>
+          <p style="color: aqua;">Cold</p>
+          <pre><code>
+const cold = new Observable((observer) => {
+  const producer = new Producer();
+  // ...
+});
+          </code></pre>
+
+          <p style="color: crimson;">Hot</p>
+          <pre><code>
+const producer = new Producer();
+const hot = new Observable((observer) => {
+  // ...
+});
+          </code></pre>
+        </section>
+
+        <section>
+          <h4>References</h4>
+          <ul>
+            <li>RxJS: Cold vs. Hot Observables <small><a href="https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/creating.md#cold-vs-hot-observables">https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/creating.md#cold-vs-hot-observables</a></small></li>
+            <li>Medium: Hot vs Cold Observables <small><a href="https://medium.com/@benlesh/hot-vs-cold-observables-f8094ed53339">https://medium.com/@benlesh/hot-vs-cold-observables-f8094ed53339</a></small></li>
+          </ul>
+        </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
