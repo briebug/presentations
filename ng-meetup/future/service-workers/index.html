@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Hot vs. Cold Observables</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Theme additions -->
+    <style>
+      img.plain {
+        box-shadow: none;
+        border: 0;
+				background: transparent !important;
+      }
+      div.logo {
+        height: 100px;
+        margin-top: 30px;
+      }
+    </style>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+        <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+          <h3>Service Workers</h3>
+          <h4>A Quick Introduction</h4>
+          <div>
+            <small>
+              <a href="http://briebug.github.io/presentations/ng-meetup/{path}">http://briebug.github.io/presentations/ng-meetup/{path}</a>
+            </small>
+          </div>
+          <div>
+            {Presenter Name}<br>
+            {Presenter Contact (Github, email, etc)}
+          </div>
+          <div class="logo">
+            <img src="images/briebug-logo.png" class="plain">
+          </div>
+        </section>
+
+        <section>
+          <h3>Service Workers</h3>
+          <p class="fragment">A progressive upgrade for modern web apps</p>
+          <p class="fragment">Man in the middle for network</p>
+        </section>
+
+        <section>
+          <h3>Offline First!</h3>
+          <p class="fragment">Treat network as a nice-to-have upgrade</p>
+          <p class="fragment">Build for offline first, right next to mobile first</p>
+        </section>
+
+        <section>
+          <h3>Secure</h3>
+          <p class="fragment">They only work over HTTPS connections</p>
+          <p class="fragment">Can only be developed at localhost</p>
+        </section>
+
+        <section>
+          <p>Service workers are web workers!</p>
+          <p class="fragment">Effectively background threads</p>
+          <p class="fragment">Programmable network proxies for the web</p>
+          <p class="fragment" style="font-weight: bold">They are promisy!</p>
+        </section>
+
+        <section>
+          <h3>Growing browser support</h3>
+          <p class="fragment">Chrome, Firefox, Opera &amp; Edge</p>
+          <p class="fragment">Safari support coming!</p>
+          <small class="fragment"><a href="https://jakearchibald.github.io/isserviceworkerready/">Is ServiceWorker Ready?</a></small>
+        </section>
+
+        <section>
+          <section>
+            <h3>Service Worker Lifecycle</h3>
+            <ul class="fragment">
+              <li>Installation</li>
+              <li>Activation</li>
+              <li>Idle/Message Loop
+                <ul>
+                  <li>Fetch/Message</li>
+                  <li>Terminate</li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+          <section>
+            <img src="images/sw-lifecycle.png">
+          </section>
+        </section>
+
+        <section>
+          <h3>Creating a ServiceWorker</h3>
+          <p class="fragment">Reliably register</p>
+          <p class="fragment">Initialize &amp; Activate</p>
+          <p class="fragment">Handle messages, cache data, etc.</p>
+        </section>
+
+        <section>
+          <section>
+            <pre><code>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker
+      .register('/myServiceWorker.js')
+      .then(function(reg) {
+        console.log('Registration successful: ', reg.scope);
+      }, function(err) {
+        console.log('Registration failed: ', err);
+      });
+  });
+}
+            </code></pre>
+            <small>TODO! Update this! <a href="http://embed.plnkr.co/fLXZETUlWK8udqhZZfA9/" target="_blank">http://embed.plnkr.co/fLXZETUlWK8udqhZZfA9/</a></small>
+          </section>
+          <section>
+            <h3>Registration</h3>
+            <p class="fragment">Guard with 'serviceWorker' in navigator</p>
+            <p class="fragment">Is idempotent</p> 
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <pre><code>
+self.addEventListener('install', function(event) {
+  // Add installation steps/code here
+});
+
+            </code></pre>
+            <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
+          </section>
+          <section>
+            <h3>Installation</h3>
+            <p class="fragment">Resides within service worker script</p>
+            <p class="fragment">First opportunity to cache data</p>
+            <p class="fragment">Can preload data into cache here</p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <pre><code>
+self.addEventListener('activate', function(event) {
+  // Add installation steps/code here
+});
+            </code></pre>
+            <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
+          </section>
+          <section>
+            <h3>Activation</h3>
+            <p class="fragment">Runs after old workers have been stopped</p>
+            <p class="fragment">Resides within service worker script</p>
+            <p class="fragment">Opportunity to remove old/unused caches and data</p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <pre><code>
+self.addEventListener('fetch', function(event) {
+  return fetch(event.request);
+});
+            </code></pre>
+            <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
+          </section>
+          <section>
+            <h3>Fetch</h3>
+            <p class="fragment">Primary event handler in service workers</p>
+            <p class="fragment">Opportunity to intercept network requests and cache cata</p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>ServiceWorker API Family</h3>
+            <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker">ServiceWorker</a></p>
+            <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/CacheStorage">CacheStorage</a></p>
+            <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Cache">Cache</a></p>
+            <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">Fetch</a></p>
+            <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API">Web Workers</a></p>
+          </section>
+          <section>
+              <h3>Cache API</h3>
+              <p class="fragment">Designed to work hand in hand with service workers</p>
+              <p class="fragment">Supports multiple stores of cached of data</p>
+              <p class="fragment">Living standard</p>
+              <p class="fragment" style="font-weight: bold">Is promisy!</p>
+          </section>
+          <section>
+              <h3>Fetch API</h3>
+              <p class="fragment">Modern replacement for XHR</p>
+              <p class="fragment">Simple, easy to use</p>
+              <p class="fragment">Living standard</p>
+              <p class="fragment" style="font-weight: bold">Is promisy!</p>
+          </section>
+          <section>
+              <h3>Web Workers API</h3>
+              <p class="fragment">Parent of ServiceWorkers</p>
+              <p class="fragment">Underlying background workers API</p>
+              <p class="fragment">Living standard</p>
+          </section>
+        </section>
+
+
+        <section>
+          <h4>References</h4>
+          <ul>
+            <li>ServiceWorkers: An Introduction <small><a href="https://developers.google.com/web/fundamentals/getting-started/primers/service-workers">https://developers.google.com/web/fundamentals/getting-started/primers/service-workers</a></small></li>
+            <li>Fast Offline Angular Apps with Service Workers <small><a href="https://coryrylan.com/blog/fast-offline-angular-apps-with-service-workers">https://coryrylan.com/blog/fast-offline-angular-apps-with-service-workers</a></small></li>
+          </ul>
+        </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
