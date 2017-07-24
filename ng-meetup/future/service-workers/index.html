@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>Hot vs. Cold Observables</title>
+		<title>Service Workers</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
@@ -81,29 +81,41 @@
         </section>
 
         <section>
+          <h3>What can they do now?</h3>
+          <p class="fragment">Caching</p>
+          <p class="fragment">Preloading</p>
+          <p class="fragment">Web Push Notifications</p>
+          <p class="fragment">Background Sync</p>
+        </section>
+        <section>
+          <h3>What will they do in the future?</h3>
+          <p class="fragment">Periodic Sync</p>
+          <p class="fragment">LBS/Geofencing</p>
+        </section>
+
+        <section>
           <h3>Growing browser support</h3>
           <p class="fragment">Chrome, Firefox, Opera &amp; Edge</p>
           <p class="fragment">Safari support coming!</p>
           <small class="fragment"><a href="https://jakearchibald.github.io/isserviceworkerready/">Is ServiceWorker Ready?</a></small>
         </section>
 
+      
         <section>
-          <section>
-            <h3>Service Worker Lifecycle</h3>
-            <ul class="fragment">
-              <li>Installation</li>
-              <li>Activation</li>
-              <li>Idle/Message Loop
-                <ul>
-                  <li>Fetch/Message</li>
-                  <li>Terminate</li>
-                </ul>
-              </li>
-            </ul>
-          </section>
-          <section>
-            <img src="images/sw-lifecycle.png">
-          </section>
+          <h3>Service Worker Lifecycle</h3>
+          <ul class="fragment">
+            <li>Installation</li>
+            <li>Activation</li>
+            <li>Idle/Message Loop
+              <ul>
+                <li>Fetch/Message</li>
+                <li>Terminate</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <img src="images/sw-lifecycle.png">
         </section>
 
         <section>
@@ -114,8 +126,7 @@
         </section>
 
         <section>
-          <section>
-            <pre><code>
+          <pre><code>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     navigator.serviceWorker
@@ -127,96 +138,218 @@ if ('serviceWorker' in navigator) {
       });
   });
 }
-            </code></pre>
-            <small>TODO! Update this! <a href="http://embed.plnkr.co/fLXZETUlWK8udqhZZfA9/" target="_blank">http://embed.plnkr.co/fLXZETUlWK8udqhZZfA9/</a></small>
-          </section>
-          <section>
-            <h3>Registration</h3>
-            <p class="fragment">Guard with 'serviceWorker' in navigator</p>
-            <p class="fragment">Is idempotent</p> 
-          </section>
+          </code></pre>
+          <small>TODO! Update this! <a href="http://embed.plnkr.co/fLXZETUlWK8udqhZZfA9/" target="_blank">http://embed.plnkr.co/fLXZETUlWK8udqhZZfA9/</a></small>
+        </section>
+        <section>
+          <h3>Registration</h3>
+          <p class="fragment">Guard with 'serviceWorker' in navigator</p>
+          <p class="fragment">Is idempotent</p> 
         </section>
 
         <section>
-          <section>
-            <pre><code>
+          <pre><code>
 self.addEventListener('install', function(event) {
   // Add installation steps/code here
 });
 
-            </code></pre>
-            <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
-          </section>
-          <section>
-            <h3>Installation</h3>
-            <p class="fragment">Resides within service worker script</p>
-            <p class="fragment">First opportunity to cache data</p>
-            <p class="fragment">Can preload data into cache here</p>
-          </section>
+          </code></pre>
+          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
         </section>
+        <section>
+          <h3>Installation</h3>
+          <p class="fragment">Resides within service worker script</p>
+          <p class="fragment">First opportunity to cache data</p>
+          <p class="fragment">Can preload data into cache here</p>
 
         <section>
-          <section>
-            <pre><code>
+          <pre><code>
 self.addEventListener('activate', function(event) {
   // Add installation steps/code here
 });
-            </code></pre>
-            <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
-          </section>
-          <section>
-            <h3>Activation</h3>
-            <p class="fragment">Runs after old workers have been stopped</p>
-            <p class="fragment">Resides within service worker script</p>
-            <p class="fragment">Opportunity to remove old/unused caches and data</p>
-          </section>
+          </code></pre>
+          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
+        </section>
+        <section>
+          <h3>Activation</h3>
+          <p class="fragment">Runs after old workers have been stopped</p>
+          <p class="fragment">Resides within service worker script</p>
+          <p class="fragment">Opportunity to remove old/unused caches and data</p>
         </section>
 
         <section>
-          <section>
-            <pre><code>
+          <pre><code>
 self.addEventListener('fetch', function(event) {
   return fetch(event.request);
 });
-            </code></pre>
-            <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
-          </section>
-          <section>
-            <h3>Fetch</h3>
-            <p class="fragment">Primary event handler in service workers</p>
-            <p class="fragment">Opportunity to intercept network requests and cache cata</p>
-          </section>
+          </code></pre>
+          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
+        </section>
+        <section>
+          <h3>Fetch</h3>
+          <p class="fragment">Primary event handler in service workers</p>
+          <p class="fragment">Opportunity to intercept network requests and cache cata</p>
+        </section>
+
+
+        <section>
+          <pre><code>
+self.addEventListener('install', function(event) {
+  event.waitUntil(
+    caches
+      .open('siteFiles')
+      .then(function(cache) {
+        // Preload the cache with core files for site
+        return cache.addAll([
+          '/assets/fonts/font.woff2',
+          '/assets/fonts/font.otf',
+          '/assets/fonts/font.ttf',
+          '/assets/css/main.css',
+          '/assets/offline.png',
+          '/offline.html'
+        ]);
+      });
+  );
+});
+          </code></pre>
+          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
+        </section>
+        <section>
+          <pre><code>
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches
+      .match(event.request) // Look for request in ALL caches
+      .then(function(res) {
+        if (res) { // We've got it in the cache, return cached copy
+          return res;
+        }
+
+        if (!navigator.onLine) { // Definite if offline!!
+          // Return the offline page, already cached in preload during install
+          return caches.match(new Request('/offline.html')); 
+        }
+
+        return fetch(event.request);
+      });
+  );
+});
+          </code></pre>
+          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
+        </section>
+        <section>
+          <h3>Preload &amp; Cache</h3>
+          <p class="fragment">During service worker install, preload &amp; cache essential files</p>
+          <p class="fragment">During service worker install, you can preload &amp; cache anything</p>
+          <p class="fragment">During fetch, data we already have can be immediately returned</p>
+          <p class="fragment">During fetch, if we don't have a resoruce &amp; are offline, fall back to preloaded offline page</p>
+          <p class="fragment">During fetch, if we don't have a resource &amp; are online, fetch it!</p>
         </section>
 
         <section>
-          <section>
-            <h3>ServiceWorker API Family</h3>
-            <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker">ServiceWorker</a></p>
-            <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/CacheStorage">CacheStorage</a></p>
-            <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Cache">Cache</a></p>
-            <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">Fetch</a></p>
-            <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API">Web Workers</a></p>
-          </section>
-          <section>
-              <h3>Cache API</h3>
-              <p class="fragment">Designed to work hand in hand with service workers</p>
-              <p class="fragment">Supports multiple stores of cached of data</p>
-              <p class="fragment">Living standard</p>
-              <p class="fragment" style="font-weight: bold">Is promisy!</p>
-          </section>
-          <section>
-              <h3>Fetch API</h3>
-              <p class="fragment">Modern replacement for XHR</p>
-              <p class="fragment">Simple, easy to use</p>
-              <p class="fragment">Living standard</p>
-              <p class="fragment" style="font-weight: bold">Is promisy!</p>
-          </section>
-          <section>
-              <h3>Web Workers API</h3>
-              <p class="fragment">Parent of ServiceWorkers</p>
-              <p class="fragment">Underlying background workers API</p>
-              <p class="fragment">Living standard</p>
-          </section>
+          <pre><code>
+self.addEventListener('activate', function(event) {
+  event.waitUntil(
+    caches
+      .keys().then(function(keys) {
+        return Promise.all(keys.filter(function(key) {
+          return ['oldDataCache','otherUnusedCache'].indexOf(key) !== -1;
+        }).map(function(key) {
+          return caches.delete(key); // Remove old caches of data
+        }));
+      });
+  );
+});
+          </code></pre>
+          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
+        </section>
+        <section>
+          <h3>Clean up Old Caches</h3>
+          <p class="fragment">During activaton, opportunity to remove unused cached data</p>
+        </section>
+
+        <section>
+          <pre><code>
+const siteFiles = [
+  '/assets/fonts/font.woff2',
+  '/assets/fonts/font.otf',
+  '/assets/fonts/font.ttf',
+  '/assets/css/main.css',
+  '/assets/offline.png',
+  '/offline.html'
+];
+
+function fetchAndCache(request) {
+  return fetch(request)
+    .then(function(res) {
+      if (res) {
+        let cacheName = siteFiles.index(res.url) === -1 ? 'data' : 'siteFiles';
+        return caches
+          .open(cacheName)
+          .then(function(cache) {
+            return cache.put(request, res.clone());
+          });
+      }
+    });
+}
+          </code></pre>
+          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
+        </section>
+        <section>
+          <pre><code>
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches
+      .match(event.request) // Look for request in ALL caches
+      .then(function(res) {
+        if (res) { // We've got it in the cache, return cached copy
+          return res;
+        }
+
+        if (!navigator.onLine) { // Definite if offline!!
+          // Return the offline page, already cached in preload during install
+          return caches.match(new Request('/offline.html')); 
+        }
+
+        return fetchAndCache(event.request); // Fetch and update the cache!
+      });
+  );
+});
+          </code></pre>
+          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
+        </section>
+        <section>
+          <h3>Keep Cache Updated</h3>
+          <p class="fragment">During fetch, cache data retrieved from network</p>
+        </section>
+
+        <section>
+          <h3>ServiceWorker API Family</h3>
+          <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker">ServiceWorker</a></p>
+          <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/CacheStorage">CacheStorage</a></p>
+          <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Cache">Cache</a></p>
+          <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">Fetch</a></p>
+          <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API">Web Workers</a></p>
+        </section>
+        <section>
+            <h3>Cache API</h3>
+            <p class="fragment">Designed to work hand in hand with service workers</p>
+            <p class="fragment">Supports multiple stores of cached of data</p>
+            <p class="fragment">Living standard</p>
+            <p class="fragment" style="font-weight: bold">Is promisy!</p>
+        </section>
+        <section>
+            <h3>Fetch API</h3>
+            <p class="fragment">Modern replacement for XHR</p>
+            <p class="fragment">Simple, easy to use</p>
+            <p class="fragment">Living standard</p>
+            <p class="fragment" style="font-weight: bold">Is promisy!</p>
+        </section>
+        <section>
+            <h3>Web Workers API</h3>
+            <p class="fragment">Parent of ServiceWorkers</p>
+            <p class="fragment">Underlying background workers API</p>
+            <p class="fragment">Living standard</p>
         </section>
 
 
