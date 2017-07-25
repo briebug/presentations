@@ -58,7 +58,7 @@
         <section>
           <h3>Service Workers</h3>
           <p class="fragment">A progressive upgrade for modern web apps</p>
-          <p class="fragment">Man in the middle for network</p>
+          <p class="fragment">Safe Man in the Middle for network</p>
         </section>
 
         <section>
@@ -74,10 +74,9 @@
         </section>
 
         <section>
-          <p>Service workers are web workers!</p>
-          <p class="fragment">Effectively background threads</p>
-          <p class="fragment">Programmable network proxies for the web</p>
-          <p class="fragment" style="font-weight: bold">They are promisy!</p>
+          <h3>Context</h3>
+          <p class="fragment">Determined by script path (default)</p>
+          <p class="fragment">Can be overridden</p>
         </section>
 
         <section>
@@ -97,7 +96,7 @@
           <h3>Growing browser support</h3>
           <p class="fragment">Chrome, Firefox, Opera &amp; Edge</p>
           <p class="fragment">Safari support coming!</p>
-          <small class="fragment"><a href="https://jakearchibald.github.io/isserviceworkerready/">Is ServiceWorker Ready?</a></small>
+          <small class="fragment"><a href="https://jakearchibald.github.io/isserviceworkerready/" target="_blank">Is ServiceWorker Ready?</a></small>
         </section>
 
       
@@ -121,10 +120,15 @@
         <section>
           <h3>Creating a ServiceWorker</h3>
           <p class="fragment">Reliably register</p>
-          <p class="fragment">Initialize &amp; Activate</p>
-          <p class="fragment">Handle messages, cache data, etc.</p>
+          <p class="fragment">Install &amp; Activate</p>
+          <p class="fragment">Handle network requests, cache data, etc.</p>
         </section>
 
+        <section>
+          <h3>Registration</h3>
+          <p class="fragment">Guard with 'serviceWorker' in navigator</p>
+          <p class="fragment">Is idempotent</p> 
+        </section>
         <section>
           <pre><code>
 if ('serviceWorker' in navigator) {
@@ -139,14 +143,14 @@ if ('serviceWorker' in navigator) {
   });
 }
           </code></pre>
-          <small>TODO! Update this! <a href="http://embed.plnkr.co/fLXZETUlWK8udqhZZfA9/" target="_blank">http://embed.plnkr.co/fLXZETUlWK8udqhZZfA9/</a></small>
-        </section>
-        <section>
-          <h3>Registration</h3>
-          <p class="fragment">Guard with 'serviceWorker' in navigator</p>
-          <p class="fragment">Is idempotent</p> 
         </section>
 
+        <section>
+          <h3>Activation</h3>
+          <p class="fragment">Runs after old workers have been stopped</p>
+          <p class="fragment">Resides within service worker script</p>
+          <p class="fragment">Opportunity to remove old/unused caches and data</p>
+        </section>
         <section>
           <pre><code>
 self.addEventListener('install', function(event) {
@@ -168,30 +172,30 @@ self.addEventListener('activate', function(event) {
   // Add installation steps/code here
 });
           </code></pre>
-          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
-        </section>
-        <section>
-          <h3>Activation</h3>
-          <p class="fragment">Runs after old workers have been stopped</p>
-          <p class="fragment">Resides within service worker script</p>
-          <p class="fragment">Opportunity to remove old/unused caches and data</p>
         </section>
 
-        <section>
-          <pre><code>
-self.addEventListener('fetch', function(event) {
-  return fetch(event.request);
-});
-          </code></pre>
-          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
-        </section>
         <section>
           <h3>Fetch</h3>
           <p class="fragment">Primary event handler in service workers</p>
           <p class="fragment">Opportunity to intercept network requests and cache cata</p>
         </section>
+        <section>
+          <pre><code>
+self.addEventListener('fetch', function(event) {
+  return fetch(event.request); // Don't cache, just pass it through (for now)
+});
+          </code></pre>
+        </section>
 
 
+        <section>
+          <h3>Preload &amp; Cache</h3>
+          <p class="fragment">During service worker install, preload &amp; cache essential files</p>
+          <p class="fragment">During service worker install, you can preload &amp; cache anything</p>
+          <p class="fragment">During fetch, data we already have can be immediately returned</p>
+          <p class="fragment">During fetch, if we don't have a resoruce &amp; are offline, fall back to preloaded offline page</p>
+          <p class="fragment">During fetch, if we don't have a resource &amp; are online, fetch it!</p>
+        </section>
         <section>
           <pre><code>
 self.addEventListener('install', function(event) {
@@ -212,7 +216,6 @@ self.addEventListener('install', function(event) {
   );
 });
           </code></pre>
-          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
         </section>
         <section>
           <pre><code>
@@ -235,17 +238,12 @@ self.addEventListener('fetch', function(event) {
   );
 });
           </code></pre>
-          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
-        </section>
-        <section>
-          <h3>Preload &amp; Cache</h3>
-          <p class="fragment">During service worker install, preload &amp; cache essential files</p>
-          <p class="fragment">During service worker install, you can preload &amp; cache anything</p>
-          <p class="fragment">During fetch, data we already have can be immediately returned</p>
-          <p class="fragment">During fetch, if we don't have a resoruce &amp; are offline, fall back to preloaded offline page</p>
-          <p class="fragment">During fetch, if we don't have a resource &amp; are online, fetch it!</p>
         </section>
 
+        <section>
+          <h3>Clean up Old Caches</h3>
+          <p class="fragment">During activaton, opportunity to remove unused cached data</p>
+        </section>
         <section>
           <pre><code>
 self.addEventListener('activate', function(event) {
@@ -261,13 +259,12 @@ self.addEventListener('activate', function(event) {
   );
 });
           </code></pre>
-          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
-        </section>
-        <section>
-          <h3>Clean up Old Caches</h3>
-          <p class="fragment">During activaton, opportunity to remove unused cached data</p>
         </section>
 
+        <section>
+          <h3>Keep Cache Updated</h3>
+          <p class="fragment">During fetch, cache data retrieved from network</p>
+        </section>
         <section>
           <pre><code>
 const siteFiles = [
@@ -318,10 +315,7 @@ self.addEventListener('fetch', function(event) {
           </code></pre>
           <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
         </section>
-        <section>
-          <h3>Keep Cache Updated</h3>
-          <p class="fragment">During fetch, cache data retrieved from network</p>
-        </section>
+
 
         <section>
           <h3>ServiceWorker API Family</h3>
@@ -352,6 +346,13 @@ self.addEventListener('fetch', function(event) {
             <p class="fragment">Living standard</p>
         </section>
 
+
+        <section>
+          <h3>Sw-Precache</h3>
+          <p class="fragment">Generates a service worker for you</p>
+          <p class="fragment">Pre-caches site content files</p>
+          <p class="fragment">sw-precache --root=dist --config=sw-precache-config.js</p>
+        </section>
         <section>
           <pre><code>
 // sw-precache-config.js
@@ -371,13 +372,15 @@ module.exports = {
           </code></pre>
           <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>  
         </section>
-        <section>
-          <h3>Sw-Precache</h3>
-          <p class="fragment">Generates a service worker for you</p>
-          <p class="fragment">Pre-caches site content files</p>
-          <p class="fragment">sw-precache --root=dist --config=sw-precache-config.js</p>
-        </section>
 
+        <section>
+          <h3>SW-Toolbox</h3>
+          <p class="fragment">Express-style routes and request handling</p>
+          <p class="fragment">Adds policies like middleware</p>
+          <p class="fragment">Network first, Cache first, etc.</p>
+          <p class="fragment">Caching configuration (expiration, maxEntries, etc.)</p>
+          <p class="fragment">Works with sw-precache</p>
+        </section>
         <section>
           <pre><code>
 importScripts('/sw-toolbox.js');
@@ -412,14 +415,6 @@ toolbox.router.get('/api/comments*', function(request, values, options) {
 });
           </code></pre>
           <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>  
-        </section>
-        <section>
-          <h3>SW-Toolbox</h3>
-          <p class="fragment">Express-style routes and request handling</p>
-          <p class="fragment">Adds policies like middleware</p>
-          <p class="fragment">Network first, Cache first, etc.</p>
-          <p class="fragment">Caching configuration (expiration, maxEntries, etc.)</p>
-          <p class="fragment">Works with sw-precache</p>
         </section>
 
 
