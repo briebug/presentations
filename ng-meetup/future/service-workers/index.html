@@ -146,10 +146,10 @@ if ('serviceWorker' in navigator) {
         </section>
 
         <section>
-          <h3>Activation</h3>
-          <p class="fragment">Runs after old workers have been stopped</p>
+          <h3>Installation</h3>
           <p class="fragment">Resides within service worker script</p>
-          <p class="fragment">Opportunity to remove old/unused caches and data</p>
+          <p class="fragment">First opportunity to cache data</p>
+          <p class="fragment">Can preload data into cache here</p>
         </section>
         <section>
           <pre><code>
@@ -160,11 +160,12 @@ self.addEventListener('install', function(event) {
           </code></pre>
           <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
         </section>
+
         <section>
-          <h3>Installation</h3>
+          <h3>Activation</h3>
+          <p class="fragment">Runs after old workers have been stopped</p>
           <p class="fragment">Resides within service worker script</p>
-          <p class="fragment">First opportunity to cache data</p>
-          <p class="fragment">Can preload data into cache here</p>
+          <p class="fragment">Opportunity to remove old/unused caches and data</p>
         </section>
         <section>
           <pre><code>
