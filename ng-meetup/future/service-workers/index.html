@@ -191,22 +191,27 @@ self.addEventListener('fetch', function(event) {
 
         <section>
           <h3>Preload &amp; Cache</h3>
-          <p class="fragment">During Install:
-            <ul>
-              <li>Preload &amp; cache essential files</li>
-              <li>Site content, data, anything you need ahead of time</li>
-            </ul>
-          </p>
-          <p class="fragment">During fetch:
-            <ul> 
-              <li>Return data from cache if we have it</li>
-              <li>Otherwise:
-                <ul>
-                  <li>If online, fetch from network</li>
-                  <li>If offline, fall back to preloaded offline page (etc.)</li>
-                </ul>
-              </li>
-            </ul>
+          <ul class="fragment">
+            <li>During Install:
+              <ul>
+                <li>Preload &amp; cache essential files</li>
+                <li>Site content, data, anything you need ahead of time</li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="fragment">
+            <li>During fetch:
+              <ul> 
+                <li>Return data from cache if we have it</li>
+                <li>Otherwise:
+                  <ul>
+                    <li>If online, fetch from network</li>
+                    <li>If offline, fall back to preloaded offline page (etc.)</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
         </section>
         <section>
           <pre><code>
