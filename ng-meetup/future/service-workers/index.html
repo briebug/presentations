@@ -178,7 +178,7 @@ self.addEventListener('activate', function(event) {
         <section>
           <h3>Fetch</h3>
           <p class="fragment">Primary event handler in service workers</p>
-          <p class="fragment">Opportunity to intercept network requests and cache cata</p>
+          <p class="fragment">Opportunity to intercept network requests and cache data</p>
         </section>
         <section>
           <pre><code>
@@ -191,11 +191,22 @@ self.addEventListener('fetch', function(event) {
 
         <section>
           <h3>Preload &amp; Cache</h3>
-          <p class="fragment">During service worker install, preload &amp; cache essential files</p>
-          <p class="fragment">During service worker install, you can preload &amp; cache anything</p>
-          <p class="fragment">During fetch, data we already have can be immediately returned</p>
-          <p class="fragment">During fetch, if we don't have a resoruce &amp; are offline, fall back to preloaded offline page</p>
-          <p class="fragment">During fetch, if we don't have a resource &amp; are online, fetch it!</p>
+          <p class="fragment">During Install:
+            <ul>
+              <li>Preload &amp; cache essential files</li>
+              <li>Site content, data, anything you need ahead of time</li>
+            </ul>
+          </p>
+          <p class="fragment">During fetch:
+            <ul> 
+              <li>Return data from cache if we have it</li>
+              <li>Otherwise:
+                <ul>
+                  <li>If online, fetch from network</li>
+                  <li>If offline, fall back to preloaded offline page (etc.)</li>
+                </ul>
+              </li>
+            </ul>
         </section>
         <section>
           <pre><code>
@@ -291,7 +302,6 @@ function fetchAndCache(request) {
     });
 }
           </code></pre>
-          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
         </section>
         <section>
           <pre><code>
@@ -314,7 +324,6 @@ self.addEventListener('fetch', function(event) {
   );
 });
           </code></pre>
-          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>
         </section>
 
 
@@ -371,7 +380,6 @@ module.exports = {
   ]
 };
           </code></pre>
-          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>  
         </section>
 
         <section>
@@ -399,8 +407,7 @@ toolbox.router.get('/*', function(request, values, options) {
     maxAgeSeconds: 60 * 60 * 24 * 30 // one month
   }
 });
-          </code></pre>
-          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>  
+          </code></pre> 
         </section>
         <section>
           <pre><code>
@@ -414,8 +421,7 @@ toolbox.router.get('/api/comments*', function(request, values, options) {
     maxAgeSeconds: 60 * 60 * 15 // Keep data for 15 minutes
   }
 });
-          </code></pre>
-          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>  
+          </code></pre> 
         </section>
 
 
