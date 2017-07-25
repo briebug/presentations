@@ -352,6 +352,76 @@ self.addEventListener('fetch', function(event) {
             <p class="fragment">Living standard</p>
         </section>
 
+        <section>
+          <pre><code>
+// sw-precache-config.js
+module.exports = {
+  navigateFallback: '/index.html',
+  stripPrefix: 'dist',
+  root: 'dist/',
+  staticFileGlobs: [
+    'dist/index.html',
+    'dist/**.js',
+    'dist/**.css',
+    'dist/fonts/**.woff',
+    'dist/fonts/**.otf',
+    'dist/fonts/**.ttf'
+  ]
+};
+          </code></pre>
+          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>  
+        </section>
+        <section>
+          <h3>Sw-Precache</h3>
+          <p class="fragment">Generates a service worker for you</p>
+          <p class="fragment">Pre-caches site content files</p>
+          <p class="fragment">sw-precache --root=dist --config=sw-precache-config.js</p>
+        </section>
+
+        <section>
+          <pre><code>
+importScripts('/sw-toolbox.js');
+
+// Toolbox way of wiring up the offline page:
+toolbox.router.get('/*', function(request, values, options) {
+  return toolbox.networkFirst(request, values, options)
+    .catch(function(err) {
+      return caches.match(new Request('/offline.html'));
+    });
+}, {
+  networkTimeoutSeconds: 5,
+  cache: {
+    name: 'staticFiles',
+    maxAgeSeconds: 60 * 60 * 24 * 30 // one month
+  }
+});
+          </code></pre>
+          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>  
+        </section>
+        <section>
+          <pre><code>
+// Retrieve data as quickly as possible:
+toolbox.router.get('/api/comments*', function(request, values, options) {
+  return toolbox.fastest(request, values, options); // Generally use cache, keeps cache fresh
+}, {
+  networkTimeoutSeconds: 5,
+  cache: {
+    name: 'comments',
+    maxAgeSeconds: 60 * 60 * 15 // Keep data for 15 minutes
+  }
+});
+          </code></pre>
+          <small>TODO! Update this! <a href="http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/" target="_blank">http://embed.plnkr.co/IVMSXLayiEvnsoVx1VV5/</a></small>  
+        </section>
+        <section>
+          <h3>SW-Toolbox</h3>
+          <p class="fragment">Express-style routes and request handling</p>
+          <p class="fragment">Adds policies like middleware</p>
+          <p class="fragment">Network first, Cache first, etc.</p>
+          <p class="fragment">Caching configuration (expiration, maxEntries, etc.)</p>
+          <p class="fragment">Works with sw-precache</p>
+        </section>
+
 
         <section>
           <h4>References</h4>
