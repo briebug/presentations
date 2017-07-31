@@ -90,6 +90,36 @@ source.subscribe(value => console.log(value));
         </section>
 
         <section>
+          <p>By default, observables in RxJS are cold, or <em>unicast</em>.</p>
+          <p>The <em>multicast</em> operators can be used to make an observable hot.</p>
+        </section>
+
+        <section>
+          <h3>publish</h3>
+          <p><pre><code>publish() : ConnectableObservable</code></pre></p>
+          <p>
+            Returns a <code>ConnectableObservable</code>, which is a variety of Observable that waits until its
+            <code>connect</code> method is called before it begins emitting items to those Observers that have subscribed to it.
+          </p>
+        </section>
+
+        <section>
+          <h3>multicast</h3>
+          <p><pre><code>multicast(selector: Function): Observable</code></pre></p>
+          <p>
+            Share the source using the provided <code>Subject</code>.
+          </p>
+        </section>
+
+        <section>
+          <h3>share</h3>
+          <p><pre><code>share(): Observable</code></pre></p>
+          <p>
+            <code>share</code> is like <code>multicast</code> with a <code>Subject</code> and <code>refCount</code>
+          </p>
+        </section>
+
+        <section>
           <p><span style="color: aqua;">Cold</span> The observable <em>creates</em> the producer</p>
           <p><span style="color: crimson;">Hot</span> The observable <em>closes over</em> the producer</p>
         </section>
@@ -110,6 +140,10 @@ const hot = new Observable((observer) => {
   // ...
 });
           </code></pre>
+        </section>
+
+        <section>
+          <img class="plain" src="images/angular.svg" style="width: 300px">
         </section>
 
         <section>
