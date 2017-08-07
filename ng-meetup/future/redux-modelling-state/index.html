@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Redux: Modelling State</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Theme additions -->
+    <style>
+      img.plain {
+        box-shadow: none;
+        border: 0;
+				background: transparent !important;
+      }
+      div.logo {
+        height: 100px;
+        margin-top: 30px;
+      }
+    </style>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+        <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+          <h3>Redux: Modelling State</h3>
+          <div>
+            <small>
+              <a href="http://briebug.github.io/presentations/ng-meetup/{path}">http://briebug.github.io/presentations/ng-meetup/{path}</a>
+            </small>
+          </div>
+          <div>
+            #presenter<br>
+            <a href="https://github.com/#github">https://github.com/#github</a>
+          </div>
+          <div class="logo">
+            <img src="images/briebug-logo.png" class="plain">
+          </div>
+        </section>
+
+        <section>
+          <pre><code>
+const blogPosts = [
+  {
+    id: 'post1',
+    author: { name: 'User One' },
+    body: '...',
+    comments: [
+      { author: { name: 'User Two' }, comment: '...' },
+      { author: { name: 'User Three' }, comment: '...' },
+      { author: { name: 'User One' }, comment: '...' }
+    ]
+  }
+];
+          </code></pre>
+        </section>
+
+        <section>
+          <p>Data structure is complex.</p>
+          <p>Data is repeated.</p>
+        </section>
+
+        <section>
+          <ul>
+            <li>Duplicated data is difficult to update.</li>
+            <li class="fragment">Nested data increases complexity of the reducer implementation&hellip;</li>
+            <li class="fragment">&hellip;and may cause unnecessary rendering.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Normalizing State</h3>
+        </section>
+
+        <section data-background="images/database.jpg">
+        </section>
+
+        <section>
+          <p>Each type of data gets its own "table"</p>
+        </section>
+
+        <section>
+          <pre><code>
+{
+  posts: { ... },
+  comments: { ... },
+  users: { ... }
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <p>Each "table" is an object. For each item, the item ID is the key and the value is item.
+        </section>
+
+        <section>
+          <pre><code>
+{
+  posts: {
+    byId: {
+      post1: { ... },
+      post2: { ... }
+    }
+  },
+  ...
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <p>Item order is stored in an array containing the item IDs.</p>
+        </section>
+
+        <section>
+          <pre><code>
+{
+  posts: {
+    byId: {
+      post1: { ... },
+      post2: { ... }
+    },
+    ids: ['post1', 'post2']
+  },
+  ...
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <p>Related items are referenced by ID.</p>
+        </section>
+
+        <section>
+          <pre><code>
+{
+  posts: {
+    byId: {
+      post1: { author: 'user1' }
+    }
+  },
+  users: {
+    byId: {
+      user1: { name: 'User One' }
+    }
+  }
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Normalizing nested data</h3>
+        </section>
+
+        <section>
+          <p>Data returned from APIs is often nested.</p>
+          <p class="fragment">Normalizr is a small utility that simplifies converting nested JSON to a flat structure.<br><a href="https://github.com/paularmstrong/normalizr" target="_blank">https://github.com/paularmstrong/normalizr</a></p>
+        </section>
+
+        <section>
+          <h4>References</h4>
+          <ul>
+            <li><a href="http://redux.js.org/docs/recipes/reducers/NormalizingStateShape.html">Normalizing State Shape</a></li>
+          </ul>
+        </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
