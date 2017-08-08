@@ -13,7 +13,7 @@ Change to the directory you just copied and update the information for the title
 
 ```
 cd 2017/08/my-presentation
-sed -ei 's/#title/My Presentation/g' index.html
-sed -ei 's/#presenter/John Doe/g' index.html
-sed -ei 's/#github/jdoe/g' index.html
+sed -i '' 's/#title/My Presentation/g' index.html
+sed -i '' 's/#presenter/John Doe/g' index.html
+sed -i '' 's/#github/jdoe/g' index.html
 ```
