@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>#title</title>
+		<title>Smart Response</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
@@ -23,6 +23,20 @@
         height: 100px;
         margin-top: 30px;
       }
+
+      .feat-right-side {
+        float: left;
+        width: 50%;
+        padding-left: 20px !important;
+      }
+
+      .bullet-train {
+        position: relative;
+        bottom: 54px;
+        left: 30px;
+        width: 150px;
+        float: left;
+      }
     </style>
 
 		<!-- Printing and PDF exports -->
@@ -38,20 +52,111 @@
 		<div class="reveal">
 			<div class="slides">
         <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
-          <h3>#title</h3>
+          <h3>Disaster Accountability Project</h3>
           <div>
             <small>
-              <a href="http://briebug.github.io/presentations/ng-meetup/{path}">http://briebug.github.io/presentations/ng-meetup/{path}</a>
+              <a href="http://briebug.github.io/presentations/develop-denver/2017/disaster-accountability-project">http://briebug.github.io/presentations/develop-denver/2017/disaster-accountability-project</a>
             </small>
           </div>
           <div>
             #presenter<br>
-            <a href="https://github.com/#github">https://github.com/#github</a>
+            <a href="https://github.com/schuchard">https://github.com/schuchard</a>
           </div>
           <div class="logo">
             <img src="images/briebug-logo.png" class="plain">
           </div>
         </section>
+
+        <section>
+          <h1>Smart Response</h1>
+          <img src="images/diagram.png" style="width: 1000px;">
+        </section>
+
+        <section>
+          <h2>Ben Smilowitz</h2>
+          <h5>Executive Director</h5>
+        </section>
+
+        <section>
+          <h3>Building blocks</h3>
+          <ul class="fragment">
+            <li>Angular 4</li>
+            <li>Node 6.X</li>
+            <li>Heroku</li>
+            <li>Travis-CI</li>
+            <li>Angular-CLI</li>
+            <li>Java backend</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Project Beginnings</h3>
+          <ul>
+            <li class="fragment">Monorepo that contained the Angular front end as a subdirectory</li>
+            <li class="fragment">Frontend build commands intertwined with Java / Gradle </li>
+            <li class="fragment">Lacked continous integration with code coverage and style guide</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Recent Features</h3>
+          <div style="float: left">
+            <img src="images/mobile-view.png" style="width: 350px;">
+          </div>
+          <div class="feat-right-side">
+            <h4 class="fragment">Stand alone front end</h4>
+            <ul>
+              <li class="fragment">Separation of concerns, quicker setup</li>
+              <li class="fragment">Easier deployments</li>
+              <li class="fragment">Quicker cycles through development, testing, continuous integration, deployments</li>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+          <div>
+            <h3 style="float:left">Streamlining development</h3>
+            <img src="images/high-speed-train.png" class="plain bullet-train" style="width: 150px">
+          </div>
+          <ul>
+            <li class="fragment">Auto-deploys from Heroku integrated with Travis-CI</li>
+            <li class="fragment">style guide, linter, unit tests, git hooks</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>"open source" community</h3>
+          <ul>
+            <li class="fragment">Developers world wide spanning nearly all time zones</li>
+            <li class="fragment">Different styles & knowledge levels</li>
+            <li class="fragment">Opportunity for a wide range skills</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Integrations</h3>
+          <ul>
+            <li class="fragment">AtPay - Connect donors directly to organizations without a middleman. Allows organizations to process donations themselves without costly intermediaries</li>
+            <li class="fragment">Salesforce - Provide better analytics and data</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Going forward</h3>
+          <ul>
+            <li class="fragment">MVP & beyond</li>
+            <li class="fragment">Testing, features, Reviews</li>
+            <li class="fragment">Redux</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>How to get involved</h3>
+          <h2>Ben Smilowitz</h2>
+          <h5>Executive Director</h5>
+          <h5>volunteer@disasteraccountability.org</h5>
+        </section>
+
         <section>
           <h4>References</h4>
           <ul>
