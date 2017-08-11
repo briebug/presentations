@@ -2,6 +2,10 @@ A collection of BrieBug presentations. Looking for an older presentation? Check 
 
 ### 2017
 
+#### August 11: [Develop Denver](https://developdenver.org/)
+
+  * [Disaster Accountability Project - SmartResponse](https://briebug.github.io/presentations/develop-denver/2017/disaster-accountability-project/)  
+
 #### June 28: [Rocky Mountain Angular Meetup](https://www.meetup.com/RockyMountainAngular/events/240491592/)
 
   * [nrgx Forms and Data](https://briebug.github.io/presentations/ng-meetup/2017/06/ngrx-forms)
