@@ -151,6 +151,29 @@ const hot = new Observable((observer) => {
         </section>
 
         <section>
+          <pre><code>
+<!-- Subscribe to the Observable -->
+<div>{{heroes | async}}</div>
+<!-- Creates a second subscription -->
+<div>{{heroes | async}}</div>
+          </code></pre>
+        </section>
+
+        <section>
+          <p>One solution is to share the Observable in the component.</p>
+        </section>
+
+        <section>
+          <pre><code>
+ngOnInit() {
+  this.heroes = this.http.get('/api/heroes.json')
+    .share()
+    .map((response: Response) => response.json());
+}
+          </code></pre>
+        </section>
+
+        <section>
           <h4>References</h4>
           <ul>
             <li>RxJS: Cold vs. Hot Observables <small><a href="https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/creating.md#cold-vs-hot-observables">https://github.com/Reactive-Extensions/RxJS/blob/master/doc/gettingstarted/creating.md#cold-vs-hot-observables</a></small></li>
