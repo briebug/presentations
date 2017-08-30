@@ -42,12 +42,14 @@
           <h3>Hot vs. Cold Observables</h3>
           <div>
             <small>
-              <a href="http://briebug.github.io/presentations/ng-meetup/{path}">http://briebug.github.io/presentations/ng-meetup/{path}</a>
+              <a href="http://briebug.github.io/presentations/ng-meetup/2017/08/hot-vs-cold-observables/">http://briebug.github.io/presentations/ng-meetup/2017/08/hot-vs-cold-observables</a>
             </small>
           </div>
           <div>
-            {Presenter Name}<br>
-            {Presenter Contact (Github, email, etc)}
+            Jesse Sanders<br>
+            e: jesse.sanders@briebug.com<br>
+              g: jesse.sanders
+
           </div>
           <div class="logo">
             <img src="images/briebug-logo.svg" class="plain">
@@ -101,6 +103,8 @@ source.subscribe(value => console.log(value));
             Returns a <code>ConnectableObservable</code>, which is a variety of Observable that waits until its
             <code>connect</code> method is called before it begins emitting items to those Observers that have subscribed to it.
           </p>
+
+            <small><a href="https://www.learnrxjs.io/operators/multicasting/publish.html" target="_blank">https://www.learnrxjs.io/operators/multicasting/publish.html/</a></small>
         </section>
 
         <section>
@@ -109,6 +113,7 @@ source.subscribe(value => console.log(value));
           <p>
             Share the source using the provided <code>Subject</code>.
           </p>
+            <small><a href="https://www.learnrxjs.io/operators/multicasting/multicast.html" target="_blank">https://www.learnrxjs.io/operators/multicasting/multicast.html/</a></small>
         </section>
 
         <section>
@@ -117,6 +122,7 @@ source.subscribe(value => console.log(value));
           <p>
             <code>share</code> is like <code>multicast</code> with a <code>Subject</code> and <code>refCount</code>
           </p>
+            <small><a href="https://www.learnrxjs.io/operators/multicasting/share.html" target="_blank">https://www.learnrxjs.io/operators/multicasting/share.html/</a></small>
         </section>
 
         <section>
