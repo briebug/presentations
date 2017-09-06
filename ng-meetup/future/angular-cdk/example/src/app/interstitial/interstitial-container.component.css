@@ -1,0 +1,34 @@
+:host {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.75);
+}
+
+.btn-close {
+  position: absolute;
+  top: 0.25em;
+  right: 0.25em;
+  border: 0;
+  background: transparent;
+  color: white;
+}
+
+.btn-close > span {
+  font-size: 5em;
+}
+
+.content {
+  width: 6em;
+  padding: 5em;
+  background: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  text-transform: uppercase;
+}
