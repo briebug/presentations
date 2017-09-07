@@ -172,6 +172,50 @@ const blogPosts = [
           <p class="fragment">Normalizr is a small utility that simplifies converting nested JSON to a flat structure.<br><a href="https://github.com/paularmstrong/normalizr" target="_blank">https://github.com/paularmstrong/normalizr</a></p>
         </section>
 
+        <section data-background="images/patterns.jpg">
+          <h3>Patterns</h3>
+          <aside class="notes">
+            Overview of common patterns.
+          </aside>
+        </section>
+
+        <section>
+          <h3>Authentication</h3>
+        </section>
+
+        <section>
+          <p>Implemented like any other feature in your application.</p>
+          <p class="fragment">State will typically include:</p>
+          <ul>
+            <li class="fragment">A flag to indicate whether the user is authenticated</li>
+            <li class="fragment">The authentication token</li>
+            <li class="fragment">The ID of the authenticated user</li>
+            <li class="fragment">An error, if authentication failed</li>
+          </ul>
+        </section>
+
+        <section>
+<pre><code>
+{
+  "auth": {
+    "isAuthenticated": true,
+    "userId": 42,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
+  }
+}
+</code></pre>
+
+          <aside class="notes">
+            Use async action to handle sign in, e.g., LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE.
+            Sign out is typically a synchronous action for JWT, since it usually just involves removing the access token
+            from client storage.
+          </aside>
+        </section>
+
+        <section>
+          <h3>Pagination</h3>
+        </section>
+
         <section>
           <h4>References</h4>
           <ul>
