@@ -55,6 +55,78 @@
         </section>
 
         <section>
+          <h3>What should go into the Redux state object?</h3>
+        </section>
+
+        <section data-background="images/thumb.png">
+          <aside class="notes">
+            Rule of thumb
+          </aside>
+        </section>
+
+        <section>
+          <ul>
+            <li>The data is shared between different parts of the application.</li>
+            <li class="fragment">The data is used by multiple components.</li>
+            <li class="fragment">New data needs to be derived from the original data.</li>
+            <li class="fragment">The state needs to be restored at a given point in time.</li>
+            <li class="fragment">The data needs to be cached.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Types of data</h3>
+          <p class="fragment">
+            The types of data that applications typically deal with can be broadly divided into three categories.
+          </p>
+        </section>
+
+        <section>
+          <p>Domain data</p>
+          <p class="fragment">Data that the application needs to show, use, or modify.</p>
+          <p class="fragment">Example: the list of todo items (fetched from the server).</p>
+        </section>
+
+        <section>
+          <p>Application state</p>
+          <p class="fragment">Data that is specific to the application's behavior.</p>
+          <p class="fragment">Example: todo items 5 and 8 are selected.</p>
+          <p class="fragment">Example: the request to fetch the todo list is in progress.</p>
+        </section>
+
+        <section>
+          <p>UI state</p>
+          <p class="fragment">Data that represents how the UI is currently displayed.</p>
+          <p class="fragment">Example: the sidebar is open.</p>
+        </section>
+
+        <section>
+          <p><strong><em>Avoid</em> defining your state shape in terms of the UI component tree.</strong></p>
+          <p class="fragment">Define the state shape in terms of the domain data and application state.</p>
+
+          <aside class="notes">
+            Avoid: state.leftPane.todoList.todos
+            Todos are central to the whole application, not just a single part of the UI.
+            Instead, todos should be a root property (domain data).
+          </aside>
+        </section>
+
+        <section>
+<pre><code>
+  {
+    domainData1 : {},
+    domainData2 : {},
+    appState1 : {},
+    appState2 : {},
+    ui : {
+      uiState1 : {},
+      uiState2 : {},
+    }
+  }
+</code></pre>
+        </section>
+
+        <section>
           <pre><code>
 const blogPosts = [
   {
