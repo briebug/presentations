@@ -161,6 +161,9 @@ const blogPosts = [
         </section>
 
         <section data-background="images/database.jpg">
+          <aside class="notes">
+            The store can be thought of as a database.
+          </aside>
         </section>
 
         <section>
@@ -185,7 +188,7 @@ const blogPosts = [
           <pre><code>
 {
   posts: {
-    byId: {
+    entities: {
       post1: { ... },
       post2: { ... }
     }
@@ -203,7 +206,7 @@ const blogPosts = [
           <pre><code>
 {
   posts: {
-    byId: {
+    entities: {
       post1: { ... },
       post2: { ... }
     },
@@ -222,12 +225,12 @@ const blogPosts = [
           <pre><code>
 {
   posts: {
-    byId: {
+    entities: {
       post1: { author: 'user1' }
     }
   },
   users: {
-    byId: {
+    entities: {
       user1: { name: 'User One' }
     }
   }
@@ -242,6 +245,81 @@ const blogPosts = [
         <section>
           <p>Data returned from APIs is often nested.</p>
           <p class="fragment">Normalizr is a small utility that simplifies converting nested JSON to a flat structure.<br><a href="https://github.com/paularmstrong/normalizr" target="_blank">https://github.com/paularmstrong/normalizr</a></p>
+        </section>
+
+        <section>
+          <h3>Selectors</h3>
+          <p>If the store is like a database&hellip;</p>
+          <p class="fragment">&hellip;selectors are like queries.</p>
+          <aside class="notes">
+            Return "slices" of state and compute data for display.
+            Properties of selectors:
+            <ul>
+              <li>Pure functions</li>
+              <li>Composable</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h3>@ngrx/store</h3>
+          <p><code>createSelector</code></p>
+          <p><code>createFeatureSelector</code></p>
+          <aside class="notes">
+            <ul>
+              <li>Helper functions for selecting data from the store.</li>
+              <li>createSelector composes from left to right</li>
+              <li>
+                createFeatureSelector is a convenience method.<br>
+                <code>const selectFoo = createFeatureSelector<FooState>('foo')</code> is equivalent to<br>
+                <code>const selectFoo = (state: AppState) => state.foo;</code>
+              </li>
+              <li>Because selectors are pure, results can be cached and returned when called again with the same arguments (memoization).
+                Improves performance for expensive calculations.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h3>Example: Select a root property</h3>
+<pre><code>
+</code></pre>
+        </section>
+
+        <section>
+          <h3>Example: Compose multiple selectors</h3>
+<pre><code>
+</code></pre>
+        </section>
+
+        <section>
+          <h3>Example: Compute data</h3>
+<pre><code>
+</code></pre>
+        </section>
+
+        <section>
+          <p>Using a selector with the Store</p>
+<pre><code>
+@Component({
+  selector: 'my-app',
+  template: `
+    &lt;div&gt;Current Count: {{ counter | async }}&lt;/div&gt;
+  `
+})
+class MyAppComponent {
+  counter: Observable&lt;number&gt;;
+
+  constructor(private store: Store&lt;AppState&gt;) {
+    this.counter = store.select(selectCount);
+  }
+}
+</code></pre>
+          <aside class="notes">
+            Assume selectCount is a selector defined somewhere else that selects a number from AppState (also defined elsewhere).
+            The select method returns an observable that emits a number.
+          </aside>
         </section>
 
         <section data-background="images/patterns.jpg">
