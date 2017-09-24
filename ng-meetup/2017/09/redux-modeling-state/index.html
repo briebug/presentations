@@ -55,7 +55,7 @@
         </section>
 
         <section>
-          <h3>What should go into the Redux state object?</h3>
+          <p>What data should be kept in the Redux state?</p>
         </section>
 
         <section data-background="images/thumb.png">
@@ -101,6 +101,14 @@
         </section>
 
         <section>
+          <h3>Organizing state in the store</h3>
+          <aside class="notes">
+            Now that we have an idea of what should be kept in the Redux state, let's talk about how
+            to structure the data.
+          </aside>
+        </section>
+
+        <section>
           <p><strong><em>Avoid</em> defining your state shape in terms of the UI component tree.</strong></p>
           <p class="fragment">Define the state shape in terms of the domain data and application state.</p>
 
@@ -127,6 +135,14 @@
         </section>
 
         <section>
+          <p>Normalize the data.</p>
+          <p class="fragment">Why?</p>
+          <aside class="notes">
+            Let's look at an example to see why.
+          </aside>
+        </section>
+
+        <section>
           <pre><code>
 const blogPosts = [
   {
@@ -141,6 +157,9 @@ const blogPosts = [
   }
 ];
           </code></pre>
+          <aside class="notes">
+            Example of how data is often represented in a JSON object, e.g. in a response from an API.
+          </aside>
         </section>
 
         <section>
@@ -157,7 +176,7 @@ const blogPosts = [
         </section>
 
         <section>
-          <h3>Normalizing State</h3>
+          <h3>How</h3>
         </section>
 
         <section data-background="images/database.jpg">
