@@ -258,13 +258,69 @@ const blogPosts = [
         </section>
 
         <section>
+          <a href="https://github.com/ngrx/platform/tree/master/docs/entity">@ngrx/entity</a>
+          <aside class="notes">
+            <ul>
+              <li>Helpers for managing record collections.</li>
+              <li>Not released yet, but should be soon.</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h3>Adapter</h3>
+          <p class="fragment">Provides methods for performing operations against a single collection of a specific type.</p>
+          <aside class="notes">The adapter can also be used to create selectors for extracting data from the entities</aside>
+        </section>
+
+        <section>
+          <h3>Instance Methods</h3>
+          <p>addOne, addMany, addAll, removeOne, removeMany, removeAll, updateOne, updateMany</p>
+        </section>
+
+        <section>
+          <p>Interface: EntityState</p>
+          <pre><code>
+interface EntityState&lt;V&gt; {
+  ids: string[];
+  entities: { [id: string]: V };
+}
+          </code></pre>
+          <aside class="notes">Generic interface for a given entity collection.</aside>
+        </section>
+
+        <section>
+          <pre><code>
+export interface User {
+  id: string;
+  name: string;
+}
+
+export interface State extends EntityState&lt;User&gt; {
+  // additional entity state properties
+  selectedUserId: number | null;
+}
+            </code></pre>
+          <aside class="notes">Example usage.</aside>
+        </section>
+
+        <section>
+          <p>Interface: EntityAdapter</p>
+          <pre><code>
+            export const adapter: EntityAdapter&lt;User&gt; =
+            createEntityAdapter&lt;User&gt;();
+          </code></pre>
+          <aside class="notes">Generic interface for the entity adapter instance, which has the methods shown previously.</aside>
+        </section>
+
+        <!-- <section>
           <h3>Normalizing nested data</h3>
         </section>
 
         <section>
           <p>Data returned from APIs is often nested.</p>
           <p class="fragment">Normalizr is a small utility that simplifies converting nested JSON to a flat structure.<br><a href="https://github.com/paularmstrong/normalizr" target="_blank">https://github.com/paularmstrong/normalizr</a></p>
-        </section>
+        </section> -->
 
         <section>
           <h3>Selectors</h3>
