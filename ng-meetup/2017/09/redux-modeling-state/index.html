@@ -300,15 +300,15 @@ export interface State extends EntityState&lt;User&gt; {
   // additional entity state properties
   selectedUserId: number | null;
 }
-            </code></pre>
+          </code></pre>
           <aside class="notes">Example usage.</aside>
         </section>
 
         <section>
           <p>Interface: EntityAdapter</p>
           <pre><code>
-            export const adapter: EntityAdapter&lt;User&gt; =
-            createEntityAdapter&lt;User&gt;();
+export const adapter: EntityAdapter&lt;User&gt; =
+  createEntityAdapter&lt;User&gt;();
           </code></pre>
           <aside class="notes">Generic interface for the entity adapter instance, which has the methods shown previously.</aside>
         </section>
@@ -333,6 +333,7 @@ export interface State extends EntityState&lt;User&gt; {
               <li>Pure functions</li>
               <li>Composable</li>
             </ul>
+            Used to be provided by the reactjs/reselect module but is now built in to ngrx.
           </aside>
         </section>
 
@@ -357,26 +358,58 @@ export interface State extends EntityState&lt;User&gt; {
         </section>
 
         <section>
-          <h3>Example: Select a root property</h3>
-<pre><code>
-</code></pre>
+          <p>Example: Select a root property</p>
+          <pre><code>
+import { createSelector } from '@ngrx/store';
+
+export interface FeatureState {
+  counter: number;
+}
+
+export interface AppState {
+  feature: FeatureState;
+}
+
+export const selectFeature =
+  (state: AppState) => state.feature;
+          </code></pre>
         </section>
 
         <section>
-          <h3>Example: Compose multiple selectors</h3>
-<pre><code>
-</code></pre>
+          <p>Example: Compose multiple selectors</p>
+          <pre><code>
+export const selectFeatureCount =
+  createSelector(
+    selectFeature,
+    (state: FeatureState) => state.counter
+  );
+          </code></pre>
+          <aside class="notes">
+            Using the interfaces from the previous example, select a property from the feature state.
+          </aside>
         </section>
 
         <section>
-          <h3>Example: Compute data</h3>
-<pre><code>
-</code></pre>
+          <p>Example: Compute data</p>
+          <pre><code>
+const selectItems = state => state.items;
+const selectTotal = createSelector(selectItems,
+  (items) => items.reduce((acc, item) => acc + item.value, 0));
+
+const state = {
+  items: [
+    { name: 'apple', value: 1.20 },
+    { name: 'orange', value: 0.95 }
+  ]
+};
+
+selectTotal(state); // 2.15
+          </code></pre>
         </section>
 
         <section>
           <p>Using a selector with the Store</p>
-<pre><code>
+          <pre><code>
 @Component({
   selector: 'my-app',
   template: `
@@ -390,14 +423,14 @@ class MyAppComponent {
     this.counter = store.select(selectCount);
   }
 }
-</code></pre>
+          </code></pre>
           <aside class="notes">
             Assume selectCount is a selector defined somewhere else that selects a number from AppState (also defined elsewhere).
             The select method returns an observable that emits a number.
           </aside>
         </section>
 
-        <section data-background="images/patterns.jpg">
+        <!-- <section data-background="images/patterns.jpg">
           <h3>Patterns</h3>
           <aside class="notes">
             Overview of common patterns.
@@ -420,7 +453,7 @@ class MyAppComponent {
         </section>
 
         <section>
-<pre><code>
+          <pre><code>
 {
   "auth": {
     "isAuthenticated": true,
@@ -428,7 +461,7 @@ class MyAppComponent {
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
   }
 }
-</code></pre>
+          </code></pre>
 
           <aside class="notes">
             Use async action to handle sign in, e.g., LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE.
@@ -439,12 +472,13 @@ class MyAppComponent {
 
         <section>
           <h3>Pagination</h3>
-        </section>
+        </section> -->
 
         <section>
           <h4>References</h4>
           <ul>
             <li><a href="http://redux.js.org/docs/recipes/reducers/NormalizingStateShape.html">Normalizing State Shape</a></li>
+            <li><a href="https://github.com/ngrx/platform">@ngrx/platform</a></li>
           </ul>
         </section>
 			</div>
