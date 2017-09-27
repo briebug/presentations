@@ -42,12 +42,12 @@
           <h3>Redux: Modeling State</h3>
           <div>
             <small>
-              <a href="http://briebug.github.io/presentations/ng-meetup/{path}">http://briebug.github.io/presentations/ng-meetup/{path}</a>
+              <a href="http://briebug.github.io/presentations/ng-meetup/2017/09/redux-modeling-state" target="_blank">http://briebug.github.io/presentations/ng-meetup/2017/09/redux-modeling-state</a>
             </small>
           </div>
           <div>
-            #presenter<br>
-            <a href="https://github.com/#github">https://github.com/#github</a>
+            Jesse Sanders<br>
+            <a href="https://github.com/jessesanders" target="_blank">https://github.com/jessesanders</a>
           </div>
           <div class="logo">
             <img src="images/briebug-logo.svg" class="plain">
@@ -258,7 +258,7 @@ const blogPosts = [
         </section>
 
         <section>
-          <a href="https://github.com/ngrx/platform/tree/master/docs/entity">@ngrx/entity</a>
+          <a href="https://github.com/ngrx/platform/tree/master/docs/entity" target="_blank">@ngrx/entity</a>
           <aside class="notes">
             <ul>
               <li>Helpers for managing record collections.</li>
@@ -333,7 +333,7 @@ export const adapter: EntityAdapter&lt;User&gt; =
               <li>Pure functions</li>
               <li>Composable</li>
             </ul>
-            Used to be provided by the reactjs/reselect module but is now built in to ngrx.
+            Previously provided by the reactjs/reselect module but is now built in to ngrx.
           </aside>
         </section>
 
@@ -350,7 +350,7 @@ export const adapter: EntityAdapter&lt;User&gt; =
                 <code>const selectFoo = createFeatureSelector<FooState>('foo')</code> is equivalent to<br>
                 <code>const selectFoo = (state: AppState) => state.foo;</code>
               </li>
-              <li>Because selectors are pure, results can be cached and returned when called again with the same arguments (memoization).
+              <li>Because selectors are pure, results will be cached and returned when called again with the same arguments (memoization).
                 Improves performance for expensive calculations.
               </li>
             </ul>
@@ -360,7 +360,7 @@ export const adapter: EntityAdapter&lt;User&gt; =
         <section>
           <p>Example: Select a root property</p>
           <pre><code>
-import { createSelector } from '@ngrx/store';
+import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 export interface FeatureState {
   counter: number;
@@ -372,7 +372,17 @@ export interface AppState {
 
 export const selectFeature =
   (state: AppState) => state.feature;
+
+// or we could use createFeatureSelector
+export const selectFeature =
+  createFeatureSelector('feature');
           </code></pre>
+            <aside class="notes">
+                <ul>
+                    <li>Create a feature selector</li>
+                    <li>We can create the selector manually or use createFeatureSelector</li>
+                </ul>
+            </aside>
         </section>
 
         <section>
@@ -386,6 +396,7 @@ export const selectFeatureCount =
           </code></pre>
           <aside class="notes">
             Using the interfaces from the previous example, select a property from the feature state.
+
           </aside>
         </section>
 
@@ -405,11 +416,32 @@ const state = {
 
 selectTotal(state); // 2.15
           </code></pre>
+                <aside class="notes">
+                    <ul>
+                        <li>
+                            The selectItems selector returns an array of items
+                        </li>
+                        <li>
+                            The selectTotal selector reduces the array of items into a total
+                        </li>
+                        <li>
+                            The reduce() method applies a function against an accumulator and each element in the array (from left to right) to reduce it to a single value.
+                        </li>
+                        <li>
+                            We pass it 0 for the initial value
+                        </li>
+                        <li>
+                            We can call our selectTotal selector and get our computed value
+                        </li>
+                    </ul>
+                </aside>
         </section>
 
         <section>
           <p>Using a selector with the Store</p>
           <pre><code>
+import ( selectCount } from '../reducers/feature';
+
 @Component({
   selector: 'my-app',
   template: `
@@ -477,8 +509,8 @@ class MyAppComponent {
         <section>
           <h4>References</h4>
           <ul>
-            <li><a href="http://redux.js.org/docs/recipes/reducers/NormalizingStateShape.html">Normalizing State Shape</a></li>
-            <li><a href="https://github.com/ngrx/platform">@ngrx/platform</a></li>
+            <li><a href="http://redux.js.org/docs/recipes/reducers/NormalizingStateShape.html" target="_blank">Normalizing State Shape</a></li>
+            <li><a href="https://github.com/ngrx/platform" target="_blank">@ngrx/platform</a></li>
           </ul>
         </section>
 			</div>
