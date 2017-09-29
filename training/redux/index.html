@@ -4,10 +4,11 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>#title</title>
+		<title>Redux with Angular</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
+    <link rel="stylesheet" href="css/extensions.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/zenburn.css">
@@ -15,13 +16,9 @@
     <!-- Theme additions -->
     <style>
       img.plain {
-        box-shadow: none;
+        background: transparent;
         border: 0;
-				background: transparent !important;
-      }
-      div.logo {
-        height: 100px;
-        margin-top: 30px;
+        box-shadow: none;
       }
     </style>
 
@@ -37,27 +34,480 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
+
         <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
-          <h3>#title</h3>
+          <h3>Redux Training</h3>
           <div>
             <small>
-              <a href="http://briebug.github.io/presentations/ng-meetup/{path}">http://briebug.github.io/presentations/ng-meetup/#path</a>
+              <a href="http://briebug.github.io/presentations/training/redux" target="_blank">http://briebug.github.io/presentations/training/redux</a>
             </small>
-          </div>
-          <div>
-            #presenter<br>
-            <a href="https://github.com/#github">https://github.com/#github</a>
           </div>
           <div class="logo">
             <img src="images/briebug-logo.svg" class="plain">
           </div>
         </section>
-        <section>
-          <h4>References</h4>
+
+        <section data-background="images/sea-serpent-attacks-ship-inverted.jpg" data-background-color="#000">
+					<h2>You might not need Redux</h2>
+          <h3><small>or: use the right tool for the job</small></h3>
+          <a href="https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367#.36hx68ytf" target="_blank">https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367</a>
+				</section>
+
+				<section data-background="images/sea-serpent-attacks-ship-inverted.jpg" data-background-color="#000">
+					<ul>
+						<li>It adds a layer of indirection that might not be necessary for a small app.</li>
+            <li class="fragment">There is a learning curve for developers who are not comfortable with functional programming.</li>
+					</ul>
+				</section>
+
+        <section data-background="images/sea-serpent-attacks-ship-inverted.jpg" data-background-color="#000">
+          <p>Redux imposes the following constraints:</p>
           <ul>
-            <li></li>
+            <li class="fragment">Application state must be represented using plain objects and arrays.</li>
+            <li class="fragment">Changes in the system must be described using plain objects.</li>
+            <li class="fragment">Logic for handling changes to application state must be implemented as pure functions.</li>
+          </ul>
+				</section>
+
+        <section data-transition="fade">
+          <img src="images/data-1.svg" class="plain">
+        </section>
+
+        <section data-transition="fade">
+          <img src="images/data-2.svg" class="plain">
+        </section>
+
+        <section data-background="images/complexity.jpg">
+        </section>
+
+        <section data-background="images/spaghetti.jpg">
+        </section>
+
+        <section>
+          <h3>Flux</h3>
+          <p class="fragment"><em>Architecture</em></p>
+        </section>
+
+        <section>
+          <h3>Redux</h3>
+          <p class="fragment">Flux + Functional Programming</p>
+        </section>
+
+        <section>
+          <h2>Benefits</h2>
+          <ul>
+            <li class="fragment">Deterministic state and view renders.</li>
+            <li class="fragment">Persist state and boot the app from it.</li>
+            <li class="fragment">Reproduce bug scenarios from serialized user actions and a state snapshot.</li>
+            <li class="fragment">Maintain an undo history. "Time travel" debugging.</li>
           </ul>
         </section>
+
+        <section>
+          Consider using Redux if:
+          <ul>
+            <li class="fragment">User workflows are complex.</li>
+            <li class="fragment">User workflows are disparate; e.g., regular users vs. administrators.</li>
+            <li class="fragment">The app uses WebSockets or server-sent events. </li>
+            <li class="fragment">View data comes from multiple sources.</li>
+            <li class="fragment">You work for BrieBug</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Flux</h2>
+          <img src="images/flux-one-way-data-flow.png">
+        </section>
+
+        <section data-background="#eee">
+          <p>Transactional state model</p>
+          <img src="images/transactional-state-model.png" class="plain">
+        </section>
+
+				<section>
+					<h1>Actions</h1>
+          <pre><code class="hljs">
+            {
+              type: ADD_TODO,
+              text: 'Build my first Redux app'
+            }
+          </code></pre>
+          <p class="fragment">A "record" of the state transaction.</p>
+          <p class="fragment">Describes what happened.</p>
+          <p class="fragment">The <em>only</em> source of information for the store.</p>
+				</section>
+
+        <section>
+					<h1>Reducers</h1>
+          <p>
+            Actions describe the fact that <em>something happened</em>.
+            <span class="fragment">They <strong>don't</strong> specify how the application's state changes in response.</span>
+            <span class="fragment"><strong>This is the job of reducers.</strong></span>
+          </p>
+				</section>
+
+        <section>
+          <img src="images/reducer.png" class="plain">
+          <p class="fragment">Reducers <em><strong>must</strong></em> be pure functions.</p>
+        </section>
+
+        <section data-background="white">
+          <img src="images/no-mutation.png" class="plain">
+          <p>Reducers <em><strong>must not</strong></em> mutate state.</p>
+        </section>
+
+        <section data-background="white">
+          <img src="images/no-side-effects.png" class="plain">
+          <p>Reducers <em><strong>must not</strong></em> produce side effects.</p>
+        </section>
+
+        <section data-background="white">
+          <img src="images/no-non-pure-function-calls.png" class="plain">
+          <p>Reducers <em><strong>must not</strong></em> call non-pure functions.</p>
+        </section>
+
+        <section data-background="images/database.jpg">
+					<h1 style="margin-top: 2em;">Store</h1>
+				</section>
+
+        <section>
+          <p>Source of record for the application state.</p>
+        </section>
+
+        <section>
+          <pre><code class="hljs">
+            {
+              "search": {
+                "ids": [],
+                "loading": false,
+                "query": ""
+              },
+              "books": {
+                "ids": [
+                  "TI0Sj6er8UEC",
+                  "tYrPCwAAQBAJ"
+                ],
+                "entities": {
+                  "TI0Sj6er8UEC": {
+                    "kind": "books#volume",
+                    "id": "TI0Sj6er8UEC",
+                    "etag": "kLWgRHNHB0Y",
+                    "selfLink": "https://www.googleapis.com/books/v1/volumes/TI0Sj6er8UEC",
+                    "volumeInfo": {
+                      "title": "Software Reliability",
+                      "authors": [
+                        "Hoang Pham"
+                      ],
+                      "publisher": "Springer Science & Business Media",
+                      "publishedDate": "2000",
+                      "description": "this book presents detailed analytical models, state-of-the-art techniques, methodologies, and tools used to assess the reliability of software systems.",
+                      "industryIdentifiers": [
+                        {
+                          "type": "ISBN_10",
+                          "identifier": "9813083840"
+                        },
+                        {
+                          "type": "ISBN_13",
+                          "identifier": "9789813083844"
+                        }
+                      ],
+                      "readingModes": {
+                        "text": false,
+                        "image": true
+                      },
+                      "pageCount": 339,
+                      "printType": "BOOK",
+                      "categories": [
+                        "Computers"
+                      ],
+                      "averageRating": 5,
+                      "ratingsCount": 1,
+                      "maturityRating": "NOT_MATURE",
+                      "allowAnonLogging": false,
+                      "contentVersion": "2.0.0.0.preview.1",
+                      "imageLinks": {
+                        "smallThumbnail": "http://books.google.com/books/content?id=TI0Sj6er8UEC&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+                        "thumbnail": "http://books.google.com/books/content?id=TI0Sj6er8UEC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+                      },
+                      "language": "en",
+                      "previewLink": "http://books.google.com/books?id=TI0Sj6er8UEC&printsec=frontcover&dq=software&hl=&cd=2&source=gbs_api",
+                      "infoLink": "http://books.google.com/books?id=TI0Sj6er8UEC&dq=software&hl=&source=gbs_api",
+                      "canonicalVolumeLink": "http://books.google.com/books/about/Software_Reliability.html?hl=&id=TI0Sj6er8UEC"
+                    },
+                    "saleInfo": {
+                      "country": "US",
+                      "saleability": "NOT_FOR_SALE",
+                      "isEbook": false
+                    },
+                    "accessInfo": {
+                      "country": "US",
+                      "viewability": "PARTIAL",
+                      "embeddable": true,
+                      "publicDomain": false,
+                      "textToSpeechPermission": "ALLOWED_FOR_ACCESSIBILITY",
+                      "epub": {
+                        "isAvailable": false
+                      },
+                      "pdf": {
+                        "isAvailable": true,
+                        "acsTokenLink": "http://books.google.com/books/download/Software_Reliability-sample-pdf.acsm?id=TI0Sj6er8UEC&format=pdf&output=acs4_fulfillment_token&dl_type=sample&source=gbs_api"
+                      },
+                      "webReaderLink": "http://books.google.com/books/reader?id=TI0Sj6er8UEC&hl=&printsec=frontcover&output=reader&source=gbs_api",
+                      "accessViewStatus": "SAMPLE",
+                      "quoteSharingAllowed": false
+                    },
+                    "searchInfo": {
+                      "textSnippet": "this book presents detailed analytical models, state-of-the-art techniques, methodologies, and tools used to assess the reliability of software systems."
+                    }
+                  },
+                  "tYrPCwAAQBAJ": {
+                    "kind": "books#volume",
+                    "id": "tYrPCwAAQBAJ",
+                    "etag": "hR6HS3iYY2g",
+                    "selfLink": "https://www.googleapis.com/books/v1/volumes/tYrPCwAAQBAJ",
+                    "volumeInfo": {
+                      "title": "Site Reliability Engineering",
+                      "subtitle": "How Google Runs Production Systems",
+                      "authors": [
+                        "Betsy Beyer",
+                        "Chris Jones",
+                        "Jennifer Petoff",
+                        "Niall Richard Murphy"
+                      ],
+                      "publisher": "\"O'Reilly Media, Inc.\"",
+                      "publishedDate": "2016-03-23",
+                      "description": "The overwhelming majority of a software system’s lifespan is spent in use, not in design or implementation. So, why does conventional wisdom insist that software engineers focus primarily on the design and development of large-scale computing systems? In this collection of essays and articles, key members of Google’s Site Reliability Team explain how and why their commitment to the entire lifecycle has enabled the company to successfully build, deploy, monitor, and maintain some of the largest software systems in the world. You’ll learn the principles and practices that enable Google engineers to make systems more scalable, reliable, and efficient—lessons directly applicable to your organization. This book is divided into four sections: Introduction—Learn what site reliability engineering is and why it differs from conventional IT industry practices Principles—Examine the patterns, behaviors, and areas of concern that influence the work of a site reliability engineer (SRE) Practices—Understand the theory and practice of an SRE’s day-to-day work: building and operating large distributed computing systems Management—Explore Google's best practices for training, communication, and meetings that your organization can use",
+                      "industryIdentifiers": [
+                        {
+                          "type": "ISBN_13",
+                          "identifier": "9781491951170"
+                        },
+                        {
+                          "type": "ISBN_10",
+                          "identifier": "1491951176"
+                        }
+                      ],
+                      "readingModes": {
+                        "text": true,
+                        "image": true
+                      },
+                      "pageCount": 552,
+                      "printType": "BOOK",
+                      "categories": [
+                        "Computers"
+                      ],
+                      "averageRating": 5,
+                      "ratingsCount": 1,
+                      "maturityRating": "NOT_MATURE",
+                      "allowAnonLogging": true,
+                      "contentVersion": "1.8.8.0.preview.3",
+                      "imageLinks": {
+                        "smallThumbnail": "http://books.google.com/books/content?id=tYrPCwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+                        "thumbnail": "http://books.google.com/books/content?id=tYrPCwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+                      },
+                      "language": "en",
+                      "previewLink": "http://books.google.com/books?id=tYrPCwAAQBAJ&printsec=frontcover&dq=engineering&hl=&cd=1&source=gbs_api",
+                      "infoLink": "https://play.google.com/store/books/details?id=tYrPCwAAQBAJ&source=gbs_api",
+                      "canonicalVolumeLink": "https://market.android.com/details?id=book-tYrPCwAAQBAJ"
+                    },
+                    "saleInfo": {
+                      "country": "US",
+                      "saleability": "FOR_SALE",
+                      "isEbook": true,
+                      "listPrice": {
+                        "amount": 38.99,
+                        "currencyCode": "USD"
+                      },
+                      "retailPrice": {
+                        "amount": 22.99,
+                        "currencyCode": "USD"
+                      },
+                      "buyLink": "https://play.google.com/store/books/details?id=tYrPCwAAQBAJ&rdid=book-tYrPCwAAQBAJ&rdot=1&source=gbs_api",
+                      "offers": [
+                        {
+                          "finskyOfferType": 1,
+                          "listPrice": {
+                            "amountInMicros": 38990000,
+                            "currencyCode": "USD"
+                          },
+                          "retailPrice": {
+                            "amountInMicros": 22990000,
+                            "currencyCode": "USD"
+                          },
+                          "giftable": true
+                        }
+                      ]
+                    },
+                    "accessInfo": {
+                      "country": "US",
+                      "viewability": "PARTIAL",
+                      "embeddable": true,
+                      "publicDomain": false,
+                      "textToSpeechPermission": "ALLOWED",
+                      "epub": {
+                        "isAvailable": true
+                      },
+                      "pdf": {
+                        "isAvailable": true
+                      },
+                      "webReaderLink": "http://books.google.com/books/reader?id=tYrPCwAAQBAJ&hl=&printsec=frontcover&output=reader&source=gbs_api",
+                      "accessViewStatus": "SAMPLE",
+                      "quoteSharingAllowed": false
+                    },
+                    "searchInfo": {
+                      "textSnippet": "This book is divided into four sections: Introduction—Learn what site reliability engineering is and why it differs from conventional IT industry practices Principles—Examine the patterns, behaviors, and areas of concern that influence ..."
+                    }
+                  }
+                },
+                "selectedBookId": null
+              },
+              "collection": {
+                "loaded": true,
+                "loading": false,
+                "ids": [
+                  "TI0Sj6er8UEC",
+                  "tYrPCwAAQBAJ"
+                ]
+              },
+              "layout": {
+                "showSidenav": false
+              },
+              "router": {
+                "path": "/"
+              }
+            }
+          </code></pre>
+        </section>
+
+        <section data-background="#eee">
+          <img src="images/transactional-state-model.png" class="plain">
+        </section>
+
+        <section>
+          <h1>Views</h1>
+        </section>
+
+				<section data-background="images/smart.png">
+					<h2 style="margin-bottom: 7em; color: #000;">"Smart" components</h2>
+				</section>
+
+        <section>
+          <p>Also known as <strong>container</strong> components.</p>
+          <p class="fragment">Concerned with <em>how things work</em>.</p>
+          <p class="fragment">Listen to application state changes via the store.</p>
+          <p class="fragment">Dispatch actions.</p>
+        </section>
+
+				<section data-background="images/dumb.jpg">
+					<h2 style="margin-bottom: 7em; color: #000;">"Dumb" components</h2>
+				</section>
+
+        <section>
+          <p>Also known as <strong>presentational</strong> components.</p>
+          <p class="fragment">Concerned with <em>how things look</em>.</p>
+          <p class="fragment">Are not dependent on the store.</p>
+          <p class="fragment">Do not dispatch actions.</p>
+        </section>
+
+				<section>
+					<h1>Async actions</h1>
+				</section>
+
+        <section>
+          <pre><code class="hljs">
+            {
+              type: FETCH_POSTS,
+              &hellip;
+            }
+          </code></pre>
+        </section>
+
+        <section data-background="#fff">
+          <img src="images/async-action.svg" class="plain">
+        </section>
+
+        <section data-background="#fff">
+          <img src="images/async-action-ui.svg" class="plain" style="width: 80%;">
+        </section>
+
+        <section>
+          <h2>@ngrx</h2>
+          <p><a href="https://github.com/ngrx/store" target="_blank">@ngrx/store</a> RxJS powered state management for Angular apps, inspired by Redux</p>
+        </section>
+
+        <section>
+          <ul>
+            <li><a href="https://github.com/ngrx/effects" target="_blank">@ngrx/effects</a> Side effect model for @ngrx/store</li>
+            <li><a href="https://github.com/ngrx/router-store" target="_blank">@ngrx/route-store</a> Bindings to connect the Angular Router to @ngrx/store</li>
+            <li><a href="https://github.com/ngrx/store-devtools" target="_blank">@ngrx/store-devtools</a> Instrumentation for @ngrx/store enabling time-travel debugging</li>
+            <li><a href="https://github.com/codewareio/ngrx-store-freeze" target="_blank">ngrx-store-freeze</a> A @ngrx/store meta reducer that prevents state from being mutated</li>
+            <li><a href="https://github.com/ngrx/example-app" target="_blank">@ngrx/example-app</a> Example app showcasing the ngrx platform</li>
+          </ul>
+        </section>
+
+        <section>
+          <p><a href="https://github.com/angular-redux/store" target="_blank">@angular-redux/store</a> (formerly ng2-redux)</p>
+          <p>Angular bindings for Redux</p>
+				</section>
+				
+        <section>
+          <h2>Model Example</h2>
+          <pre><code class="hljs">
+export interface Book {
+	id: string;
+	title: string;
+	authors: string[];
+}
+          </code></pre>
+        </section>
+				
+        <section>
+          <h2>Action Example</h2>
+          <pre><code class="hljs">
+import { Action } from '@ngrx/store';
+import { Book } from '../models/book';
+
+export const SEARCH = '[Book] Search';
+
+export class Search implements Action {
+	readonly type = SEARCH;
+
+	constructor(public payload: string) {}
+}
+          </code></pre>
+        </section>
+				
+        <section>
+          <h2>Reducer Example</h2>
+          <pre><code class="hljs">
+export function reducer(
+	state = initialState,
+	action: book.Actions
+): State {
+	switch (action.type) {
+		case book.SEARCH_COMPLETE:
+		case collection.LOAD_SUCCESS: {
+			return {
+				...adapter.addMany(action.payload, state),
+				selectedBookId: state.selectedBookId,
+			};
+		}
+
+		default: {
+			return state;
+		}
+	}
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h4>References</h4>
+          <p><a href="http://redux.js.org/" target="_blank">redux.js.org</a></p>
+          <p><a href="https://gist.github.com/btroncone/a6e4347326749f938510" target="_blank">Comprehensive Introduction to @ngrx/store</a> Brian Troncone</p>
+          <p><a href="https://medium.com/javascript-scene/10-tips-for-better-redux-architecture-69250425af44#.dvtou3cge" target="_blank">10 Tips for a Better Redux Architecture</a> Eric Elliott</p>
+        </section>
+
 			</div>
 		</div>
 
