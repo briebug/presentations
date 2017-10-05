@@ -4,7 +4,7 @@ A collection of BrieBug presentations. Looking for an older presentation? Check 
 
 #### October 25: [Rocky Mountain Angular Meetup](https://www.meetup.com/RockyMountainAngular/events/242254440/)
 
-  * [Angular Component Development Kit](https://briebug.github.io/presentation/ng-meetup/2017/10/angular-cdk)
+  * [Angular Component Development Kit](https://briebug.github.io/presentations/ng-meetup/2017/10/angular-cdk)
 
 #### August 11: [Develop Denver](https://developdenver.org/)
 
