@@ -97,7 +97,81 @@
         </section>
 
         <section>
-          <h3>Example</h3>
+          <pre><code>
+&lt;cdk-table #table [dataSource]=&quot;dataSource&quot;&gt;
+
+  &lt;!-- ID Column --&gt;
+  &lt;ng-container cdkColumnDef=&quot;userId&quot;&gt;
+    &lt;cdk-header-cell *cdkHeaderCellDef&gt;
+      ID
+    &lt;/cdk-header-cell&gt;
+    &lt;cdk-cell *cdkCellDef=&quot;let row&quot;&gt;
+      {{row.id}}
+    &lt;/cdk-cell&gt;
+  &lt;/ng-container&gt;
+
+  &lt;!-- Name Column --&gt;
+  &lt;ng-container cdkColumnDef=&quot;userName&quot;&gt;
+    &lt;cdk-header-cell *cdkHeaderCellDef&gt;
+      Name
+    &lt;/cdk-header-cell&gt;
+    &lt;cdk-cell *cdkCellDef=&quot;let row&quot;&gt;
+      {{row.name}}
+    &lt;/cdk-cell&gt;
+  &lt;/ng-container&gt;
+
+  &lt;cdk-header-row *cdkHeaderRowDef=&quot;displayedColumns&quot;&gt;&lt;/cdk-header-row&gt;
+  &lt;cdk-row *cdkRowDef=&quot;let row; columns: displayedColumns;&quot;&gt;&lt;/cdk-row&gt;
+&lt;/cdk-table&gt;
+          </code></pre>
+          <aside class="notes">
+            <ul>
+              <li>Columns can be defined in any order. The actual rendered columns are set as a property on the row definition</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <p>Define the columns</p>
+          <pre><code>
+&lt;ng-container cdkColumnDef=&quot;username&quot;&gt;
+  &lt;cdk-header-cell *cdkHeaderCellDef&gt;
+    User name
+  &lt;/cdk-header-cell&gt;
+  &lt;cdk-cell *cdkCellDef=&quot;let row&quot;&gt;
+    {{row.a}}
+  &lt;/cdk-cell&gt;
+&lt;/ng-container&gt;
+          </code></pre>
+          <aside class="notes">
+            <ul>
+              <li>A column is defined using ng-container element with cdkColumnDef directive that has the column name.</li>
+              <li>The set of columns defined are available for render.</li>
+              <li>The actual set of rendered columns is defined on the row.</li>
+              <li>cdkCellDef exports row context, as well as the ngFor properties (index, even, odd, first, last). These properties can
+                be referenced by the cell template.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <p>Define the header and data rows</p>
+          <pre><code>
+&lt;cdk-header-row
+  *cdkHeaderRowDef=&quot;[&#39;username&#39;, &#39;age&#39;, &#39;title&#39;]&quot;&gt;
+&lt;/cdk-header-row&gt;
+&lt;cdk-row
+  *cdkRowDef=&quot;let row; columns: [&#39;username&#39;, &#39;age&#39;, &#39;title&#39;]&quot;&gt;
+&lt;/cdk-row&gt;
+          </code></pre>
+          <aside class="notes">
+            <ul>
+              <li>cdkHeaderRowDef defines the header row.</li>
+              <li>cdkRowDef defines the data row.</li>
+              <li>Content inside cdkHeaderRowDef and cdkRowDef is ignored. Rendered content comes from the cell templates.</li>
+            </ul>
+          </aside>
         </section>
 
         <section>
