@@ -1,0 +1,536 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Redux: Modeling State</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Theme additions -->
+    <style>
+      img.plain {
+        box-shadow: none;
+        border: 0;
+				background: transparent !important;
+      }
+      div.logo {
+        height: 100px;
+        margin-top: 30px;
+      }
+    </style>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+        <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+          <h3>Redux: Modeling State</h3>
+          <div>
+            <small>
+              <a href="http://briebug.github.io/presentations/conferences/2017/ng-mix/redux-modeling-state" target="_blank">http://briebug.github.io/presentations/conferences/2017/ng-mix/redux-modeling-state</a>
+            </small>
+          </div>
+          <div>
+            Jesse Sanders<br>
+            <a href="https://github.com/jessesanders" target="_blank">https://github.com/jessesanders</a>
+          </div>
+          <div>
+            <a href="https://twitter.com/BrieBugSoftware" target="_blank">@BrieBugSoftware</a>
+          </div>
+          <div class="logo">
+            <img src="images/briebug-logo.svg" class="plain">
+          </div>
+        </section>
+
+        <section>
+          <p>What data should be kept in the Redux state?</p>
+        </section>
+
+        <section data-background="images/thumb.png">
+          <aside class="notes">
+            Rule of thumb
+          </aside>
+        </section>
+
+        <section>
+          <ul>
+            <li>The data is shared between different parts of the application.</li>
+            <li class="fragment">The data is used by multiple components.</li>
+            <li class="fragment">New data needs to be derived from the original data.</li>
+            <li class="fragment">The state needs to be restored at a given point in time.</li>
+            <li class="fragment">The data needs to be cached.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Types of data</h3>
+          <p class="fragment">
+            The types of data that applications typically deal with can be broadly divided into three categories.
+          </p>
+        </section>
+
+        <section>
+          <p>Domain data</p>
+          <p class="fragment">Data that the application needs to show, use, or modify.</p>
+          <p class="fragment">Example: the list of todo items (fetched from the server).</p>
+        </section>
+
+        <section>
+          <p>Application state</p>
+          <p class="fragment">Data that is specific to the application's behavior.</p>
+          <p class="fragment">Example: todo items 5 and 8 are selected.</p>
+          <p class="fragment">Example: the request to fetch the todo list is in progress.</p>
+        </section>
+
+        <section>
+          <p>UI state</p>
+          <p class="fragment">Data that represents how the UI is currently displayed.</p>
+          <p class="fragment">Example: the sidebar is open.</p>
+        </section>
+
+        <section>
+          <h3>Organizing state in the store</h3>
+          <aside class="notes">
+            Now that we have an idea of what should be kept in the Redux state, let's talk about how
+            to structure the data.
+          </aside>
+        </section>
+
+        <section>
+          <p><strong><em>Avoid</em> defining your state shape in terms of the UI component tree.</strong></p>
+          <p class="fragment">Define the state shape in terms of the domain data and application state.</p>
+
+          <aside class="notes">
+            Avoid: state.leftPane.todoList.todos
+            Todos are central to the whole application, not just a single part of the UI.
+            Instead, todos should be a root property (domain data).
+          </aside>
+        </section>
+
+        <section>
+<pre><code>
+  {
+    domainData1 : {},
+    domainData2 : {},
+    appState1 : {},
+    appState2 : {},
+    ui : {
+      uiState1 : {},
+      uiState2 : {},
+    }
+  }
+</code></pre>
+        </section>
+
+        <section>
+          <p>Normalize the data.</p>
+          <p class="fragment">Why?</p>
+          <aside class="notes">
+            Let's look at an example to see why.
+          </aside>
+        </section>
+
+        <section>
+          <pre><code>
+const blogPosts = [
+  {
+    id: 'post1',
+    author: { name: 'User One' },
+    body: '...',
+    comments: [
+      { author: { name: 'User Two' }, comment: '...' },
+      { author: { name: 'User Three' }, comment: '...' },
+      { author: { name: 'User One' }, comment: '...' }
+    ]
+  }
+];
+          </code></pre>
+          <aside class="notes">
+            Example of how data is often represented in a JSON object, e.g. in a response from an API.
+          </aside>
+        </section>
+
+        <section>
+          <p>Data structure is complex.</p>
+          <p>Data is repeated.</p>
+        </section>
+
+        <section>
+          <ul>
+            <li>Duplicated data is difficult to update.</li>
+            <li class="fragment">Nested data increases complexity of the reducer implementation&hellip;</li>
+            <li class="fragment">&hellip;and may cause unnecessary rendering.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>How</h3>
+        </section>
+
+        <section data-background="images/database.jpg">
+          <aside class="notes">
+            The store can be thought of as a database.
+          </aside>
+        </section>
+
+        <section>
+          <p>Each type of data gets its own "table"</p>
+        </section>
+
+        <section>
+          <pre><code>
+{
+  posts: { ... },
+  comments: { ... },
+  users: { ... }
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <p>Each "table" is an object. For each item, the item ID is the key and the value is item.
+        </section>
+
+        <section>
+          <pre><code>
+{
+  posts: {
+    entities: {
+      post1: { ... },
+      post2: { ... }
+    }
+  },
+  ...
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <p>Item order is stored in an array containing the item IDs.</p>
+        </section>
+
+        <section>
+          <pre><code>
+{
+  posts: {
+    entities: {
+      post1: { ... },
+      post2: { ... }
+    },
+    ids: ['post1', 'post2']
+  },
+  ...
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <p>Related items are referenced by ID.</p>
+        </section>
+
+        <section>
+          <pre><code>
+{
+  posts: {
+    entities: {
+      post1: { author: 'user1' }
+    }
+  },
+  users: {
+    entities: {
+      user1: { name: 'User One' }
+    }
+  }
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <a href="https://github.com/ngrx/platform/tree/master/docs/entity" target="_blank">@ngrx/entity</a>
+          <aside class="notes">
+            <ul>
+              <li>Helpers for managing record collections.</li>
+              <li>Not released yet, but should be soon.</li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <h3>Adapter</h3>
+          <p class="fragment">Provides methods for performing operations against a single collection of a specific type.</p>
+          <aside class="notes">The adapter can also be used to create selectors for extracting data from the entities</aside>
+        </section>
+
+        <section>
+          <h3>Instance Methods</h3>
+          <p>addOne, addMany, addAll, removeOne, removeMany, removeAll, updateOne, updateMany</p>
+        </section>
+
+        <section>
+          <p>Interface: EntityState</p>
+          <pre><code>
+interface EntityState&lt;V&gt; {
+  ids: string[];
+  entities: { [id: string]: V };
+}
+          </code></pre>
+          <aside class="notes">Generic interface for a given entity collection.</aside>
+        </section>
+
+        <section>
+          <pre><code>
+export interface User {
+  id: string;
+  name: string;
+}
+
+export interface State extends EntityState&lt;User&gt; {
+  // additional entity state properties
+  selectedUserId: number | null;
+}
+          </code></pre>
+          <aside class="notes">Example usage.</aside>
+        </section>
+
+        <section>
+          <p>Interface: EntityAdapter</p>
+          <pre><code>
+export const adapter: EntityAdapter&lt;User&gt; =
+  createEntityAdapter&lt;User&gt;();
+          </code></pre>
+          <aside class="notes">Generic interface for the entity adapter instance, which has the methods shown previously.</aside>
+        </section>
+
+        <!-- <section>
+          <h3>Normalizing nested data</h3>
+        </section>
+
+        <section>
+          <p>Data returned from APIs is often nested.</p>
+          <p class="fragment">Normalizr is a small utility that simplifies converting nested JSON to a flat structure.<br><a href="https://github.com/paularmstrong/normalizr" target="_blank">https://github.com/paularmstrong/normalizr</a></p>
+        </section> -->
+
+        <section>
+          <h3>Selectors</h3>
+          <p>If the store is like a database&hellip;</p>
+          <p class="fragment">&hellip;selectors are like queries.</p>
+          <aside class="notes">
+            Return "slices" of state and compute data for display.
+            Properties of selectors:
+            <ul>
+              <li>Pure functions</li>
+              <li>Composable</li>
+            </ul>
+            Previously provided by the reactjs/reselect module but is now built in to ngrx.
+          </aside>
+        </section>
+
+        <section>
+          <h3>@ngrx/store</h3>
+          <p><code>createSelector</code></p>
+          <p><code>createFeatureSelector</code></p>
+          <aside class="notes">
+            <ul>
+              <li>Helper functions for selecting data from the store.</li>
+              <li>createSelector composes from left to right</li>
+              <li>
+                createFeatureSelector is a convenience method.<br>
+                <code>const selectFoo = createFeatureSelector<FooState>('foo')</code> is equivalent to<br>
+                <code>const selectFoo = (state: AppState) => state.foo;</code>
+              </li>
+              <li>Because selectors are pure, results will be cached and returned when called again with the same arguments (memoization).
+                Improves performance for expensive calculations.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section>
+          <p>Example: Select a root property</p>
+          <pre><code>
+import { createSelector, createFeatureSelector } from '@ngrx/store';
+
+export interface FeatureState {
+  counter: number;
+}
+
+export interface AppState {
+  feature: FeatureState;
+}
+
+export const selectFeature =
+  (state: AppState) => state.feature;
+          </code></pre>
+            <aside class="notes">
+                <ul>
+                    <li>Create a feature selector</li>
+                    <li>We can create the selector manually or use createFeatureSelector</li>
+                </ul>
+            </aside>
+        </section>
+
+        <section>
+          <p>Example: Compose multiple selectors</p>
+          <pre><code>
+export const selectFeatureCount =
+  createSelector(
+    selectFeature,
+    (state: FeatureState) => state.counter
+  );
+          </code></pre>
+          <aside class="notes">
+            Using the interfaces from the previous example, select a property from the feature state.
+
+          </aside>
+        </section>
+
+        <section>
+          <p>Example: Compute data</p>
+          <pre><code>
+const selectItems = state => state.items;
+const selectTotal = createSelector(selectItems,
+  (items) => items.reduce((acc, item) => acc + item.value, 0));
+
+const state = {
+  items: [
+    { name: 'apple', value: 1.20 },
+    { name: 'orange', value: 0.95 }
+  ]
+};
+
+selectTotal(state); // 2.15
+          </code></pre>
+                <aside class="notes">
+                    <ul>
+                        <li>
+                            The selectItems selector returns an array of items
+                        </li>
+                        <li>
+                            The selectTotal selector reduces the array of items into a total
+                        </li>
+                        <li>
+                            The reduce() method applies a function against an accumulator and each element in the array (from left to right) to reduce it to a single value.
+                        </li>
+                        <li>
+                            We pass it 0 for the initial value
+                        </li>
+                        <li>
+                            We can call our selectTotal selector and get our computed value
+                        </li>
+                    </ul>
+                </aside>
+        </section>
+
+        <section>
+          <p>Using a selector with the Store</p>
+          <pre><code>
+import ( selectTotal } from '../reducers/feature';
+
+@Component({
+  selector: 'my-app',
+  template: `
+    &lt;div&gt;Total: {{ total | async }}&lt;/div&gt;
+  `
+})
+class MyAppComponent {
+  total: Observable&lt;number&gt;;
+
+  constructor(private store: Store&lt;AppState&gt;) {
+    this.total = store.select(selectTotal);
+  }
+}
+          </code></pre>
+          <aside class="notes">
+            Assume selectCount is a selector defined somewhere else that selects a number from AppState (also defined elsewhere).
+            The select method returns an observable that emits a number.
+          </aside>
+        </section>
+
+        <!-- <section data-background="images/patterns.jpg">
+          <h3>Patterns</h3>
+          <aside class="notes">
+            Overview of common patterns.
+          </aside>
+        </section>
+
+        <section>
+          <h3>Authentication</h3>
+        </section>
+
+        <section>
+          <p>Implemented like any other feature in your application.</p>
+          <p class="fragment">State will typically include:</p>
+          <ul>
+            <li class="fragment">A flag to indicate whether the user is authenticated</li>
+            <li class="fragment">The authentication token</li>
+            <li class="fragment">The ID of the authenticated user</li>
+            <li class="fragment">An error, if authentication failed</li>
+          </ul>
+        </section>
+
+        <section>
+          <pre><code>
+{
+  "auth": {
+    "isAuthenticated": true,
+    "userId": 42,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ"
+  }
+}
+          </code></pre>
+
+          <aside class="notes">
+            Use async action to handle sign in, e.g., LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE.
+            Sign out is typically a synchronous action for JWT, since it usually just involves removing the access token
+            from client storage.
+          </aside>
+        </section>
+
+        <section>
+          <h3>Pagination</h3>
+        </section> -->
+
+        <section>
+          <h4>References</h4>
+          <ul>
+            <li><a href="http://redux.js.org/docs/recipes/reducers/NormalizingStateShape.html" target="_blank">Normalizing State Shape</a></li>
+            <li><a href="https://github.com/ngrx/platform" target="_blank">@ngrx/platform</a></li>
+          </ul>
+        </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
