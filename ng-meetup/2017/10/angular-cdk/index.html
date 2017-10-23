@@ -220,11 +220,41 @@
         </section>
 
         <section>
-          <h3>Example</h3>
+          <h3>Accessibility</h3>
         </section>
 
         <section>
-          <h3>a11y</h3>
+          <p>ListKeyManager</p>
+          <p class="fragment">Manages the active option in a list of items based on keyboard interaction.</p>
+          <aside class="notes">For things like menus, i.e. role="menu" or role="listbox"</aside>
+        </section>
+
+        <section>
+          <p>Two types:</p>
+          <p class="fragment">FocusKeyManager: for options that directly receive focus.</p>
+          <p class="fragment">ActiveDescendentKeyManager: for options that use <code>aria-activedescendant</code>.</p>
+        </section>
+
+        <section>
+          <p>Any component that uses a <code>ListKeyManager</code> will generally do three things:</p>
+          <ul>
+            <li class="fragment">Create a <code>@ViewChildren</code> query for the options being managed.</li>
+            <li class="fragment">Initialize the <code>ListKeyManager</code>, passing in the options.</li>
+            <li class="fragment">Forward keyboard events from the managed component to the <code>ListKeyManager</code>.</li>
+          </ul>
+        </section>
+
+        <section>
+          <p>FocusTrap</p>
+          <p class="fragment"><code>cdkFocusTrap</code> directive keeps focus within an element.</p>
+        </section>
+
+        <section>
+          <pre><code>
+&lt;div class="dialog-content" cdkTrapFocus&gt;
+  &lt;!-- Tab and Shift + Tab will not leave this element. --&gt;
+&lt;/div>
+          </code></pre>
         </section>
 
         <section>
