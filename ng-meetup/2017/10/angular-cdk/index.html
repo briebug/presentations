@@ -258,10 +258,38 @@
         </section>
 
         <section>
-          <h3>Bidi</h3>
+          <p>Layout: BreakpointObserver</p>
+          <p class="fragment">Utility for evaluating media queries and reacting to changes.</p>
         </section>
 
         <section>
+          <h3>Bidirectionality</h3>
+        </section>
+
+        <section>
+          <p>Directionality</p>
+          <p>Service that provides the current direction value ('ltr' or 'rtl') and a stream for observing changes to direction.</p>
+        </section>
+
+        <section>
+          <pre><code>
+@Component()
+class DirectionalityExample {
+  private isRtl: boolean;
+  private dirChangeSubscription = Subscription.EMPTY;
+  
+  constructor(dir: Directionality) {
+    this.isRtl = dir.value === 'rtl';
+  
+    dirChangeSubscription = dir.change.subscribe(() => {
+      // Direction has changed
+    });
+  }
+}
+          </code></pre>
+        </section>
+
+        <!--<section>
           <h3>Coercion</h3>
         </section>
 
@@ -283,7 +311,7 @@
 
         <section>
           <h3>Testing</h3>
-        </section>
+        </section> -->
 
         <section>
           <h4>References</h4>
