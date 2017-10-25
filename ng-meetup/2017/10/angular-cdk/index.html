@@ -104,6 +104,33 @@
           <h3>Example</h3>
         </section>
 
+        <section>
+          <h3>Overlay</h3>
+        </section>
+
+        <section>
+          <p>Mechanism for creating floating panels on the screen.</p>
+        </section>
+
+        <section>
+          <p>Position strategies:</p>
+          <p class="fragment">GlobalPositionStrategy: for a specific position in the viewport (modal dialog, snackbar).</p>
+          <p class="fragment">ConnectedPositionStrategy: position relative to an anchor (menu, tooltip).</p>
+          <p class="fragment">PositionStrategy interface: implement for custom strategies.</p>
+        </section>
+
+        <section>
+          <p>Scroll strategies:</p>
+          <p class="fragment">NoopScrollStrategy (default): does nothing.</p>
+          <p class="fragment">CloseScrollStrategy: close the overlay on scroll.</p>
+        </section>
+
+        <section>
+          <p>BlockScrollStrategy: prevent scrolling when the overlay is open.</p>
+          <p class="fragment">RepositionScrollStrategy: reposition the overlay element on scroll. <em>(May impact performance)</em>.</p>
+          <p class="fragment">ScrollStrategy interface: implement for custom strategies.</p>
+        </section>
+
         <section data-background="#fafafa">
           <h3>Table</h3>
           <img class="plain" src="images/table.png" style="width: 400px">
