@@ -1,0 +1,463 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Service Workers</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Theme additions -->
+    <style>
+      img.plain {
+        box-shadow: none;
+        border: 0;
+				background: transparent !important;
+      }
+      div.logo {
+        height: 100px;
+        margin-top: 30px;
+      }
+    </style>
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+        <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+          <h3>Service Workers</h3>
+          <h4>A Quick Introduction</h4>
+          <div>
+            <small>
+              <a href="http://briebug.github.io/presentations/ng-meetup/2017/11/service-workers">http://briebug.github.io/presentations/ng-meetup/2017/11/service-workers</a>
+            </small>
+          </div>
+          <div>
+            Kevin Schuchard<br>
+            kevin.schuchard@briebug.com
+          </div>
+          <div class="logo">
+            <img src="images/briebug-logo.png" class="plain">
+          </div>
+        </section>
+
+        <section>
+          <h3>Service Workers</h3>
+          <p class="fragment">A progressive upgrade for modern web apps</p>
+          <p class="fragment">Safe Man in the Middle for network</p>
+        </section>
+
+        <section>
+          <h3>Offline First!</h3>
+          <p class="fragment">Treat network as a nice-to-have upgrade</p>
+          <p class="fragment">Build for offline first, right next to mobile first</p>
+        </section>
+
+        <section>
+          <h3>Secure</h3>
+          <p class="fragment">They only work over HTTPS connections</p>
+          <p class="fragment">Can only be developed at localhost</p>
+        </section>
+
+        <section>
+          <h3>Context</h3>
+          <p class="fragment">Determined by script path (default)</p>
+          <p class="fragment">Can be overridden</p>
+        </section>
+
+        <section>
+          <h3>What can they do now?</h3>
+          <p class="fragment">Caching</p>
+          <p class="fragment">Preloading</p>
+          <p class="fragment">Web Push Notifications</p>
+          <p class="fragment">Background Sync</p>
+        </section>
+        <section>
+          <h3>What will they do in the future?</h3>
+          <p class="fragment">Periodic Sync</p>
+          <p class="fragment">LBS/Geofencing</p>
+        </section>
+
+        <section>
+          <h3>Growing browser support</h3>
+          <p class="fragment">Chrome, Firefox, Opera &amp; Edge</p>
+          <p class="fragment">Safari support coming!</p>
+          <small class="fragment"><a href="https://jakearchibald.github.io/isserviceworkerready/" target="_blank">Is ServiceWorker Ready?</a></small>
+        </section>
+
+
+        <section>
+          <h3>Service Worker Lifecycle</h3>
+          <ul class="fragment">
+            <li>Installation</li>
+            <li>Activation</li>
+            <li>Idle/Message Loop
+              <ul>
+                <li>Fetch/Message</li>
+                <li>Terminate</li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <img src="images/sw-lifecycle.png">
+        </section>
+
+        <section>
+          <h3>Creating a ServiceWorker</h3>
+          <p class="fragment">Reliably register</p>
+          <p class="fragment">Install &amp; Activate</p>
+          <p class="fragment">Handle network requests, cache data, etc.</p>
+        </section>
+
+        <section>
+          <h3>Registration</h3>
+          <p class="fragment">Guard with 'serviceWorker' in navigator</p>
+          <p class="fragment">Is idempotent</p>
+        </section>
+        <section>
+          <pre><code>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker
+      .register('/myServiceWorker.js')
+      .then(function(reg) {
+        console.log('Registration successful: ', reg.scope);
+      }, function(err) {
+        console.log('Registration failed: ', err);
+      });
+  });
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Installation</h3>
+          <p class="fragment">Resides within service worker script</p>
+          <p class="fragment">First opportunity to cache data</p>
+          <p class="fragment">Can preload data into cache here</p>
+        </section>
+        <section>
+          <pre><code>
+self.addEventListener('install', function(event) {
+  // Add installation steps/code here
+});
+
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Activation</h3>
+          <p class="fragment">Runs after old workers have been stopped</p>
+          <p class="fragment">Resides within service worker script</p>
+          <p class="fragment">Opportunity to remove old/unused caches and data</p>
+        </section>
+        <section>
+          <pre><code>
+self.addEventListener('activate', function(event) {
+  // Add installation steps/code here
+});
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Fetch</h3>
+          <p class="fragment">Primary event handler in service workers</p>
+          <p class="fragment">Opportunity to intercept network requests and cache data</p>
+        </section>
+        <section>
+          <pre><code>
+self.addEventListener('fetch', function(event) {
+  return fetch(event.request); // Don't cache, just pass it through (for now)
+});
+          </code></pre>
+        </section>
+
+
+        <section>
+          <h3>Preload &amp; Cache</h3>
+          <ul class="fragment">
+            <li>During Install:
+              <ul>
+                <li>Preload &amp; cache essential files</li>
+                <li>Site content, data, anything you need ahead of time</li>
+              </ul>
+            </li>
+          </ul>
+          <ul class="fragment">
+            <li>During fetch:
+              <ul>
+                <li>Return data from cache if we have it</li>
+                <li>Otherwise:
+                  <ul>
+                    <li>If online, fetch from network</li>
+                    <li>If offline, fall back to preloaded offline page (etc.)</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <pre><code>
+self.addEventListener('install', function(event) {
+  event.waitUntil(
+    caches
+      .open('siteFiles')
+      .then(function(cache) {
+        // Preload the cache with core files for site
+        return cache.addAll([
+          '/assets/fonts/font.woff2',
+          '/assets/fonts/font.otf',
+          '/assets/fonts/font.ttf',
+          '/assets/css/main.css',
+          '/assets/offline.png',
+          '/offline.html'
+        ]);
+      });
+  );
+});
+          </code></pre>
+        </section>
+        <section>
+          <pre><code>
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches
+      .match(event.request) // Look for request in ALL caches
+      .then(function(res) {
+        if (res) { // We've got it in the cache, return cached copy
+          return res;
+        }
+
+        if (!navigator.onLine) { // Definite if offline!!
+          // Return the offline page, already cached in preload during install
+          return caches.match(new Request('/offline.html'));
+        }
+
+        return fetch(event.request);
+      });
+  );
+});
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Clean up Old Caches</h3>
+          <p class="fragment">During activaton, opportunity to remove unused cached data</p>
+        </section>
+        <section>
+          <pre><code>
+self.addEventListener('activate', function(event) {
+  event.waitUntil(
+    caches
+      .keys().then(function(keys) {
+        return Promise.all(keys.filter(function(key) {
+          return ['oldDataCache','otherUnusedCache'].indexOf(key) !== -1;
+        }).map(function(key) {
+          return caches.delete(key); // Remove old caches of data
+        }));
+      });
+  );
+});
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Keep Cache Updated</h3>
+          <p class="fragment">During fetch, cache data retrieved from network</p>
+        </section>
+        <section>
+          <pre><code>
+const siteFiles = [
+  '/assets/fonts/font.woff2',
+  '/assets/fonts/font.otf',
+  '/assets/fonts/font.ttf',
+  '/assets/css/main.css',
+  '/assets/offline.png',
+  '/offline.html'
+];
+
+function fetchAndCache(request) {
+  return fetch(request)
+    .then(function(res) {
+      if (res) {
+        let cacheName = siteFiles.index(res.url) === -1 ? 'data' : 'siteFiles';
+        return caches
+          .open(cacheName)
+          .then(function(cache) {
+            return cache.put(request, res.clone());
+          });
+      }
+    });
+}
+          </code></pre>
+        </section>
+        <section>
+          <pre><code>
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches
+      .match(event.request) // Look for request in ALL caches
+      .then(function(res) {
+        if (res) { // We've got it in the cache, return cached copy
+          return res;
+        }
+
+        if (!navigator.onLine) { // Definite if offline!!
+          // Return the offline page, already cached in preload during install
+          return caches.match(new Request('/offline.html'));
+        }
+
+        return fetchAndCache(event.request); // Fetch and update the cache!
+      });
+  );
+});
+          </code></pre>
+        </section>
+
+
+        <section>
+          <h3>ServiceWorker API Family</h3>
+          <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/ServiceWorker" target="_blank">ServiceWorker</a></p>
+          <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/CacheStorage" target="_blank">CacheStorage</a></p>
+          <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Cache" target="_blank">Cache</a></p>
+          <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API" target="_blank">Fetch</a></p>
+          <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API" target="_blank">Web Workers</a></p>
+        </section>
+        <section>
+            <h3>Cache API</h3>
+            <p class="fragment">Designed to work hand in hand with service workers</p>
+            <p class="fragment">Supports multiple stores of cached of data</p>
+            <p class="fragment">Living standard</p>
+            <p class="fragment" style="font-weight: bold">Is promisy!</p>
+        </section>
+        <section>
+            <h3>Fetch API</h3>
+            <p class="fragment">Modern replacement for XHR</p>
+            <p class="fragment">Simple, easy to use</p>
+            <p class="fragment">Living standard</p>
+            <p class="fragment" style="font-weight: bold">Is promisy!</p>
+        </section>
+        <section>
+            <h3>Web Workers API</h3>
+            <p class="fragment">Parent of ServiceWorkers</p>
+            <p class="fragment">Underlying background workers API</p>
+            <p class="fragment">Living standard</p>
+        </section>
+
+
+        <section>
+          <h3>Sw-Precache</h3>
+          <p class="fragment">Generates a service worker for you</p>
+          <p class="fragment">Pre-caches site content files</p>
+          <p class="fragment">sw-precache --root=dist --config=sw-precache-config.js</p>
+        </section>
+        <section>
+          <pre><code>
+// sw-precache-config.js
+module.exports = {
+  navigateFallback: '/index.html',
+  stripPrefix: 'dist',
+  root: 'dist/',
+  staticFileGlobs: [
+    'dist/index.html',
+    'dist/**.js',
+    'dist/**.css',
+    'dist/fonts/**.woff',
+    'dist/fonts/**.otf',
+    'dist/fonts/**.ttf'
+  ]
+};
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>SW-Toolbox</h3>
+          <p class="fragment">Express-style routes and request handling</p>
+          <p class="fragment">Adds policies like middleware</p>
+          <p class="fragment">Network first, Cache first, etc.</p>
+          <p class="fragment">Caching configuration (expiration, maxEntries, etc.)</p>
+          <p class="fragment">Works with sw-precache</p>
+        </section>
+        <section>
+          <pre><code>
+importScripts('/sw-toolbox.js');
+
+// Toolbox way of wiring up the offline page:
+toolbox.router.get('/*', function(request, values, options) {
+  return toolbox.networkFirst(request, values, options)
+    .catch(function(err) {
+      return caches.match(new Request('/offline.html'));
+    });
+}, {
+  networkTimeoutSeconds: 5,
+  cache: {
+    name: 'staticFiles',
+    maxAgeSeconds: 60 * 60 * 24 * 30 // one month
+  }
+});
+          </code></pre>
+        </section>
+        <section>
+          <pre><code>
+// Retrieve data as quickly as possible:
+toolbox.router.get('/api/comments*', function(request, values, options) {
+  return toolbox.fastest(request, values, options); // Generally use cache, keeps cache fresh
+}, {
+  networkTimeoutSeconds: 5,
+  cache: {
+    name: 'comments',
+    maxAgeSeconds: 60 * 60 * 15 // Keep data for 15 minutes
+  }
+});
+          </code></pre>
+        </section>
+
+
+        <section>
+          <h4>References</h4>
+          <ul>
+            <li>ServiceWorkers: An Introduction <small><a href="https://developers.google.com/web/fundamentals/getting-started/primers/service-workers" target="_blank">https://developers.google.com/web/fundamentals/getting-started/primers/service-workers</a></small></li>
+            <li>Fast Offline Angular Apps with Service Workers <small><a href="https://coryrylan.com/blog/fast-offline-angular-apps-with-service-workers" target="_blank">https://coryrylan.com/blog/fast-offline-angular-apps-with-service-workers</a></small></li>
+            <li>Designing Offline-First Web Apps <small><a href="https://alistapart.com/article/offline-first" target="_blank">https://alistapart.com/article/offline-first</a></small></li>
+            <li>SW-Precache <br><small><a href="https://github.com/GoogleChrome/sw-precache" target="_blank">https://github.com/GoogleChrome/sw-precache</a></small></li>
+            <li>SW-Toolbox <br><small><a href="https://github.com/GoogleChrome/sw-toolbox" target="_blank">https://github.com/GoogleChrome/sw-toolbox</a></small></li>
+          </ul>
+        </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>

@@ -2,6 +2,10 @@ A collection of BrieBug presentations. Looking for an older presentation? Check 
 
 ### 2017
 
+#### November 8: [Rocky Mountain Angular Meetup](https://www.meetup.com/RockyMountainAngular/events/242254440/)
+
+  * [Service Workers: A Quick Introduction](https://briebug.github.io/presentations/ng-meetup/2017/11/service-workers)
+
 #### October 25: [Rocky Mountain Angular Meetup](https://www.meetup.com/RockyMountainAngular/events/242254440/)
 
   * [Angular Component Development Kit](https://briebug.github.io/presentations/ng-meetup/2017/10/angular-cdk)
