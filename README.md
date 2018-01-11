@@ -2,6 +2,10 @@ A collection of BrieBug presentations. Looking for an older presentation? Check 
 
 ### 2017
 
+#### November 28: [Rocky Mountain Angular Meetup](https://www.meetup.com/RockyMountainAngular/events/242254468/)
+
+  * [Upgrading AngularJS Apps (Revisited)](http://briebug.github.io/presentations/ng-meetup/2017/11/upgrading-angularjs-apps)
+
 #### November 8: [Rocky Mountain Angular Meetup](https://www.meetup.com/RockyMountainAngular/events/242254440/)
 
   * [Service Workers: A Quick Introduction](https://briebug.github.io/presentations/ng-meetup/2017/11/service-workers)
@@ -12,12 +16,12 @@ A collection of BrieBug presentations. Looking for an older presentation? Check 
 
 #### August 11: [Develop Denver](https://developdenver.org/)
 
-  * [Disaster Accountability Project - SmartResponse](https://briebug.github.io/presentations/develop-denver/2017/disaster-accountability-project/)  
+  * [Disaster Accountability Project - SmartResponse](https://briebug.github.io/presentations/develop-denver/2017/disaster-accountability-project/)
 
 #### June 28: [Rocky Mountain Angular Meetup](https://www.meetup.com/RockyMountainAngular/events/240491592/)
 
   * [nrgx Forms and Data](https://briebug.github.io/presentations/ng-meetup/2017/06/ngrx-forms)
-  
+
 #### May 24: [Rocky Mountain Angular Meetup](https://www.meetup.com/RockyMountainAngular/events/239567196/)
 
   * [A first look at Angular Universal](https://briebug.github.io/presentations/ng-meetup/2017/05/angular-universal/#/)
