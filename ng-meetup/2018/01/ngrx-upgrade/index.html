@@ -1,0 +1,499 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>So You Wanna Do Redux?</title>
+
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/black.css">
+
+  <!-- Theme used for syntax highlighting of code -->
+  <link rel="stylesheet" href="lib/css/zenburn.css">
+
+  <!-- Theme additions -->
+  <style>
+    img.plain {
+      box-shadow: none;
+      border: 0;
+      background: transparent !important;
+    }
+
+    div.logo {
+      height: 100px;
+      margin-top: 30px;
+    }
+  </style>
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+        <h3>So You Wanna Do Redux?</h3>
+        <div>
+          <small>
+            <a href="http://briebug.github.io/presentations/ng-meetup/2018/01/ngrx-upgrade">http://briebug.github.io/presentations/ng-meetup/2018/01/ngrx-upgrade</a>
+          </small>
+        </div>
+        <div>
+          Jesse Sanders
+          <br>
+          @JesseS_BrieBug
+          <br>
+          <a href="https://github.com/jessesanders">https://github.com/jessesanders</a>
+          <br>
+          jesse.sanders@briebug.com
+        </div>
+        <div class="logo">
+          <img src="images/briebug-logo.svg" class="plain">
+        </div>
+      </section>
+
+      <section data-background="images/BrieBugMeetup1.png" data-background-color="#ffffff">
+      </section>
+
+      <section data-background="images/BrieBugMeetup2.png" data-background-color="#ffffff">
+      </section>
+
+      <section data-background-color="#ffffff">
+        <img src="images/ng-conf.png">
+      </img>
+      </section>
+
+      <section>
+        <h3>Agenda</h3>
+        <aside>
+          <ul>
+            <li class="fragment">Understand when to implement redux</li>
+            <li class="fragment">How to plan to upgrade a project</li>
+            <li class="fragment">Understanding Containers vs. Presentation Components</li>
+            <li class="fragment">Identifying Entities and Actions</li>
+            <li class="fragment">Lift And Shift - simple conversion</li>
+            <li class="fragment">Real code examples - NgDocIo</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h3>When/Why to implement redux</h3>
+        <aside>
+          <ul>
+            <li class="fragment">To reduce complexity</li>
+            <li class="fragment">Predictability and Maintainability</li>
+            <li class="fragment">Ease of testing</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h3>Planning</h3>
+        <aside>
+          <ul>
+            <li class="fragment">Indentify a complex page</li>
+            <li class="fragment">Can I decompose page/components?</li>
+            <li class="fragment">What events/actions does my page need to support?</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h3>Container Components</h3>
+        <aside>
+          <ul>
+            <li class="fragment">Concerned with how things work</li>
+            <li class="fragment">May contain both presentational and container components</li>
+            <li class="fragment">Provide data and behavior to other components</li>
+            <li class="fragment">Often stateful, as they serve as data sources</li>
+            <li class="fragment">Request data from store, unwrap observable, and pass data to child components</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h3>Presentational Components</h3>
+        <aside>
+          <ul>
+            <li class="fragment">Concerned with how things look</li>
+            <li class="fragment">May contain both presentational and container components</li>
+            <li class="fragment">Have no dependencies on the rest of the app</li>
+            <li class="fragment">Receive data and callbacks via props</li>
+            <li class="fragment">Usually use unwrapped data rather than observables</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h3>Identifying Entities, Create Models</h3>
+        <aside>
+          <ul>
+            <li class="fragment">Entities are domain data for our purposes</li>
+            <li class="fragment">Usually loaded externally from an API</li>
+            <li class="fragment">In our example entities include articles, tags, users, and article-filter</li>
+            <li class="fragment">For each entity, create a model</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h3>Model Interface Example</h3>
+        <pre><code>
+export interface IArticle {
+  _id: string;
+  tags: string[];
+  title: string;
+  url: string;
+  version: string;
+  author_name: string;
+  status: string;
+  published_date: Date;
+  submitted_by_id: number;
+  submitted_by_name: string;
+  submitted_by_email: string;
+}            
+          </code></pre>
+      </section>
+
+      <section>
+        <h3>Identifying Actions</h3>
+        <aside>
+          <ul>
+            <li class="fragment">An action is any event that we want to handle</li>
+            <li class="fragment">Includes system events and users clicking on something</li>
+            <li class="fragment">NgDocIO home page needs to support loading recent articles, searching articles, and loading tags.</li>
+            <li class="fragment">Actions like load need to support load, success, and fail.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h3>Creating Actions</h3>
+        <aside>
+          <ul>
+            <li class="fragment">Create an actions folder and a typescript file with the entity name</li>
+            <li class="fragment">Import the entity model</li>
+            <li class="fragment">Create an enum to define our actions</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h3>Action Enum Example</h3>
+        <pre><code>
+export enum ArticleActionTypes {
+  LoadRecent = '[Article] Load Recent',
+  Search = '[Article] Search',
+  LoadSuccess = '[Article] Load Success',
+  LoadFail = '[Article] Load Fail',
+  Select = '[Article] Select'
+}                       
+          </code></pre>
+      </section>
+
+      <section>
+        <h3>Creating Action Classes</h3>
+        <aside>
+          <ul>
+            <li class="fragment">Each action gets its own class</li>
+            <li class="fragment">Each class implements Action interface</li>
+            <li class="fragment">Class readonly type property set to action enum value</li>
+            <li class="fragment">If action expects a value, constructor is required</li>
+            <li class="fragment">Parameters are passed as public and can be typed</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h3>Action Class Examples</h3>
+        <pre><code>
+export class LoadRecentArticles implements Action {
+  readonly type = ArticleActionTypes.LoadRecent;
+}
+
+export class LoadSuccess implements Action {
+  readonly type = ArticleActionTypes.LoadSuccess;
+
+  constructor(public payload: IArticle[]) { }
+}                    
+          </code></pre>
+      </section>
+
+      <section>
+        <h3>Exporting Action Class Types</h3>
+        <aside>
+          <ul>
+            <li class="fragment">Class types can be used as parameters later</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h3>Exporting Action Class Types Examples</h3>
+        <pre><code>
+            export type ArticleActions
+              = LoadRecentArticles
+              | SearchArticles
+              | LoadSuccess
+              | LoadFail;                   
+          </code></pre>
+      </section>
+
+      <section>
+        <h3>Creating Reducers</h3>
+        <aside>
+          <ul>
+            <li class="fragment">Reducers modify store state</li>
+            <li class="fragment">Arrays vs dictionaries</li>
+            <li class="fragment">Nested data</li>
+            <li class="fragment">ngrx/Entity</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h3>NGRX Entity</h3>
+        <aside>
+          <ul>
+            <li class="fragment">Adapter</li>
+            <li class="fragment">Manages dictionary</li>
+            <li class="fragment">Default selectors</li>
+            <li class="fragment">Simple reducers</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h3>Reducer EntityState Example</h3>
+        <pre>
+          <code>
+export interface AppState {
+  articles: IArticle[];
+  articleFilter: IArticleFilter;
+}
+
+export interface ArticlesState extends EntityState&lt;IArticle&gt; {
+  selectedArticleId: number | null;
+  loading: boolean;
+  error: any;
+}
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Reducer Adapter Example</h3>
+        <pre>
+          <code>
+export const articleAdapter: EntityAdapter&lt;IArticle&gt; = 
+  createEntityAdapter&lt;IArticle&gt;({
+    selectId: (article: IArticle) =&gt; article._id,
+    sortComparer: false
+  });
+
+export const initialState: ArticlesState = 
+  articleAdapter.getInitialState({
+    selectedArticleId: null,
+    loading: false,
+    error: null
+  });    
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Reducer Example</h3>
+        <pre>
+            <code>
+export function articleReducer(
+    state = initialState,
+    action: ArticleActions
+  ): ArticlesState {
+    switch (action.type) {
+      case ArticleActionTypes.Load:
+      case ArticleActionTypes.LoadRecent:
+      case ArticleActionTypes.Search:
+        return {
+          ...state,
+          ...articleAdapter.removeAll(state),
+          loading: true,
+          error: null
+        };
+
+      case ArticleActionTypes.LoadSuccess:
+        return {
+          ...articleAdapter.addMany(action.payload, initialState),
+          loading: false
+        };
+
+      case ArticleActionTypes.LoadFail:
+        return {
+          ...state,
+          loading: false,
+          error: { error: 'Error while loading articles' }
+        };
+
+      case ArticleActionTypes.Select: {
+        return {
+          ...state,
+          selectedArticleId: action.payload,
+        };
+      }
+
+      default:
+        return state;
+    }
+  }
+            </code>
+          </pre>
+      </section>
+
+      <section>
+        <h3>Effects</h3>
+        <aside>
+          <ul>
+            <li class="fragment">Handles async operations</li>
+            <li class="fragment">Connects action(s) to services</li>
+            <li class="fragment">Handles success and error blocks</li>
+            <li class="fragment">Lift and shift</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h3>Original Code Example</h3>
+        <pre>
+          <code>
+getRecentArticles() {
+  this.loading = true;
+  this.articleSvc.getRecentArticles()
+    .subscribe(articles => {
+      this.articles = articles;
+      this.ready();
+    });
+    // No error handling... very bad.
+}
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Effect Example</h3>
+        <pre>
+          <code>
+@Effect()
+loadRecentArticles: Observable&lt;Action&gt; = 
+  this.actions.ofType(ArticleActionTypes.LoadRecent)
+    .switchMap(() =>
+      this.articleSvc.getRecentArticles()
+        .pipe(
+        map((articles: IArticle[]) => 
+          new articleActions.LoadArticlesSuccess(articles)),
+        catchError(err => 
+          of(new articleActions.LoadArticlesFail({ error: err.message })))
+        )
+    );
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Selectors</h3>
+        <aside>
+          <ul>
+            <li class="fragment">Reducers index.ts</li>
+            <li class="fragment">If store is like a database, selectors are like queries</li>
+            <li class="fragment">Composable</li>
+            <li class="fragment">Memoized</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section>
+        <h3>Default Adapter Selectors</h3>
+        <pre>
+          <code>
+// TypeScript Destructuring            
+export const {
+  selectIds: selectArticleIds,
+  selectEntities: selectArticleEntities,
+  selectAll: selectAllArticles,
+  selectTotal: selectArticleTotal
+} = articleAdapter.getSelectors(selectArticleState);
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Custom Selectors</h3>
+        <pre>
+          <code>
+export const selectAllArticleTags = createSelector(
+  selectAllArticles,
+  (articles: IArticle[]) =>
+    articles.map(article => article.tags)
+);
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h4>References</h4>
+        <ul>
+          <li class="fragment">
+            <a href="https://github.com/ngrx/platform" target="_blank">NgRx Platform</a>
+          </li>
+          <li class="fragment">
+            <a href="https://redux.js.org/docs/recipes/reducers/NormalizingStateShape.html" target="_blank">Normailizing State Shape</a>
+          </li>
+          <li class="fragment">
+            <a href="https://medium.com/@dan_abramov/smart-and-dumb-components-7ca2f9a7c7d0" target="_blank">Presentational and Container Components</a>
+          </li>
+          <li class="fragment">
+            <a href="https://blog.nrwl.io/ngrx-patterns-and-techniques-f46126e2b1e5" target="_blank">NgRx: Patterns and Techniques</a>
+          </li>
+          <li class="fragment">
+            <a href="https://medium.com/@dan_abramov/you-might-not-need-redux-be46360cf367" target="_blank">You Might Not Need Redux</a>
+          </li>
+        </ul>
+      </section>
+
+      <section data-background-color="#ffffff">
+        <img src="images/ng-conf.png">
+      </img>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+
+  <script>
+    // More info https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+      history: true,
+
+      // More info https://github.com/hakimel/reveal.js#dependencies
+      dependencies: [
+        { src: 'plugin/markdown/marked.js' },
+        { src: 'plugin/markdown/markdown.js' },
+        { src: 'plugin/notes/notes.js', async: true },
+        { src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+      ]
+    });
+  </script>
+</body>
+
+</html>
