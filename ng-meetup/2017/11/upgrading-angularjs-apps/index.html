@@ -1,0 +1,393 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>#title</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <!-- Theme additions -->
+    <style>
+      img.plain {
+        box-shadow: none;
+        border: 0;
+        background: transparent !important;
+      }
+      div.logo {
+        height: 100px;
+        margin-top: 30px;
+      }
+    </style>
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+
+
+        <section data-background="images/1.png" data-background-color="#ffffff">
+        </section>
+
+        <section data-background="images/2.png" data-background-color="#ffffff">
+        </section>
+
+        <section data-background="images/3.png" data-background-color="#ffffff">
+        </section>
+
+        <section data-background="images/4.png" data-background-color="#ffffff">
+        </section>
+
+        <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+          <h3>Upgrading AngularJS Apps</h3>
+          <div>
+            <small>
+              <a href="http://briebug.github.io/presentations/ng-meetup/2017/11/upgrading-angularjs-apps/">
+                http://briebug.github.io/presentations/ng-meetup/2017/11/upgrading-angularjs-apps/
+              </a>
+            </small>
+          </div>
+          <div>
+            Reid Villeneuve<br>
+            <a href="https://github.com/reidsvilleneuve/">https://github.com/reidsvilleneuve/</a>
+          </div>
+          <div class="logo">
+            <img src="images/briebug-logo.svg" class="plain">
+          </div>
+        </section>
+
+        <section>
+          <h3>Planning</h3>
+          <p>Don't jump into this blindly!</p>
+        </section>
+
+
+        <section>
+          <h3>Context</h3>
+          <p>Where are you now?</p>
+
+          <ul>
+            <li>Build Process?</li>
+            <li>Module loader, if any?</li>
+            <li>Developer resources?</li>
+            <li>Business interest?</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Goal</h3>
+          <p>Where do you want to be?</p>
+
+          <ul>
+            <li>TypeScript / Dart / ES6? ES5??? ಠ_ಠ</li>
+            <li>Angular CLI?</li>
+            <li>Async/Await or embrace Observables?</li>
+            <li class="fragment">Gloat that you upgraded?</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>First Steps</h3>
+          <p>Set yourself up for success</p>
+        </section>
+
+        <section>
+          <h3>Immediate code considerations</h3>
+            <p>
+              Get the latest version of AngularJS
+            </p>
+
+          <ul>
+            <li>AngularJS Components</li>
+            <li>
+              Don't forget the
+              <a href="https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md">AngularJS </a>
+              and
+              <a href="https://angular.io/guide/styleguide">Angular</a>
+              Style Guides
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <section>
+            <h4>Side-by-side: AngularJS and Angular components</h4>
+            <p>
+              They are very syntactically similar so can help with the upgrade.
+            </p>
+          </section>
+
+          <section>
+            <pre>
+              <code>
+angular.module('veryComplicatedApp')
+  .component('appDoSomeMath', function () {
+    return {
+      template: '<p>{{ $ctrl.num }} + 1 = {{ $ctrl.addedNum }}</p>',
+      bindings: {
+        num: '@'
+      },
+      controller: doSomeMath
+    };
+    function doSomeMath () {
+      this.$onInit = function () {
+        this.addedNum = this.num + 1;
+      }
+    }
+  });
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <pre>
+              <code>
+@Component({
+  selector: 'app-do-some-math',
+  template: '<p>{{ num }} + 1 = {{ addedNum }}</p>'
+})
+export class DoSomeMathComponent {
+  @input() numberToAddOneTo: Number;
+
+  ngOnInit () {
+    this.addedNumber = this.numberToAddOneTo + 1;
+  }
+}
+              </code>
+            </pre>
+          </section>
+        </section>
+
+        <section>
+          <h3>JavaScript to TypeScript</h3>
+        </section>
+
+        <section>
+          <h3>DEMO: JavaScript to TypeScript</h3>
+          <p>This will be super-duper complicated</p>
+          <small>You have no idea what I am about to do.</small>
+        </section>
+
+        <section>
+          <h3>Build Process</h3>
+          <p>Consider the "Planning" step and figure out your build process</p>
+
+          <small>
+            If you have no idea where to start with this, consider this
+            exercise: "If I just mass-converted to typescript, where could I
+            fit the typescript compilation step in there with what I have?"
+          </small>
+        </section>
+
+        <section>
+          <h3>Start using a module loader</h3>
+          <p>Webpack is pretty "in" right now, and for good reason.</p>
+
+          <small>
+            It's also what the Angular CLI uses, so keep that in mind if you
+            would like to eventually start using it.
+          </small>
+        </section>
+
+        <section>
+          <h1>ngUpgrade!</h1>
+          <small>The Angular team has your back!</small>
+          <p>
+            Incrementally upgrade your app by simultaneously loading both
+            frameworks.
+          </p>
+        </section>
+
+        <section>
+          <section>
+            <h3>Upgrading / Downgrading</h3>
+            <p>Upgrade: AngularJS to Angular</p>
+
+            <small>
+              e.g. an AngularJS service consumed by an Angular component. You
+              are "upgrading" the AngularJS service to be compatible with the
+              Angular consumer.
+            </small>
+
+            <p>Downgrade: Angular to AngularJS</p>
+
+            <small>
+              e.g. an Angular component within an AngularJS module. You
+              are "downgrading" the Angular component to be compatible with the
+              AngularJS module.
+            </small>
+          </section>
+
+          <section>
+            <pre>
+              <code>
+@Component({
+  selector: 'app-do-some-math',
+  template: '<p>{{ num }} + 1 = {{ addedNum }}</p>'
+})
+export class DoSomeMathComponent {
+  @input() numberToAddOneTo: Number;
+
+  ngOnInit () {
+    this.addedNumber = this.numberToAddOneTo + 1;
+  }
+}
+
+///////////////////
+
+import { DoSomeMathComponent } from './do-some-math.component';
+import { downgradeComponent } from '@angular/upgrade/static';
+
+angular.module('veryComplicatedApp')
+  .component(
+    'appDoSomeMath',
+    downgradeComponent({ component: DoSomeMathComponent }) as angular.IDirectiveFactory
+  );
+              </code>
+            </pre>
+
+            <small>
+              Remember to add the component to your module's declarations array.
+            </small>
+          </section>
+        </section>
+
+        <section>
+          <h3>Other considerations</h3>
+
+          <p>
+            In the spirit of BrieBug CEO Jessie's original "Transitioning to
+            Angular 2" series, we will go over a few more things in the...
+          </p>
+        </section>
+
+        <section>
+          <section>
+            <h4>DEMO: Converting John Papa's Hot Towel</h4>
+
+            <small>
+              <a href="https://youtu.be/b8EjzJuiGYY?t=10m56s">
+                See the video here.
+              </a>
+            </small>
+          </section>
+
+          <section>
+            <h4>DEMO: Converting John Papa's Hot Towel</h4>
+            <p>Where are we now?</p>
+
+            <ul>
+              <li>Very functional (and massive) gulpfile</li>
+              <li>'vet' gulp task can no longer be valid</li>
+              <li>Should we include gulp-typescript or run tsc?</li>
+
+              <li>
+                Pretty good amount of abstraction in common pain points (e.g.
+                routerHelper)
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h4>DEMO: Converting John Papa's Hot Towel</h4>
+            <p>Where do we want to be?</p>
+
+            <ul>
+              <li>Aim to be as close to the guide as possible</li>
+              <li>Remove gulp as the build driver (Angular CLI as a replacement)</li>
+              <li class="fragment">Gloat that we upgraded!</li>
+            </ul>
+          </section>
+
+          <section>
+            <h4>DEMO: Converting John Papa's Hot Towel</h4>
+            <p>A look at an in-progress upgrade</p>
+
+            <ul>
+              <li>Right after JS to TS conversion</li>
+              <li>Angular service being used by an Angular component</li>
+              <li>Angular component nested within AngularJS directives</li>
+            </ul>
+          </section>
+
+          <section>
+            <h4>DEMO: Converting John Papa's Hot Towel</h4>
+            <p>Gotchas</p>
+
+            <ul>
+              <li>
+                Pay attention to version numbers and their corresponding
+                documentation!
+              </li>
+              <li>
+                systemjs-angular-loader.js - This is in the Quickstart project
+                that is linked in the guide, and it must be downloaded if
+                approaching the Angular installation this way.
+              </li>
+              <li>The guide-provided tsconfig.json required some tweaking</li>
+            </ul>
+          </section>
+        </section>
+
+
+
+        <section>
+          <h3>References</h3>
+          <small>This is also a recommended reading list!</small>
+
+          <ul>
+            <li>
+              <a href="https://angular.io/guide/upgrade/">
+                The official Angular Upgrade guide
+              </a>
+            </li>
+
+            <li>
+              <a href="https://leanpub.com/ngupgrade">
+                Nrwl's Upgrading Angular Applications book
+              </a>
+            </li>
+
+            <li>
+              <a href="https://blog.nrwl.io/ngupgrade-in-depth-436a52298a00">
+                ...or their blog post based on it
+              </a>
+            </li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+      // More info https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        history: true,
+
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+          { src: 'plugin/markdown/marked.js' },
+          { src: 'plugin/markdown/markdown.js' },
+          { src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+        ]
+      });
+    </script>
+  </body>
+</html>

@@ -42,12 +42,12 @@
           <h3>Angular Component Development Kit</h3>
           <div>
             <small>
-              <a href="http://briebug.github.io/presentations/ng-meetup/{path}">http://briebug.github.io/presentations/ng-meetup/#path</a>
+              <a href="https://briebug.github.io/presentations/ng-meetup/2017/10/angular-cdk/">https://briebug.github.io/presentations/ng-meetup/2017/10/angular-cdk/</a>
             </small>
           </div>
           <div>
-            #presenter<br>
-            <a href="https://github.com/#github">https://github.com/#github</a>
+            Adam Armour<br>
+            <a href="https://github.com/aarmour">https://github.com/aarmour</a>
           </div>
           <div class="logo">
             <img src="images/briebug-logo.svg" class="plain">
@@ -71,9 +71,12 @@
           </blockquote>
         </section>
 
-        <section>
+        <section data-background="images/rm-portal.png" data-background-color="#fff">
           <h3>Portal and PortalHost</h3>
-          <p class="fragment">
+        </section>
+
+        <section>
+          <p>
             A <q>Portal</q> is a piece of UI that can be dynamically rendered to an open slot on the page&hellip;
           </p>
           <p class="fragment">
@@ -85,12 +88,56 @@
         </section>
 
         <section>
+          <p>Material Design</p>
+          <ul>
+            <li>Tabs</li>
+            <li>Dialog</li>
+            <li>Snackbar</li>
+          </ul>
+
+          <aside class="notes">
+            Some of the Material Design components that use portals.
+          </aside>
+        </section>
+
+        <section>
           <h3>Example</h3>
         </section>
 
         <section>
+          <h3>Overlay</h3>
+        </section>
+
+        <section>
+          <p>Mechanism for creating floating panels on the screen.</p>
+        </section>
+
+        <section>
+          <p>Position strategies:</p>
+          <p class="fragment">GlobalPositionStrategy: for a specific position in the viewport (modal dialog, snackbar).</p>
+          <p class="fragment">ConnectedPositionStrategy: position relative to an anchor (menu, tooltip).</p>
+          <p class="fragment">PositionStrategy interface: implement for custom strategies.</p>
+        </section>
+
+        <section>
+          <p>Scroll strategies:</p>
+          <p class="fragment">NoopScrollStrategy (default): does nothing.</p>
+          <p class="fragment">CloseScrollStrategy: close the overlay on scroll.</p>
+        </section>
+
+        <section>
+          <p>BlockScrollStrategy: prevent scrolling when the overlay is open.</p>
+          <p class="fragment">RepositionScrollStrategy: reposition the overlay element on scroll. <em>(May impact performance)</em>.</p>
+          <p class="fragment">ScrollStrategy interface: implement for custom strategies.</p>
+        </section>
+
+        <section data-background="#fafafa">
           <h3>Table</h3>
-          <p class="fragment">
+          <img class="plain" src="images/table.png" style="width: 400px">
+        </section>
+
+        <section>
+          <p>
             The <code>&lt;cdk-table&gt;</code> is an unopinionated, customizable data-table with a fully-templated API, dynamic
             columns, and an accessible DOM structure.
           </p>
@@ -174,15 +221,115 @@
           </aside>
         </section>
 
-        <section>
-          <h3>a11y</h3>
+        <section data-background="#fff">
+          <h3>Stepper</h3>
+          <img class="plain" src="images/stepper.png">
+          
+          <aside class="notes">
+            Foundation for building workflows that divide content into logical steps.
+          </aside>
         </section>
 
         <section>
-          <h3>Bidi</h3>
+          <ul>
+            <li>Manages which step is active.</li>
+            <li class="fragment">Handles keyboard interaction.</li>
+            <li class="fragment">Provides an API for advancing or rewinding the workflow.</li>
+          </ul>
         </section>
 
         <section>
+          <p>Supports two approaches:</p>
+          <ol>
+            <li class="fragment">Using a single form for the entire stepper.</li>
+            <li class="fragment">Using a form for each individual step.</li>
+          </ol>
+        </section>
+
+        <section data-background="images/accessibility.png" data-background-color="white">
+          <h3>Accessibility</h3>
+        </section>
+
+        <section>
+          <p>ListKeyManager</p>
+          <p class="fragment">Manages the active option in a list of items based on keyboard interaction.</p>
+          <aside class="notes">For things like menus, i.e. role="menu" or role="listbox"</aside>
+        </section>
+
+        <section>
+          <p>Two types:</p>
+          <p class="fragment">FocusKeyManager: for options that directly receive focus.</p>
+          <p class="fragment">ActiveDescendentKeyManager: for options that use <code>aria-activedescendant</code>.</p>
+        </section>
+
+        <section>
+          <p>Any component that uses a <code>ListKeyManager</code> will generally do three things:</p>
+          <ul>
+            <li class="fragment">Create a <code>@ViewChildren</code> query for the options being managed.</li>
+            <li class="fragment">Initialize the <code>ListKeyManager</code>, passing in the options.</li>
+            <li class="fragment">Forward keyboard events from the managed component to the <code>ListKeyManager</code>.</li>
+          </ul>
+        </section>
+
+        <section>
+          <p>FocusTrap</p>
+          <p class="fragment"><code>cdkFocusTrap</code> directive keeps focus within an element.</p>
+        </section>
+
+        <section>
+          <pre><code>
+&lt;div class="dialog-content" cdkTrapFocus&gt;
+  &lt;!-- Tab and Shift + Tab will not leave this element. --&gt;
+&lt;/div>
+          </code></pre>
+        </section>
+
+        <section>
+          <p>Layout: BreakpointObserver</p>
+          <p class="fragment">Utility for evaluating media queries and reacting to changes.</p>
+        </section>
+
+        <section data-background="images/bidirectionality.png">
+          <h3 style="color: black">Bidirectionality</h3>
+        </section>
+
+        <section>
+          <p>Directionality</p>
+          <p>Service that provides the current direction value ('ltr' or 'rtl') and a stream for observing changes to direction.</p>
+        </section>
+
+        <section>
+          <pre><code>
+@Component()
+class DirectionalityExample {
+  private isRtl: boolean;
+  private dirChangeSubscription = Subscription.EMPTY;
+  
+  constructor(dir: Directionality) {
+    this.isRtl = dir.value === 'rtl';
+  
+    dirChangeSubscription = dir.change.subscribe(() => {
+      // Direction has changed
+    });
+  }
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h3>Scrolling</h3>
+        </section>
+
+        <section>
+          <p>cdkScrollable and ScrollDispatcher</p>
+          <p>React to scrolling in any ancestor scrolling containers.</p>
+        </section>
+
+        <section>
+          <h3>Example</h3>
+        </section>
+
+        <!--<section>
           <h3>Coercion</h3>
         </section>
 
@@ -204,7 +351,7 @@
 
         <section>
           <h3>Testing</h3>
-        </section>
+        </section> -->
 
         <section>
           <h4>References</h4>
