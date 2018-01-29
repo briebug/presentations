@@ -1,0 +1,9 @@
+yarn add @ngrx/core @ngrx/store @ngrx/effects @ngrx/entity @ngrx/router-store @ngrx/store-devtools
+
+from https://github.com/ngrx/platform:
+@ngrx/core - Core operators and utilities for the ngrx platform
+@ngrx/store - RxJS powered state management for Angular applications, inspired by Redux
+@ngrx/effects - Side Effect model for @ngrx/store to model event sources as actions
+@ngrx/router-store - Bindings to connect the Angular Router to @ngrx/store
+@ngrx/store-devtools - Store instrumentation that enables a powerful time-travelling debugger
+@ngrx/entity - Entity State adapter for managing record collections
