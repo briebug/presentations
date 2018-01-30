@@ -37,14 +37,16 @@ Only to be used in development!!
 SLIDE:
 Create structure for ngrx state management
 ng g m state
-ng g class state/heroes/actions/heroes
-ng g class state/heroes/effects/heroes
-ng g class state/heroes/reducers/heroes
-ng g class state/heroes/reducers/index
-ng g class state/app.effects
-ng g class state/app.interfaces
-ng g class state/app.reducer
-ng g class state/shared/utils
+mkdir src/app/state/heroes
+mkdir src/app/state/shared
+touch src/app/state/heroes/heroes.actions.ts
+touch src/app/state/heroes/heroes.effects.ts
+touch src/app/state/heroes/heroes.reducers.ts
+touch src/app/state/heroes/index.ts
+touch src/app/state/app.effects.ts
+touch src/app/state/app.interfaces.ts
+touch src/app/state/app.reducer.ts
+touch src/app/state/shared/utils.ts
 
 SLIDE:
 utils.ts definition
