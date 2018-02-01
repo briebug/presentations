@@ -1,0 +1,560 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Add NgRx to Existing Angular Application</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+
+    <!--&lt;!&ndash; Theme used for syntax highlighting of code &ndash;&gt;-->
+    <link rel="stylesheet" href="lib/css/darcula.css">
+
+    <!-- Theme additions -->
+    <style>
+        img.plain {
+            box-shadow: none;
+            border: 0;
+            background: transparent !important;
+        }
+
+        div.logo {
+            height: 100px;
+            margin-top: 30px;
+        }
+    </style>
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+<body>
+<div class="reveal">
+    <div class="slides">
+<!--INTRODUCTION-->
+        <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+            <h3>Adding NgRx to Tour Of Heroes Application</h3>
+            <div>
+                <small>
+                    <a href="http://briebug.github.io/presentations/ng-meetup/{path}">http://briebug.github.io/presentations/ng-meetup/#path</a>
+                </small>
+            </div>
+            <div>
+                #presenter<br>
+                <a href="https://github.com/#github">https://github.com/#github</a>
+            </div>
+            <div class="logo">
+                <img src="images/briebug-logo.svg" class="plain">
+            </div>
+        </section>
+        <section>
+            <h3>References</h3>
+            <ul>
+                <li><a href="https://github.com/ngrx/platform">https://github.com/ngrx/platform</a></li>
+                <li><a href="https://github.com/briebug/tour-of-heroes-ng5-ngrx">https://github.com/briebug/tour-of-heroes-ng5-ngrx (master branch)</a></li>
+                <li><a href="https://github.com/briebug/tour-of-heroes-ng5-ngrx">https://github.com/briebug/tour-of-heroes-ng5-ngrx (ngrx-basics branch)</a> </li>
+            </ul>
+        </section>
+        <section>
+            <h3>Overview</h3>
+            <ol>
+                <li>Clone the tour-of-heroes-ng5-ngrx repo (master branch)</li>
+                <li class="fragment">Install dependencies and NgRx packages</li>
+                <li class="fragment">Add NgRx scaffolding</li>
+                <li class="fragment">Create state for Heroes</li>
+                <li class="fragment">Switch from service calls to NgRx store calls</li>
+            </ol>
+        </section>
+
+<!--NGRX-->
+        <section>
+            <h2>Required NgRx Packages</h2>
+            <ol>
+                <li class="fragment">@ngrx/store: RxJS powered state management for Angular applications, inspired by Redux</li>
+                <li class="fragment">@ngrx/effects: Side Effect model for @ngrx/store to model event sources as actions</li>
+                <li class="fragment">@ngrx/entity: Entity State adapter for managing record collections</li>
+                <li class="fragment">@ngrx/router-store: Bindings to connect the Angular Router to @ngrx/store</li>
+            </ol>
+        </section>
+        <section>
+            <h2>Optional/Dev-only NgRx Packages</h2>
+            <ol>
+                <li>@ngrx/store-devtools: Store instrumentation that enables a powerful time-travelling debugger</li>
+                <li class="fragment">ngrx-store-freeze: A meta-reducer that prevents state from being mutated, and if state is mutated an exception will be thrown</li>
+            </ol>
+        </section>
+
+        <section>
+            <h2>Step 1: NgRx Installation</h2>
+            <pre>
+                <code class="hljs">
+yarn install
+
+# Required Packages
+yarn add @ngrx/store @ngrx/effects
+      @ngrx/entity @ngrx/router-store
+
+# Optional Packages
+yarn add @ngrx/store-devtools ngrx-store-freeze
+                </code>
+            </pre>
+        </section>
+
+<!--SCAFFOLDING-->
+        <section>
+            <h2>Step 2: Create NgRx scaffolding</h2>
+        </section>
+        <section>
+            <h3>Create State module and related store files</h3>
+            <pre>
+                <code class="hljs" data-trim>
+ng g m state
+mkdir src/app/state/heroes
+mkdir src/app/state/shared
+touch src/app/state/heroes/heroes.actions.ts
+touch src/app/state/heroes/heroes.effects.ts
+touch src/app/state/heroes/heroes.reducers.ts
+touch src/app/state/heroes/index.ts
+touch src/app/state/app.effects.ts
+touch src/app/state/app.interfaces.ts
+touch src/app/state/app.reducer.ts
+touch src/app/state/shared/utils.ts
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>Utils.ts</h3>
+            <span>Create a helper function to use in the action files. This is optional, but it will ensure that you don't
+	use the same action string literal in different places, which can cause some very unexpected results</span>
+        </section>
+        <section>
+            <pre>
+                <code class="typescript" data-trim>
+/**
+ * This function coerces a string into a string literal type.
+ * Using tagged union types in TypeScript 2.0, this enables
+ * powerful type checking of reducers.
+ *
+ * Since every action label passes through this function it
+ * is a good place to ensure the action labels are unique.
+ */
+const typeCache: { [label: string]: boolean } = {};
+export function createActionType&lt;T&gt;(label: T | ''): T {
+  if (typeCache[&lt;string&gt;label]) {
+    throw new Error(`Action type "${label}" is not unique"`);
+  }
+  typeCache[&lt;string&gt;label] = true;
+  return &lt;T&gt;label;
+}
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>Utils.ts continued...</h3>
+            <span>We can keep all application state inside the store as well as the state of the data in the application.
+	This includes the router snapshot state, which can be used to make sure we're looking at the latest
+	url request in all of our stores.</span>
+        </section>
+        <section>
+            <pre>
+                <code class="hljs" data-trim>
+/**
+ * The RouterStateSerializer takes the current RouterStateSnapshot
+ * and returns any pertinent information needed. The snapshot contains
+ * all information about the state of the router at the given point in time.
+ * The entire snapshot is complex and not always needed. In this case, you only
+ * need the URL and query parameters from the snapshot in the store. Other items could be
+ * returned such as route parameters and static route data.
+ */
+
+export interface RouterStateUrl {
+  url: string;
+  queryParams: Params;
+}
+
+export class CustomRouterStateSerializer
+  implements RouterStateSerializer&lt;RouterStateUrl&gt; {
+  serialize(routerState: RouterStateSnapshot): RouterStateUrl {
+    const { url } = routerState;
+    const queryParams = routerState.root.queryParams;
+    return { url, queryParams };
+  }
+}
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>App.effects definition</h3>
+            <span>WHY???</span>
+            <pre>
+                <code class="hljs" data-trim>
+@Injectable()
+export class AppEffects {
+  constructor(private actions: Actions) { }
+}
+                </code>
+            </pre>
+            <small>Import Actions from @ngrx/effects</small>
+        </section>
+        <section>
+            <h3>App.interfaces definition</h3>
+            <span>Create an interface where we can expose all of the different stores in a single place</span>
+            <pre>
+                <code class="hljs" data-trim>
+import { State as heroesState } from './heroes/heroes.reducers';
+
+export interface AppState {
+  router: RouterReducerState&lt;RouterStateUrl&gt;
+}
+
+export type TourOfHeroesState = AppState;
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>App.reducer definition</h3>
+            <span>Create a top-level reducer where we can expose all of the different reducer functions in a single place</span>
+            <pre>
+                <code class="hljs" data-trim>
+export const appReducer: ActionReducerMap&lt;AppState&gt; = {
+  router: routerReducer
+};
+
+export const appMetaReducers:
+    MetaReducer&lt;AppState&gt;[] = !environment.production
+        ? [storeFreeze]
+        : [];
+
+                </code>
+            </pre>
+            <small>Note the "!environment.production" line, assigning storeFreeze to the appMetaReducers array if we're not running in prod mode.</small>
+        </section>
+        <section>
+            <h3>State.module definition</h3>
+            Import ModuleWithProviders from @angular/core
+            <span></span>
+            <pre>
+                <code class="hljs" data-trim>
+@NgModule({
+  imports: [
+    CommonModule,
+    StoreRouterConnectingModule,
+    StoreModule.forRoot(appReducer, { metaReducers: appMetaReducers }),
+    EffectsModule.forRoot([AppEffects]),
+    !environment.production ? StoreDevtoolsModule.instrument() : []
+  ],
+  declarations: []
+})
+
+export class StateModule {
+
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: StateModule,
+      providers: [
+        /**
+         * The `RouterStateSnapshot` provided by the `Router` is a large complex structure.
+         * A custom RouterStateSerializer is used to parse the `RouterStateSnapshot` provided
+         * by `@ngrx/router-store` to include only the desired pieces of the snapshot.
+         */
+        {provide: RouterStateSerializer, useClass: CustomRouterStateSerializer}
+      ]
+    };
+  }
+
+  constructor(@Optional() @SkipSelf() parentModule: StateModule) {
+    if (parentModule) {
+      throw new Error(
+        'StateModule is already loaded. Import it in the AppModule only');
+    }
+  }
+}
+                </code>
+            </pre>
+            <small>Note the "!environment.production" line, assigning storeFreeze to the appMetaReducers array if we're not running in prod mode.</small>>
+        </section>
+
+        <section>
+            <h2>Step 3: Create State for Heroes</h2>
+        </section>
+        <section>
+            <h3>Create the heroes.actions.ts file</h3>
+            <span>Step 1: Use constants to describe what data actions can be performed on heroes. We'll just start with loading an array of Hero objects.</span>
+            <small>Import Action from @ngrx/store</small>
+            <pre>
+                <code class="hljs" data-trim>
+export const LOAD_HEROES = createActionType('LOAD_HEROES');
+export const LOAD_HEROES_SUCCESS = createActionType('LOAD_HEROES_SUCCESS');
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>Create the heroes.actions.ts file</h3>
+            <span>Step 2: Declare classes that implement Action and describe the action constants</span>
+            <pre>
+                <code class="hljs" data-trim>
+export class LoadHeroes implements Action {
+  readonly type = LOAD_HEROES;
+}
+
+export class LoadHeroesSuccess implements Action {
+  readonly type = LOAD_HEROES_SUCCESS;
+  constructor(public payload: Hero[]) {
+  }
+}
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>Create the heroes.actions.ts file</h3>
+            <span>Step 3: Export a type with all class names for use in the application</span>
+            <pre>
+                <code class="hljs" data-trim>
+export type HeroesActions =
+  LoadHeroes
+  | LoadHeroesSuccess;
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>Create the heroes.effects.ts file</h3>
+            <span>Describe the side-effects that happen when an action is invoked</span>
+            <pre>
+                <code class="hljs" data-trim>
+@Injectable()
+export class HeroesEffects {
+
+  @Effect()
+  getHeroes: Observable&lt;Action&gt; = this.actions.ofType(LOAD_HEROES)
+    .pipe(
+      switchMap(() => this.service.getHeroes()),
+      map((heroes: Hero[]) => new LoadHeroesSuccess(heroes)
+      )
+    );
+
+  constructor(
+    private actions: Actions,
+    private service: HeroService)  { }
+
+}
+                </code>
+            </pre>
+            <small>Import Action from @ngrx/store</small>
+            <small>Import Actions from @ngrx/effects</small>
+            <small>Import switchMap and map from rxjs/operator/switchMap</small>
+        </section>
+        <section>
+            <h3>Create the heroes.reducers.ts file</h3>
+            <span>The reducer is responsible for managing the state of the heroes collection</span>
+            <pre>
+                <code class="typescript" data-trim>
+export interface State extends EntityState&lt;Hero&gt; {
+  selectedHeroId: number | null;
+}
+
+export const adapter: EntityAdapter&lt;Hero&gt; = createEntityAdapter&lt;Hero&gt;();
+
+const initialState: State = adapter.getInitialState({
+  selectedHeroId: null
+});
+
+export function reducer(state: State = initialState, action: HeroesActions) {
+  switch (action.type) {
+    case LOAD_HEROES_SUCCESS: {
+      return adapter.addAll(action.payload, state);
+    }
+
+    default: {
+      return state;
+    }
+  }
+}
+
+export const getSelectedHeroId = (state: State) => state.selectedHeroId;
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>Create the index.ts file</h3>
+            <span>Create the methods that expose the selectors for the heroes state</span>
+            <pre>
+                <code class="hljs" data-trim>
+import * as fromHeroes from './heroes.reducers';
+import { State as HeroesState } from './heroes.reducers';
+
+export const getHeroesState = createFeatureSelector&lt;HeroesState&gt;('heroes');
+
+export const {
+  selectAll: getAllHeroes,
+  selectEntities: getHeroEntities,
+  selectIds: getHeroIds,
+  selectTotal: getHeroesTotal,
+} = fromHeroes.adapter.getSelectors(getHeroesState);
+
+export const getSelectedHeroId = createSelector(
+  getHeroesState,
+  fromHeroes.getSelectedHeroId
+);
+
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>Update the app.interfaces file</h3>
+            <span>Open the app.interfaces.ts file and add Heroes state to the TourOfHeroesState type definition:</span>
+            <pre>
+                <code class="hljs" data-trim>
+export interface AppState {
+  router: RouterReducerState&lt;RouterStateUrl&gt;
+  heroes: heroesState
+}
+
+export type TourOfHeroesState = AppState | heroesState;
+
+                </code>
+            </pre>
+        </section>
+        <section>
+            <h3>Update the app.reducer file</h3>
+            <span>Open the app.reducer.ts file and add Heroes reducer to the list of application reducers:</span>
+            <pre>
+                <code class="hljs" data-trim>
+export const appReducer: ActionReducerMap&lt;AppState&gt; = {
+  router: routerReducer,
+  heroes: heroesReducer
+};
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <h3>edit app.module</h3>
+            <span>Add state module to app modules</span>
+            <pre>
+                <code class="typescript" data-trim>
+// Add to @NgModule imports array
+StateModule.forRoot()
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <h3>Edit state.module.ts</h3>
+            <span>Register the heroes effects with the application store</span>
+            <pre>
+                <code class="typescript" data-trim>
+// FROM
+EffectsModule.forRoot([AppEffects]),
+
+// TO
+EffectsModule.forRoot([AppEffects, HeroesEffects]),
+                </code>
+            </pre>
+        </section>
+<!--HEROES STATE-->
+
+        <section>
+            <h2>Step 4: Use NgRx Store to get Heroes list</h2>
+        </section>
+        <section>
+            <h3>Update the dashboard component</h3>
+            <span>Open the dashboard.component.ts and use the Heroes state to supply data instead of the Heroes service:</span>
+            <pre>
+                <code class="typescript" data-trim>
+export class DashboardComponent implements OnInit {
+  heroes: Hero[];
+  heroObservable: Observable&lt;Hero[]&gt;
+
+  constructor(
+    private router: Router,
+    private store: Store&lt;TourOfHeroesState&gt;) {
+  }
+
+  ngOnInit(): void {
+    this.heroObservable = this.store.select(getAllHeroes);
+    this.store.dispatch(new LoadHeroes);
+    this.heroObservable
+      .catch(err => {
+        console.log(err);
+        return of(err);
+      })
+      .subscribe(heroes => this.heroes = heroes.slice(1, 5));
+  }
+
+  gotoDetail(hero: Hero): void {
+    const link = ['/detail', hero.id];
+    this.router.navigate(link);
+  }
+}
+                </code>
+            </pre>
+        </section>
+
+        <section>
+            <span>Use the Redux DevTools add-in to inspect state</span>
+            <img src="images/dev-tools-dashboard.png" />
+        </section>
+
+        <section>
+            <h3>Update the heroes list component</h3>
+            <span>Open the heroes.component.ts and use the Heroes state to supply data instead of the Heroes service:</span>
+            <pre>
+                <code class="typescript" data-trim>
+// Declare the observable to hold the heroes state
+  heroesObservable: Observable&lt;Hero[]&gt;
+
+// Add the TourOfHeroesState as a dependency
+  constructor(
+    private router: Router,
+    private store: Store&lt;TourOfHeroesState&gt;,
+    private heroService: HeroService) { }
+
+// Convert getHeroes() to use the NgRx store instead of the heroes service
+  getHeroes(): void {
+    this.heroesObservable = this.store.select(getAllHeroes);
+    this.store.dispatch(new LoadHeroes);
+
+    this.heroesObservable
+      .catch(err => {
+        console.log(err);
+        return of(err);
+      })
+      .subscribe(heroes => this.heroes = heroes);
+  }
+                </code>
+            </pre>
+        </section>
+
+    </div>
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+    // More info https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        history: true,
+
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+            {src: 'plugin/markdown/marked.js'},
+            {src: 'plugin/markdown/markdown.js'},
+            {src: 'plugin/notes/notes.js', async: true},
+            {
+                src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+                    hljs.initHighlightingOnLoad();
+                }
+            }
+        ]
+    });
+</script>
+</body>
+</html>

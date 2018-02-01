@@ -1,0 +1,18 @@
+yarn install
+yarn add @ngrx/core
+yarn add @ngrx/effects
+yarn add @ngrx/entity
+yarn add @ngrx/router-store
+yarn add @ngrx/store
+yarn add @ngrx/store-devtools
+yarn add ngrx-store-freeze
+
+ng g m state
+ng g class state/heroes/actions/heroes
+ng g class state/heroes/effects/heroes
+ng g class state/heroes/reducers/heroes
+ng g class state/heroes/reducers/index
+ng g class state/app.effects
+ng g class state/app.interfaces
+ng g class state/app.reducer
+ng g class state/shared/utils
