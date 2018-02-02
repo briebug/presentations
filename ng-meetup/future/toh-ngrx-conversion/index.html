@@ -129,35 +129,35 @@ touch src/app/state/shared/utils.ts
                 </code>
             </pre>
         </section>
+        <!--<section>-->
+            <!--<h3>Utils.ts</h3>-->
+            <!--<span>Create a helper function to use in the action files. This is optional, but it will ensure that you don't-->
+	<!--use the same action string literal in different places, which can cause some very unexpected results</span>-->
+        <!--</section>-->
+        <!--<section>-->
+            <!--<pre>-->
+                <!--<code class="typescript" data-trim>-->
+<!--/**-->
+ <!--* This function coerces a string into a string literal type.-->
+ <!--* Using tagged union types in TypeScript 2.0, this enables-->
+ <!--* powerful type checking of reducers.-->
+ <!--*-->
+ <!--* Since every action label passes through this function it-->
+ <!--* is a good place to ensure the action labels are unique.-->
+ <!--*/-->
+<!--const typeCache: { [label: string]: boolean } = {};-->
+<!--export function createActionType&lt;T&gt;(label: T | ''): T {-->
+  <!--if (typeCache[&lt;string&gt;label]) {-->
+    <!--throw new Error(`Action type "${label}" is not unique"`);-->
+  <!--}-->
+  <!--typeCache[&lt;string&gt;label] = true;-->
+  <!--return &lt;T&gt;label;-->
+<!--}-->
+                <!--</code>-->
+            <!--</pre>-->
+        <!--</section>-->
         <section>
             <h3>Utils.ts</h3>
-            <span>Create a helper function to use in the action files. This is optional, but it will ensure that you don't
-	use the same action string literal in different places, which can cause some very unexpected results</span>
-        </section>
-        <section>
-            <pre>
-                <code class="typescript" data-trim>
-/**
- * This function coerces a string into a string literal type.
- * Using tagged union types in TypeScript 2.0, this enables
- * powerful type checking of reducers.
- *
- * Since every action label passes through this function it
- * is a good place to ensure the action labels are unique.
- */
-const typeCache: { [label: string]: boolean } = {};
-export function createActionType&lt;T&gt;(label: T | ''): T {
-  if (typeCache[&lt;string&gt;label]) {
-    throw new Error(`Action type "${label}" is not unique"`);
-  }
-  typeCache[&lt;string&gt;label] = true;
-  return &lt;T&gt;label;
-}
-                </code>
-            </pre>
-        </section>
-        <section>
-            <h3>Utils.ts continued...</h3>
             <span>We can keep all application state inside the store as well as the state of the data in the application.
 	This includes the router snapshot state, which can be used to make sure we're looking at the latest
 	url request in all of our stores.</span>
@@ -190,34 +190,34 @@ export class CustomRouterStateSerializer
                 </code>
             </pre>
         </section>
-        <section>
-            <h3>App.effects definition</h3>
-            <span>WHY???</span>
-            <pre>
-                <code class="hljs" data-trim>
-@Injectable()
-export class AppEffects {
-  constructor(private actions: Actions) { }
-}
-                </code>
-            </pre>
-            <small>Import Actions from @ngrx/effects</small>
-        </section>
-        <section>
-            <h3>App.interfaces definition</h3>
-            <span>Create an interface where we can expose all of the different stores in a single place</span>
-            <pre>
-                <code class="hljs" data-trim>
-import { State as heroesState } from './heroes/heroes.reducers';
+        <!--<section>-->
+            <!--<h3>App.effects definition</h3>-->
+            <!--<span>WHY???</span>-->
+            <!--<pre>-->
+                <!--<code class="hljs" data-trim>-->
+<!--@Injectable()-->
+<!--export class AppEffects {-->
+  <!--constructor(private actions: Actions) { }-->
+<!--}-->
+                <!--</code>-->
+            <!--</pre>-->
+            <!--<small>Import Actions from @ngrx/effects</small>-->
+        <!--</section>-->
+        <!--<section>-->
+            <!--<h3>App.interfaces definition</h3>-->
+            <!--<span>Create an interface where we can expose all of the different stores in a single place</span>-->
+            <!--<pre>-->
+                <!--<code class="hljs" data-trim>-->
+<!--import { State as heroesState } from './heroes/heroes.reducers';-->
 
-export interface AppState {
-  router: RouterReducerState&lt;RouterStateUrl&gt;
-}
+<!--export interface AppState {-->
+  <!--router: RouterReducerState&lt;RouterStateUrl&gt;-->
+<!--}-->
 
-export type TourOfHeroesState = AppState;
-                </code>
-            </pre>
-        </section>
+<!--export type TourOfHeroesState = AppState;-->
+                <!--</code>-->
+            <!--</pre>-->
+        <!--</section>-->
         <section>
             <h3>App.reducer definition</h3>
             <span>Create a top-level reducer where we can expose all of the different reducer functions in a single place</span>
@@ -238,7 +238,6 @@ export const appMetaReducers:
         </section>
         <section>
             <h3>State.module definition</h3>
-            Import ModuleWithProviders from @angular/core
             <span></span>
             <pre>
                 <code class="hljs" data-trim>
@@ -278,7 +277,8 @@ export class StateModule {
 }
                 </code>
             </pre>
-            <small>Note the "!environment.production" line, assigning storeFreeze to the appMetaReducers array if we're not running in prod mode.</small>>
+            <small>Import ModuleWithProviders from @angular/core</small>
+            <!--<small>Note the "!environment.production" line, assigning storeFreeze to the appMetaReducers array if we're not running in prod mode.</small>>-->
         </section>
 
         <section>
@@ -286,26 +286,28 @@ export class StateModule {
         </section>
         <section>
             <h3>Create the heroes.actions.ts file</h3>
-            <span>Step 1: Use constants to describe what data actions can be performed on heroes. We'll just start with loading an array of Hero objects.</span>
-            <small>Import Action from @ngrx/store</small>
+            <span>Step 1: Use a string enum to describe what data actions can be performed on heroes. We'll just start with loading an array of Hero objects.</span>
             <pre>
                 <code class="hljs" data-trim>
-export const LOAD_HEROES = createActionType('LOAD_HEROES');
-export const LOAD_HEROES_SUCCESS = createActionType('LOAD_HEROES_SUCCESS');
+export enum HeroActionTypes {
+  LOAD_HEROES = 'LOAD_HEROES',
+  LOAD_HEROES_SUCCESS = 'LOAD_HEROES_SUCCESS'
+}
                 </code>
             </pre>
+            <small>Import Action from @ngrx/store</small>
         </section>
         <section>
             <h3>Create the heroes.actions.ts file</h3>
-            <span>Step 2: Declare classes that implement Action and describe the action constants</span>
+            <span>Step 2: Declare classes that implement Action and describe the action enum values</span>
             <pre>
                 <code class="hljs" data-trim>
 export class LoadHeroes implements Action {
-  readonly type = LOAD_HEROES;
+  readonly type = HeroActionTypes.LOAD_HEROES;
 }
 
 export class LoadHeroesSuccess implements Action {
-  readonly type = LOAD_HEROES_SUCCESS;
+  readonly type = HeroActionTypes.LOAD_HEROES_SUCCESS;
   constructor(public payload: Hero[]) {
   }
 }
@@ -332,7 +334,8 @@ export type HeroesActions =
 export class HeroesEffects {
 
   @Effect()
-  getHeroes: Observable&lt;Action&gt; = this.actions.ofType(LOAD_HEROES)
+  getHeroes: Observable&lt;Action&gt;
+   = this.actions.ofType(HeroActionTypes.LOAD_HEROES)
     .pipe(
       switchMap(() => this.service.getHeroes()),
       map((heroes: Hero[]) => new LoadHeroesSuccess(heroes)
@@ -367,7 +370,7 @@ const initialState: State = adapter.getInitialState({
 
 export function reducer(state: State = initialState, action: HeroesActions) {
   switch (action.type) {
-    case LOAD_HEROES_SUCCESS: {
+    case HeroActionTypes.LOAD_HEROES_SUCCESS: {
       return adapter.addAll(action.payload, state);
     }
 
@@ -377,6 +380,7 @@ export function reducer(state: State = initialState, action: HeroesActions) {
   }
 }
 
+export const getSelectedHeroId = (state: State) => state.selectedHeroId;
 export const getSelectedHeroId = (state: State) => state.selectedHeroId;
                 </code>
             </pre>
