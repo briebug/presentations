@@ -1,0 +1,332 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>NgRx Jest Testing</title>
+
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/black.css">
+
+  <!-- Theme used for syntax highlighting of code -->
+  <link rel="stylesheet" href="lib/css/zenburn.css">
+
+  <!-- Theme additions -->
+  <style>
+    img.plain {
+      box-shadow: none;
+      border: 0;
+      background: transparent !important;
+    }
+
+    div.logo {
+      height: 100px;
+      margin-top: 30px;
+    }
+  </style>
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+        <h3>NgRx Jest Testing</h3>
+        <div>
+          <small>
+            <a href="http://briebug.github.io/presentations/ng-meetup/2018/02/ngrx-jest-testing" target="_blank">http://briebug.github.io/presentations/ng-meetup/2018/02/ngrx-jest-testing</a>
+          </small>
+        </div>
+        <div>
+          Jesse Sanders
+          <br> @JesseS_BrieBug
+          <br>
+          <a href="https://github.com/jessesanders">https://github.com/jessesanders</a>
+          <br> jesse.sanders@briebug.com
+        </div>
+        <div class="logo">
+          <img src="images/briebug-logo.svg" class="plain">
+        </div>
+      </section>
+
+      <section data-background="images/BrieBugMeetup1.png" data-background-color="#ffffff">
+      </section>
+
+      <section data-background="images/BrieBugMeetup2.png" data-background-color="#ffffff">
+      </section>
+
+      <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+        <h3>Intro to RxJS</h3>
+        <div>
+          <small>
+            2/28/2018 - BrieBug
+          </small>
+        </div>
+        <div>
+          Brian Love
+        </div>
+        <div class="logo">
+          <img src="images/briebug-logo.svg" class="plain">
+        </div>
+      </section>
+
+      <section data-background-color="#ffffff">
+        <img src="images/JWilken_1252018_3.png"></img>
+      </section>
+
+      <section data-background-color="#ffffff">
+        <img src="images/EveningofAngular_KidsTek.png"></img>
+      </section>
+
+      <section>
+        <h3>Agenda</h3>
+        <aside>
+          <ul>
+            <li class="fragment">What is Jest? Why use it?</li>
+            <li class="fragment">How do I install and configure it?</li>
+            <li class="fragment">How to write simple tests</li>
+            <li class="fragment">Testing NgRx</li>
+            <li class="fragment">Upgrading Tests</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section data-transition="slide-in fade-out">
+        <h3>I love testing</h3>
+      </section>
+
+      <section data-transition="fade-in">
+        <h3>I love the idea of testing</h3>
+      </section>
+
+      <section>
+        <h3>Testing is hard</h3>
+        <aside>
+          <ul>
+            <li class="fragment">Takes a lot of time</li>
+            <li class="fragment">E2E tests fragile/fail intermittently</li>
+            <li class="fragment">Refactors can break 100's of tests</li>
+            <li class="fragment">Not enough time</li>
+          </ul>
+      </section>
+
+      <section>
+        <h3>Installation</h3>
+        <code>
+          npm install --save-dev jest
+        </code>
+      </section>
+
+      <section>
+        <h3>Typical Configuration</h3>
+        <aside>
+          Karma
+          <br/> Jasmine/Mocha
+          <br/> Instanbul
+          <br/> Karma Chrome Launcher
+          <br/> karma.conf.js
+        </aside>
+      </section>
+
+      <section>
+        <h3>Jest Configuration</h3>
+        <code class="fragment">
+          (none)
+        </code>
+      </section>
+
+
+      <section>
+        <h3>Angular CLI</h3>
+        <h3>Configuration</h3>
+        <pre>
+          <code>
+  // typescript support
+  npm install --save-dev ts-jest @types/jest
+
+  // angular support
+  npm install --save-dev jest-preset-angular jest-zone-patch
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Angular Configuration</h3>
+        <p>package.json</p>
+        <pre>
+          <code>
+"jest": { 
+  "setupTestFrameworkScriptFile": "&lt;rootDir&gt;/setup-jest.ts", 
+  "globals": { 
+    "ts-jest": { 
+      "tsConfigFile": "src/tsconfig.spec.json" 
+    }, 
+    "__TRANSFORM_HTML__": true 
+  }, 
+  "transform": { 
+    "^.+\\.(ts|js|html)$": "&lt;rootDir&gt;/node_modules/jest-preset-angular/preprocessor.js" 
+  }, 
+  "testMatch": ["&lt;rootDir&gt;/src/**/*.spec.ts"], 
+  "moduleFileExtensions": ["ts", "js", "html", "json"], 
+  "mapCoverage": true, 
+  "coveragePathIgnorePatterns": ["/node_modules/", "/modules/*.*/"], 
+  "moduleNameMapper": { 
+    "^@ngrx/(?!db)(.*)": "&lt;rootDir&gt;/modules/$1" 
+  }, 
+  "transformIgnorePatterns": ["node_modules/(?!@ngrx)"], 
+  "modulePathIgnorePatterns": ["dist"] 
+}
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <p>setup-jest.ts</p>
+        <pre>
+          <code>
+import "jest-preset-angular";
+global["CSS"] = null;
+
+/**
+* ISSUE: https://github.com/angular/material2/issues/7101
+* Workaround for JSDOM missing transform property
+*/
+Object.defineProperty(document.body.style, "transform", {
+  value: () => {
+    return {
+      enumerable: true,
+      configurable: true
+    };
+  }
+});
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Simple Function</h3>
+        <pre>
+          <code>
+    function sum(a, b) { 
+      return a + b; 
+    } 
+    
+    module.exports = sum;
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>My First Test</h3>
+        <pre>
+          <code>
+    const sum = require('./sum'); 
+    
+    test('adds 1 + 2 to equal 3', () => { 
+      expect(sum(1, 2)).toBe(3); 
+    });
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Running tests</h3>
+        <p>package.json</p>
+        <pre>
+          <code>
+"scripts": {
+  ...
+  "test": "jest"
+}
+          </code>
+          <code>
+npm test
+          </code>
+        </pre>>
+      </section>
+      <section>
+        <h3>Test Output</h3>
+        <pre>
+          <code>
+FAIL  src/sum.spec.ts
+  ● adds 1 + 2 to equal 3
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected value to be:
+      4
+    Received:
+      3
+
+      1 | const sumFunc = require("./sum");
+      2 |
+    > 3 | test("adds 1 + 2 to equal 3", () => {
+      4 |   expect(sumFunc(1, 2)).toBe(4);
+      5 | });
+      6 |
+
+      at src/sum.spec.ts:3:27
+
+Test Suites: 1 failed, 1 passed, 2 total
+Tests:       1 failed, 3 passed, 4 total
+Snapshots:   0 total
+Time:        3.297s
+Ran all test suites.
+          </code>
+        </pre>>
+      </section>
+
+      <section>
+        <h4>References</h4>
+        <ul>
+          <li class="">
+            <a href="https://facebook.github.io/jest/" target="_blank">https://facebook.github.io/jest/</a>
+          </li>
+          <li class="">
+            <a href="https://github.com/facebook/jest" target="_blank">https://github.com/facebook/jest</a>
+          </li>
+          <li class="">
+            <a href="https://github.com/kulshekhar/ts-jest" target="_blank">https://github.com/kulshekhar/ts-jest</a>
+          </li>
+        </ul>
+      </section>
+
+      <section data-background-color="#ffffff">
+        <img src="images/ng-conf.png">
+        </img>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+
+  <script>
+    // More info https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+      history: true,
+
+      // More info https://github.com/hakimel/reveal.js#dependencies
+      dependencies: [
+        { src: 'plugin/markdown/marked.js' },
+        { src: 'plugin/markdown/markdown.js' },
+        { src: 'plugin/notes/notes.js', async: true },
+        { src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+      ]
+    });
+  </script>
+</body>
+
+</html>
