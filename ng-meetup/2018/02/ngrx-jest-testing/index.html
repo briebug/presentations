@@ -63,7 +63,17 @@
       <section data-background="images/BrieBugMeetup1.png" data-background-color="#ffffff">
       </section>
 
-      <section data-background="images/BrieBugMeetup2.png" data-background-color="#ffffff">
+      <section data-background="images/2_about_BrieBug_slide.png" data-background-color="#ffffff">
+      </section>
+
+      <section data-background="images/3_call_for_presenters_slide.png" data-background-color="#ffffff">
+      </section>
+
+      <section data-background="images/4_announcements_slide.png" data-background-color="#ffffff">
+      </section>
+
+      <section data-background-color="#ffffff">
+        <img src="images/JWilken_1252018_3.png"></img>
       </section>
 
       <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
@@ -82,11 +92,11 @@
       </section>
 
       <section data-background-color="#ffffff">
-        <img src="images/JWilken_1252018_3.png"></img>
+        <img src="images/EveningofAngular_KidsTek.png"></img>
       </section>
 
       <section data-background-color="#ffffff">
-        <img src="images/EveningofAngular_KidsTek.png"></img>
+        <img class="borderless" src="images/Jester.gif"></img>
       </section>
 
       <section>
@@ -255,6 +265,20 @@ npm test
           </code>
         </pre>>
       </section>
+
+      <section>
+        <h3>Karma Test Output</h3>
+        <pre>
+                <code>
+   Chrome 63.0.3239 (Mac OS X 10.13.3): Executed 2 of 3 (1 FAILED) (0 secs / 0.258 secs) Chrome 63.0.3239 (Mac OS X 10.13.3)
+  AppComponent should have as title'app' FAILED Expected 'app' to equal 'app2'. at Object.
+  &lt;anonymous&gt; Users/jessesanders/repo/ng-test/src/app/app.component.spec.ts:24:25) at ZoneDelegate.webpackJsonp.../../../../zone.js/dist/zone.js.ZoneDelegate.invoke
+    Users/jessesanders/repo/ng-test/node_modules/zone.js/dist/zone.js:392:1) at AsyncTestZoneSpec.webpackJsonp.../../../../zone.js/dist/async-test.js.AsyncTestZoneSpec.onInvoke
+    Users/jessesanders/repo/ng-test/node_modules/zone.js/dist/async-test.js:49:1)
+                </code>
+              </pre>>
+      </section>
+
       <section>
         <h3>Test Output</h3>
         <pre>
@@ -269,9 +293,9 @@ FAIL  src/sum.spec.ts
     Received:
       3
 
-      1 | const sumFunc = require("./sum");
+      1 | const sumFunc = require('./sum');
       2 |
-    > 3 | test("adds 1 + 2 to equal 3", () => {
+    > 3 | test('adds 1 + 2 to equal 3', () => {
       4 |   expect(sumFunc(1, 2)).toBe(4);
       5 | });
       6 |
@@ -288,6 +312,310 @@ Ran all test suites.
       </section>
 
       <section>
+        <h3>Code Coverage</h3>
+        <p>package.json</p>
+        <pre>
+                <code>
+      "scripts": {
+        ...
+        "test": "jest --coverage"
+      }
+                </code>
+              </pre>>
+      </section>
+
+      <section>
+        <h3>Test Coverage Output</h3>
+        <pre>
+          <code>
+ PASS  src/sum.spec.ts
+ PASS  src/app/app.component.spec.ts
+---------------------|----------|----------|----------|----------|----------------|
+File                 |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
+---------------------|----------|----------|----------|----------|----------------|
+All files            |      100 |      100 |      100 |      100 |                |
+ src                 |      100 |      100 |      100 |      100 |                |
+  sum.ts             |      100 |      100 |      100 |      100 |                |
+ src/app             |      100 |      100 |      100 |      100 |                |
+  app.component.html |      100 |      100 |      100 |      100 |                |
+  app.component.ts   |      100 |      100 |      100 |      100 |                |
+---------------------|----------|----------|----------|----------|----------------|
+
+Test Suites: 2 passed, 2 total
+Tests:       4 passed, 4 total
+Snapshots:   0 total
+Time:        3.527s
+          </code>
+        </pre>>
+      </section>
+
+      <section>
+        <h3>Jest CLI Options</h3>
+        <pre>
+          <code>
+    jest sum --coverage // filters test files matching sum
+    npm test -- sum // same
+
+    jest --watch // watch mode 
+    npm test -- --watch // same
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Watch Mode</h3>
+        <pre>
+          <code>
+Watch Usage
+ › Press a to run all tests.
+ › Press f to run only failed tests.
+ › Press p to filter by a filename regex pattern.
+ › Press t to filter by a test name regex pattern.
+ › Press q to quit watch mode.
+ › Press Enter to trigger a test run.
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Jest Globals</h3>
+        <pre>
+          <code>
+    afterAll(fn, timeout)
+    afterEach(fn, timeout)
+    beforeAll(fn, timeout)
+    beforeEach(fn, timeout)
+    describe(name, fn)
+    describe.only(name, fn)
+    describe.skip(name, fn)
+    require.requireActual(moduleName)
+    require.requireMock(moduleName)
+    test(name, fn, timeout)
+    test.only(name, fn, timeout)
+    test.skip(name, fn)
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>A Simple Action</h3>
+        <pre>
+          <code>
+    export class Select implements Action {
+      readonly type = CustomerActionTypes.Select;
+
+      constructor(public payload: Customer) {}
+    }  
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Action Testing</h3>
+        <pre>
+          <code>
+    describe('Customer Select', () => {
+      test('should set selected id', () => {
+        const customer = &lt;Customer&gt;{ id: 1, name: 'Test User' },
+          action = new CustomerActions.Select(customer);
+
+        expect(action.type).toBe('[Customer] Select');
+        expect(action.payload).toBe(customer);
+      });
+    });
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Snapshot Testing</h3>
+        <ul>
+          <li class="fragment">
+            Compares expectation to stored snapshot
+          </li>
+          <li class="fragment">Stores a snapshot if it doesn't exist</li>
+          <li class="fragment">Performs diff on snapshot</li>
+          <li class="fragment">
+            Easily update snapshots on refactor
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Snapshot Test Example</h3>
+        <pre>
+          <code>
+    test('should set customer to payload in snapshot', () => {
+      const action = new CustomerActions.Select(customer);
+
+      expect(action.payload).toMatchSnapshot();
+    });
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Snapshot Stored</h3>
+        <pre>
+          <code>
+    exports[`Customer Actions Customer Select should set customer to payload in snapshot`] = `
+    Object {
+      "id": 1,
+      "name": "Test User",
+    }
+    `;
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Sample Reducer</h3>
+        <pre>
+          <code>
+  export function reducer(state = initialState, action: CustomerActions): State {
+    switch (action.type) {
+      case CustomerActionTypes.Select: {
+        return {
+          ...state,
+          selectedCustomerId: action.payload.id
+        };
+      }
+
+      default: {
+        return state;
+      }
+    }
+  }
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Testing the Reducer</h3>
+        <pre>
+          <code>
+  describe('Customer Select Action', () => {
+    test('should set selectedCustomerId', () => {
+      const action = new Select(customer),
+        result = reducer(initialState, action);
+
+      expect(result).toMatchSnapshot();
+      expect(fromCustomers.getSelectedId(result)).toEqual(customer.id);
+    });
+  });
+          </code>
+        </pre>
+      </section>
+      <section>
+        <h3>Sample Effect</h3>
+        <pre>
+          <code>
+    @Effect()
+    load$: Observable<Action> = this.actions$.pipe(
+      ofType<Load>(CustomerActionTypes.Load),
+      switchMap(query => {
+        return this.customersService
+          .load()
+          .pipe(
+            map((customers: Customer[]) => new LoadSuccess(customers)),
+            catchError(err => of(new LoadFail(err)))
+          );
+      })
+    );
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Testing the Effect</h3>
+        <pre>
+          <code>
+    describe('load$', () => {
+      it('should return a new customer.LoadSuccess, with the customers, on success', () => {
+        const action = new Load(),
+          completion = new LoadSuccess(customers),
+          response = cold('a|', { a: customers }),
+          expected = cold('-b', { b: completion });
+
+        actions$.stream = hot('-a', { a: action });
+
+        // mock the load function to be the response
+        customersService.load = jest.fn(() => response);
+
+        expect(effects.load$).toBeObservable(expected);
+      });
+    });
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>RxJs Marbles</h3>
+        <ul>
+          <li class="fragment">
+            Enables testing async operations in a synchronous and dependable manner
+          </li>
+          <li class="fragment">Control what is emitted and when</li>
+          <li class="fragment">hot creates a subject that behaves like its already running</li>
+          <li class="fragment">
+            cold creates an observable that "starts" when the tests start.
+          </li>
+          <li class="fragment">
+            hot('--a--b', { a: 1, b: 2 }) - emits values 1 and 2
+          </li>
+          <li class="fragment">
+            hot('---#') - will emit error
+          </li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>RxJs Marbles Syntax</h3>
+        <ul>
+          <li class="fragment">
+            "-" time: 10 "frames" of time passage
+          </li>
+          <li class="fragment">
+            "|" complete: The successful completion of an observable
+          </li>
+          <li class="fragment">
+            "#" error: An error terminating the observable
+          </li>
+          <li class="fragment">
+            "a" any character: All other characters represent a value being emitted
+          </li>
+          <li class="fragment">
+            "()" sync groupings: multiple events emitted in the same frame
+          </li>
+          <li class="fragment">
+            "^" subscription point: (hot observables only)
+          </li>
+        </ul>
+      </section>
+
+
+      <section>
+        <h3>Testing the Effect Error Path</h3>
+        <pre>
+          <code>
+    it('should return a new customer.LoadError, on fail', () => {
+      const action = new Load(),
+        completion = new LoadFail('error'),
+        response = cold('#'),
+        expected = cold('-b', { b: completion });
+
+      actions$.stream = hot('-a', { a: action });
+
+      // mock the load function to be the response
+      customersService.load = jest.fn(() => response);
+
+      expect(effects.load$).toBeObservable(expected);
+    });
+          </code>
+        </pre>
+      </section>
+
+      <section>
         <h4>References</h4>
         <ul>
           <li class="">
@@ -298,6 +626,15 @@ Ran all test suites.
           </li>
           <li class="">
             <a href="https://github.com/kulshekhar/ts-jest" target="_blank">https://github.com/kulshekhar/ts-jest</a>
+          </li>
+          <li class="">
+            <a href="https://github.com/ReactiveX/rxjs/blob/5.4.2/doc/writing-marble-tests.md" target="_blank">https://github.com/ReactiveX/rxjs/blob/5.4.2/doc/writing-marble-tests.md</a>
+          </li>
+          <li class="">
+            <a href="https://blog.angularindepth.com/rxjs-marble-testing-rtfm-a9a6cd3db758" target="_blank">https://blog.angularindepth.com/rxjs-marble-testing-rtfm-a9a6cd3db758</a>
+          </li>
+          <li class="">
+            <a href="https://www.ericponto.com/blog/2017/01/08/rxjs-marble-diagram-tests-with-qunit/" target="_blank">https://www.ericponto.com/blog/2017/01/08/rxjs-marble-diagram-tests-with-qunit/</a>
           </li>
         </ul>
       </section>
