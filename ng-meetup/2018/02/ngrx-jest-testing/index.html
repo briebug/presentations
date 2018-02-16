@@ -511,8 +511,8 @@ Watch Usage
         <pre>
           <code>
     @Effect()
-    load$: Observable<Action> = this.actions$.pipe(
-      ofType<Load>(CustomerActionTypes.Load),
+    load$: Observable&lt;Action&gt; = this.actions$.pipe(
+      ofType&lt;Load&gt;(CustomerActionTypes.Load),
       switchMap(query => {
         return this.customersService
           .load()
