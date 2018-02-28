@@ -42,7 +42,7 @@
         <div class="slides">
             <!--INTRODUCTION-->
             <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
-                <h3>Adding NgRx to Tour Of Heroes Application</h3>
+                <h3>Tour Of Heroes - NgRx</h3>
                 <div>
                     <small>
                         <a href="http://briebug.github.io/presentations/ng-meetup/2018/02/toh-ngrx-conversion">http://briebug.github.io/presentations/ng-meetup/2018/02/toh-ngrx-conversion</a>
@@ -57,10 +57,31 @@
                     <img src="images/briebug-logo.svg" class="plain">
                 </div>
             </section>
+
+            <section data-background="images/BrieBugMeetup1.png" data-background-color="#ffffff">
+            </section>
+
+            <section data-background="images/2_about_BrieBug_slide.png" data-background-color="#ffffff">
+            </section>
+
+            <section data-background="images/AboutJesse.png" data-background-color="#ffffff">
+            </section>
+
+            <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+                <h3>BrieBug - What We do</h3>
+                <ol>
+                    <li class="fragment">Angular Training</li>
+                    <li class="fragment">Architecture Reviews</li>
+                    <li class="fragment">Complex Applications</li>
+                    <li class="fragment">Upgrade old technology</li>
+                    <li class="fragment">We have fun!</li>
+                </ol>
+            </section>
+
             <section>
                 <h3>Overview</h3>
                 <ol>
-                    <li>What is NgRx and why would I use it?</li>
+                    <li class="fragment">What is NgRx and why would I use it?</li>
                     <li class="fragment">Installing NgRx</li>
                     <li class="fragment">NgRx basic concepts</li>
                     <li class="fragment">Planning the upgrade</li>
@@ -72,29 +93,29 @@
             <section>
                 <h2>What is NgRx</h2>
                 <ul>
-                    <li>State is a single immutable data structure</li>
-                    <li>Actions describe state changes</li>
-                    <li>Reducers are pure functions that take the previous state and the next action to compute the new state</li>
-                    <li>State accessed through Store class, which is an observable of state and an observer of actions</li>
+                    <li class="fragment">State is a single immutable data structure</li>
+                    <li class="fragment">Actions describe state changes</li>
+                    <li class="fragment">Reducers are pure functions that take the previous state and the next action to compute the new state</li>
+                    <li class="fragment">State accessed through Store class, which is an observable of state and an observer of actions</li>
                 </ul>
             </section>
 
             <section>
                 <h2>What is NgRx, pt 2</h2>
                 <ul>
-                    <li>Effects are an observer of actions, execute async processes, and return a new action</li>
-                    <li>Selectors are composable data queries</li>
+                    <li class="fragment">Effects are an observer of actions, execute async processes, and may return a new action</li>
+                    <li class="fragment">Selectors are memoized and composable data queries</li>
                 </ul>
             </section>
 
             <section>
                 <h2>Why NgRx?</h2>
                 <ul>
-                    <li>State managemenet is hard</li>
-                    <li>Reduce Complexity</li>
-                    <li>NgRx follows best practices from Redux</li>
-                    <li>East to test</li>
-                    <li>Who doesn't want to time travel?</li>
+                    <li class="fragment">State managment is hard</li>
+                    <li class="fragment">Reduce Complexity</li>
+                    <li class="fragment">NgRx follows best practices from Redux</li>
+                    <li class="fragment">Easy to test</li>
+                    <li class="fragment">Who doesn't want to time travel?</li>
                 </ul>
             </section>
 
@@ -111,7 +132,7 @@
             <section>
                 <h2>Optional/Dev-only NgRx Packages</h2>
                 <ol>
-                    <li>@ngrx/store-devtools: Store instrumentation that enables a powerful time-travelling debugger</li>
+                    <li class="fragment">@ngrx/store-devtools: Store instrumentation that enables a powerful time-travelling debugger</li>
                     <li class="fragment">ngrx-store-freeze: A meta-reducer that prevents state from being mutated, and if state is mutated an
                         exception will be thrown</li>
                     <li class="fragment">@ngrx/schematics: CLI templates for implementing NgRx</li>
@@ -133,10 +154,10 @@ npm install --save @ngrx/{store-devtools,schematics} ngrx-store-freeze --save-de
 
             <!--SCAFFOLDING-->
             <section>
-                <h2>Create NgRx struture</h2>
+                <h2>Create NgRx structure</h2>
                 <ul>
-                    <li>Create state folder in ./src/app</li>
-                    <li>Add folder for Hero entity</li>
+                    <li class="fragment">Create state folder in ./src/app</li>
+                    <li class="fragment">Add folder for Hero entity</li>
                 </ul>
             </section>
             <section>
@@ -169,10 +190,10 @@ ng g en Hero --flat false
             <section>
                 <h3>Hero Actions</h3>
                 <ul>
-                    <li>Import Action from @ngrx/store</li>
-                    <li>Create HeroActionTypes enum</li>
-                    <li>Create Hero Action Classes - type checked payloads</li>
-                    <li>Export a type with all class names for use in the application</li>
+                    <li class="fragment">Import Action class from @ngrx/store</li>
+                    <li class="fragment">Create HeroActionTypes enum</li>
+                    <li class="fragment">Create Hero Action classes - type checked payloads</li>
+                    <li class="fragment">Export a type that is a union of all Action classes</li>
                 </ul>
             </section>
 
@@ -180,10 +201,10 @@ ng g en Hero --flat false
                 <h3>Hero Effects</h3>
 
                 <ul>
-                    <li>Effects handle async operations</li>
-                    <li>Watch dispatched actions and act accordingly</li>
-                    <li>Usually call a service and return a new action once data is returned</li>
-                    <li>Errors result in a new action (Error is a new state)</li>
+                    <li class="fragment">Effects handle async operations</li>
+                    <li class="fragment">Watch dispatched actions and act accordingly</li>
+                    <li class="fragment">Usually call a service and return a new action once data is returned</li>
+                    <li class="fragment">Errors result in a new action (Error is a new state)</li>
                 </ul>
             </section>
 
@@ -191,126 +212,126 @@ ng g en Hero --flat false
                 <h3>Hero Reducer</h3>
                 <span>The reducer is responsible for managing the state of the heroes collection</span>
                 <ul>
-                    <li>Array vs Dictionary data</li>
-                    <li>@ngrx/entity</li>
-                    <li>Pure functions that compute new state</li>
+                    <li class="fragment">Array vs Dictionary data</li>
+                    <li class="fragment">@ngrx/entity</li>
+                    <li class="fragment">Pure functions that compute new state</li>
                 </ul>
             </section>
 
             <section>
                 <h3>NgRx Entity</h3>
                 <ul>
-                    <li>Entity State</li>
-                    <li>EntityAdapter</li>
-                    <li>Adding app state properties, e.g., loading, error, etc.</li>
+                    <li class="fragment">Entity State</li>
+                    <li class="fragment">EntityAdapter</li>
+                    <li class="fragment">Adding app state properties, e.g., loading, error, etc.</li>
                 </ul>
             </section>
 
             <section>
                 <h3>Heroes Selectors</h3>
                 <ul>
-                    <li>If the store is like a database, selectors are like queries</li>
-                    <li>Composable using creatSelector</li>
-                    <li>Memoized for speed</li>
-                    <li>Adapter has 4 base selectors</li>
+                    <li class="fragment">If the store is like a database, selectors are like queries</li>
+                    <li class="fragment">Composable using createSelector</li>
+                    <li class="fragment">Memoized for speed</li>
+                    <li class="fragment">Adapter has 4 base selectors</li>
                 </ul>
             </section>
 
             <section>
                 <h2>Dashboard Refactor</h2>
                 <ul>
-                    <li>Replace service calls with store</li>
-                    <li>Dispatch LoadHeros Action</li>
-                    <li>Use selectors to get data from store</li>
+                    <li class="fragment">Replace service calls with dispatching actions to the store</li>
+                    <li class="fragment">Dispatch LoadHeros Action</li>
+                    <li class="fragment">Use selectors to get data from store</li>
                 </ul>
             </section>
 
             <section>
                 <h2>Redux Dev Tools</h2>
                 <ul>
-                    <li>Inspect current and past states</li>
-                    <li>Step through each state - time travel</li>
+                    <li class="fragment">Inspect current and past states</li>
+                    <li class="fragment">Step through each state - time travel</li>
                 </ul>
             </section>
 
             <section>
                 <h3>Heros List Refactor</h3>
                 <ul>
-                    <li>Replace service calls with store</li>
-                    <li>Dispatch LoadHeros Action</li>
-                    <li>Use selectors to get data from store</li>
+                    <li class="fragment">Replace service calls with dispatching actions to the store</li>
+                    <li class="fragment">Dispatch LoadHeros Action</li>
+                    <li class="fragment">Use selectors to get data from store</li>
                 </ul>
             </section>
 
             <section>
                 <h3>We still have issues</h3>
                 <ul>
-                    <li>Containers vs Presentation components</li>
-                    <li>Heroes list - funky local variable for heroes</li>
-                    <li>App state still exists - addingHero, selectedHero</li>
-                    <li>git checkout ngrx-complete</li>
+                    <li class="fragment">Containers vs Presentation components</li>
+                    <li class="fragment">Heroes list - funky local variable for heroes</li>
+                    <li class="fragment">App state still exists - addingHero, selectedHero</li>
+                    <li class="fragment">git checkout ngrx-complete</li>
                 </ul>
             </section>
 
             <section>
                 <h3>NgRx Wireup</h3>
                 <ul>
-                    <li>We now have actions, reducers, effects... </li>
-                    <li>Components use the store</li>
-                    <li>Now what?</li>
-                    <li>Register reducers and effects</li>
+                    <li class="fragment">We now have actions, reducers, effects... </li>
+                    <li class="fragment">Components use the store</li>
+                    <li class="fragment">Now what?</li>
+                    <li class="fragment">Register reducers and effects</li>
                 </ul>
             </section>
 
             <section>
                 <h3>Simple Wireup</h3>
                 <ul>
-                    <li>Import all reducers and effects into app.module</li>
-                    <li>Register reducers and effects</li>
+                    <li class="fragment">Import all reducers and effects into app.module</li>
+                    <li class="fragment">Register reducers and effects</li>
                 </ul>
             </section>
 
             <section>
                 <h3>Simple Wireup Issues</h3>
                 <ul>
-                    <li>No longer modular</li>
-                    <li>No ability to lazy load</li>
-                    <li>app.module becomes a big mess</li>
-                    <li>Solution?</li>
-                    <li>Modules</li>
+                    <li class="fragment">No longer modular</li>
+                    <li class="fragment">No ability to lazy load</li>
+                    <li class="fragment">app.module becomes a big mess</li>
+                    <li class="fragment">Solution?</li>
+                    <li class="fragment">Modules</li>
                 </ul>
             </section>
 
             <section>
                 <h3>app.interfaces</h3>
                 <ul>
-                    <li>Create app level state</li>
-                    <li>Single import for App State into components</li>
+                    <li class="fragment">Create app level state</li>
+                    <li class="fragment">Single import for App State into components</li>
                 </ul>
             </section>
 
             <section>
                 <h3>app.reducer</h3>
                 <ul>
-                    <li>Creates an app level action reducer map</li>
-                    <li>Active store freeze in non production envs</li>
+                    <li class="fragment">Creates an app level action reducer map</li>
+                    <li class="fragment">Active store freeze in non production envs</li>
                 </ul>
             </section>
 
             <section>
                 <h3>store.module</h3>
                 <ul>
-                    <li>Reduce clutter in app.module</li>
-                    <li>Registers effects and reducers</li>
-                    <li>Setup instrumentation</li>
-                    <li>RouterStateSerializer</li>
+                    <li class="fragment">Reduce clutter in app.module</li>
+                    <li class="fragment">Registers effects and reducers</li>
+                    <li class="fragment">Setup instrumentation</li>
+                    <li class="fragment">RouterStateSerializer</li>
                 </ul>
             </section>
 
             <section>
                 <h3>app.module</h3>
                 <ul>
-                    <li>Single import for store state</li>
+                    <li class="fragment">Single import for store state</li>
                 </ul>
             </section>
 
