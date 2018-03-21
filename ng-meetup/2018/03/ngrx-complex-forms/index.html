@@ -64,7 +64,7 @@
             <section data-background="images/AboutJesse.png" data-background-color="#ffffff">
             </section>
 
-            <section data-background="images/PostMeetupSlide.png" data-background-color="#ffffff">
+            <section data-background="images/Post Meetup_WilliesMex.png" data-background-color="#ffffff">
             </section>
 
             <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
@@ -74,7 +74,6 @@
                     <li class="fragment">Architecture Reviews</li>
                     <li class="fragment">Complex Applications</li>
                     <li class="fragment">Upgrade old technology</li>
-                    <li class="fragment">We have fun!</li>
                 </ul>
                 <div class="logo">
                     <img src="images/briebug-logo.svg" class="plain">
@@ -125,12 +124,9 @@
                 </ul>
             </section>
 
-            <section>
-                <h2>Our Entities</h2>
-                <div style="width: 640px; height: 480px; margin: 10px; position: relative;">
-                    <iframe allowfullscreen frameborder="0" style="width:640px; height:480px" src="https://www.lucidchart.com/documents/embeddedchart/c89c9663-b9fd-45c9-8b35-91250b4de74a"
-                        id="sEWk2_WVHgHA"></iframe>
-                </div>
+            <section data-background="#fff">
+                <h2>Order Entities</h2>
+                <img src="images/OrderERD.svg" class="plain">
             </section>
 
             <section>
@@ -167,6 +163,10 @@
                 </ul>
             </section>
 
+            <section data-background="#fff">
+                <img src="images/combineLatest.svg" class="plain">
+            </section>
+
             <section>
                 <h2>2nd Attempt</h2>
                 <ul>
@@ -193,10 +193,16 @@
 
             <section>
                 <h2>Views are great...</h2>
+                <div class="fragment">But...</div>
+                <div class="fragment">How do I do forms in NgRx?</div>
+            </section>
+
+
+            <section>
+                <h2>Form Basics</h2>
                 <ul>
-                    <li class="fragment">How do I do forms in NgRx?</li>
                     <li class="fragment">Dispatch action to load data</li>
-                    <li class="fragment">Select data from store</li>
+                    <li class="fragment">Select data from store using selector</li>
                     <li class="fragment">Pass data to presentation component</li>
                     <li class="fragment">Pass events back up to container</li>
                 </ul>
@@ -204,6 +210,10 @@
 
             <section>
                 <h2>product-edit Container</h2>
+            </section>
+
+            <section data-background="#fff">
+                <img src="images/Container and Presentation Components.svg" class="plain">
             </section>
 
             <section>
@@ -215,6 +225,10 @@
                     <li class="fragment">Watch valueChanges</li>
                     <li class="fragment">Use OnChange to patch values to the formGroup</li>
                 </ul>
+            </section>
+
+            <section data-background="#fff">
+                <img src="images/FormGroup-diagram.svg" class="plain">
             </section>
 
             <section>
@@ -240,7 +254,43 @@
 
             <section>
                 <h3>Order Form</h3>
+                <ul>
+                    <li class="fragment">Broken into 3 components</li>
+                    <li class="fragment">Customer</li>
+                    <li class="fragment">LineItems</li>
+                    <li class="fragment">Order Summary</li>
+                </ul>
+            </section>
 
+            <section>
+                <h3>Order Form Form Groups</h3>
+                <ul>
+                    <li class="fragment">One form group for Order</li>
+                    <li class="fragment">Array form group for line items</li>
+                    <li class="fragment">Each line item added to form group array</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Order Form Save</h3>
+                <ul>
+                    <li class="fragment">Handled by parent container</li>
+                    <li class="fragment">Data could be saved by entity or transactionally</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Summary</h3>
+                <ul>
+                    <li class="fragment">Create models to combine entities</li>
+                    <li class="fragment">Container/Presentation Pattern</li>
+                    <li class="fragment">Understand NgRx Forms Basics</li>
+                    <li class="fragment">NgRx makes complex forms easy</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Questions?</h3>
             </section>
 
             <section>
