@@ -1,0 +1,73 @@
+import {Action} from '@ngrx/store';
+import {Hero} from '../../../hero';
+
+export const LOAD_HEROES = 'LOAD_HEROES';
+export const LOAD_HEROES_SUCCESS = 'LOAD_HEROES_SUCCESS';
+export const LOAD_HERO = 'LOAD_HERO';
+export const LOAD_HERO_SUCCESS = 'LOAD_HERO_SUCCESS';
+export const SELECT_HERO = 'SELECT_HERO';
+export const UPDATE_HERO = 'UPDATE_HERO';
+export const UPDATE_HERO_SUCCESS = 'UPDATE_HERO_SUCCESS';
+export const DELETE_HERO = 'DELETE_HERO';
+export const DELETE_HERO_SUCCESS = 'DELETE_HERO_SUCCESS';
+
+export class LoadHeroes implements Action {
+  readonly type = LOAD_HEROES;
+}
+
+export class LoadHeroesSuccess implements Action {
+  readonly type = LOAD_HEROES_SUCCESS;
+  constructor(public payload: Hero[]) {
+  }
+}
+
+export class LoadHero implements Action {
+  readonly type = LOAD_HERO;
+  constructor(public payload: { id: number }) {
+  }
+}
+
+export class LoadHeroSuccess implements Action {
+  readonly type = LOAD_HERO_SUCCESS;
+  constructor(public payload: Hero) {
+  }
+}
+
+export class SelectHero implements Action {
+  readonly type = SELECT_HERO;
+  constructor(public payload: Hero) {
+  }
+}
+
+export class UpdateHero implements Action {
+  readonly type = UPDATE_HERO;
+  constructor(public payload: Hero) {
+  }
+}
+
+export class UpdateHeroSuccess implements Action {
+  readonly type = UPDATE_HERO_SUCCESS;
+  constructor(public payload: Hero) {
+  }
+}
+
+export class DeleteHero implements Action {
+  readonly type = DELETE_HERO;
+  constructor(public payload: Hero) {
+  }
+}
+
+export class DeleteHeroSuccess implements Action {
+  readonly type = DELETE_HERO_SUCCESS;
+}
+
+export type HeroActions =
+  LoadHeroes
+  | LoadHeroesSuccess
+  | LoadHero
+  | LoadHeroSuccess
+  | SelectHero
+  | UpdateHero
+  | UpdateHeroSuccess
+  | DeleteHero
+  | DeleteHeroSuccess;
