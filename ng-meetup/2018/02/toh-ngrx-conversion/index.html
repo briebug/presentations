@@ -111,14 +111,6 @@
                 </ul>
             </section>
 
-
-            <section>
-                <ul>
-                    <li class="fragment">Effects are an observer of actions, execute async processes, and may return a new action</li>
-                    <li class="fragment">Selectors are memoized and composable data queries</li>
-                </ul>
-            </section>
-
             <section>
                 <h2>Why NgRx?</h2>
                 <ul>
@@ -159,7 +151,7 @@
 npm install --save @ngrx/{store,effects,entity,router-store}
 
 # Optional Packages
-npm install --save @ngrx/{store-devtools,schematics} ngrx-store-freeze --save-dev
+npm install --save-dev @ngrx/{store-devtools,schematics} ngrx-store-freeze
                 </code>
             </pre>
             </section>
@@ -193,38 +185,37 @@ touch src/app/state/heroes/index.ts
 cd src/app/state
 ng g en Hero --flat false
                 </code>
+                <p>NgRx Schematics will create our files for us</p>
             </pre>
             </section>
 
 
             <section>
-                <h2>Planning Hero Actions</h2>
+                <h2>Planning for Actions</h2>
+            </section>
+
+            <section data-background="#eee">
+                <p>Transactional state model</p>
+                <img src="images/transactional-state-model.png" class="plain">
             </section>
 
             <section>
-                <h3>Hero Actions</h3>
+                <h3>Actions</h3>
                 <ul>
-                    <li class="fragment">Import Action class from @ngrx/store</li>
-                    <li class="fragment">Create HeroActionTypes enum</li>
-                    <li class="fragment">Create Hero Action classes - type checked payloads</li>
-                    <li class="fragment">Export a type that is a union of all Action classes</li>
+                    <li class="fragment">Create ActionTypes enum</li>
+                    <li class="fragment">Create Action classes - type checked payloads</li>
+                    <li class="fragment">Export a type (union of all Action classes)</li>
                 </ul>
             </section>
 
-            <section>
-                <h3>Hero Effects</h3>
-
-                <ul>
-                    <li class="fragment">Effects handle async operations</li>
-                    <li class="fragment">Watch dispatched actions and act accordingly</li>
-                    <li class="fragment">Usually call a service and return a new action once data is returned</li>
-                    <li class="fragment">Errors result in a new action (Error is a new state)</li>
-                </ul>
+            <section data-background="#000">
+                <p>Transactional state model</p>
+                <img src="images/reducer.png" class="plain">
             </section>
 
             <section>
-                <h3>Hero Reducer</h3>
-                <span>The reducer is responsible for managing the state of the heroes collection</span>
+                <h3>Reducer</h3>
+                <span>The reducer is responsible for managing the state</span>
                 <ul>
                     <li class="fragment">Array vs Dictionary data</li>
                     <li class="fragment">@ngrx/entity</li>
@@ -242,7 +233,7 @@ ng g en Hero --flat false
             </section>
 
             <section>
-                <h3>Heroes Selectors</h3>
+                <h3>Selectors</h3>
                 <ul>
                     <li class="fragment">If the store is like a database, selectors are like queries</li>
                     <li class="fragment">Composable using createSelector</li>
@@ -252,11 +243,12 @@ ng g en Hero --flat false
             </section>
 
             <section>
-                <h2>Dashboard Refactor</h2>
+                <h3>Effects</h3>
                 <ul>
-                    <li class="fragment">Replace service calls with dispatching actions to the store</li>
-                    <li class="fragment">Dispatch LoadHeros Action</li>
-                    <li class="fragment">Use selectors to get data from store</li>
+                    <li class="fragment">Effects handle async operations</li>
+                    <li class="fragment">Watch dispatched actions and act accordingly</li>
+                    <li class="fragment">Usually call a service and return a new action once data is returned</li>
+                    <li class="fragment">Errors result in a new action (Error is a new state)</li>
                 </ul>
             </section>
 
@@ -265,6 +257,15 @@ ng g en Hero --flat false
                 <ul>
                     <li class="fragment">Inspect current and past states</li>
                     <li class="fragment">Step through each state - time travel</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Dashboard Refactor</h2>
+                <ul>
+                    <li class="fragment">Replace service calls with dispatching actions to the store</li>
+                    <li class="fragment">Dispatch LoadHeros Action</li>
+                    <li class="fragment">Use selectors to get data from store</li>
                 </ul>
             </section>
 
