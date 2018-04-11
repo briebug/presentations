@@ -42,241 +42,166 @@
         <div class="slides">
             <!--INTRODUCTION-->
             <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
-                <h3>NgRx Complex Forms</h3>
-                <div>
-                    <small>
-                        <a href="http://briebug.github.io/presentations/ng-meetup/2018/03/ngrx-complex-forms">http://briebug.github.io/presentations/ng-meetup/2018/03/ngrx-complex-forms</a>
-                    </small>
-                </div>
-                <div>
-                    Jesse Sanders
-                    <br> @JesseS_BrieBug
-                    <br> jesse.sanders@briebug.com
-                </div>
+                <h3>Serenity Now!</h3>
+                <h3>Just Handle that Complex Form with NgRx</h3>
+
                 <div class="logo">
                     <img src="images/briebug-logo.svg" class="plain">
                 </div>
             </section>
 
-            <section data-background="images/BrieBugMeetup1.png" data-background-color="#ffffff">
+            <section data-background="#000">
+                <h2>Forms are hard</h2>
+                <img src="images/frustrated.jpg" class="plain">
             </section>
 
-            <section data-background="images/AboutJesse.png" data-background-color="#ffffff">
+            <section data-background="#000">
+                <h2>NgRx</h2>
+                <img src="images/serenity.jpg" class="plain">
             </section>
 
-            <section data-background="images/PostMeetup_WilliesMex.png" data-background-color="#ffffff">
+            <section data-background="#000">
+                <h2>Container - Presentation</h2>
+                <img src="images/Container-4.png" class="plain">
             </section>
 
-            <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
-                <h3>BrieBug - What We do</h3>
-                <ul>
-                    <li class="fragment">Angular Training</li>
-                    <li class="fragment">Architecture Reviews</li>
-                    <li class="fragment">Complex Applications</li>
-                    <li class="fragment">Upgrade old technology</li>
-                </ul>
-                <div class="logo">
-                    <img src="images/briebug-logo.svg" class="plain">
-                </div>
+            <section data-background="#000">
+                <h2>NgRx Entity</h2>
+                <img src="images/NGRXEntity.png" class="plain">
             </section>
 
-            <section>
-                <h3>Overview</h3>
-                <ul>
-                    <li class="fragment">NgRx Entity</li>
-                    <li class="fragment">Entities with Relationships</li>
-                    <li class="fragment">Viewing Complex Data</li>
-                    <li class="fragment">NgRx Forms</li>
-                    <li class="fragment">NgRx Complex Forms</li>
-                </ul>
+            <section data-background="#000">
+                <h2>Relational Data</h2>
+                <img src="images/RelationalData.png" class="plain">
             </section>
 
-            <section>
-                <h2>What is NgRx Entity?</h2>
-                <ul>
-                    <li class="fragment">NgRx Library</li>
-                    <li class="fragment">Dictionary vs Array data</li>
-                    <li class="fragment">Quickly access entities by key/id</li>
-                    <li class="fragment">Manages getting store data</li>
-                </ul>
+            <section data-background="#000">
+                <h2>Nested Data</h2>
+                <img src="images/NestedData.png" class="plain">
             </section>
 
-            <section>
-                <h2>Basic Concepts</h2>
-            </section>
-
-            <section>
-                <h2>Container Components</h2>
-                <ul>
-                    <li class="fragment">Responsible for how things work</li>
-                    <li class="fragment">Dispatches actions</li>
-                    <li class="fragment">Gets data from store</li>
-                    <li class="fragment">Decides how events are handled</li>
-                </ul>
-            </section>
-
-            <section>
-                <h2>Presentation Components</h2>
-                <ul>
-                    <li class="fragment">Concerned with how data looks</li>
-                    <li class="fragment">Receives data via Inputs</li>
-                    <li class="fragment">Emits events via Outputs</li>
-                </ul>
-            </section>
-
-            <section data-background="#fff">
-                <h2>Order Entities</h2>
-                <img src="images/OrderERD.svg" class="plain">
-            </section>
-
-            <section>
-                <h2>Entities with relationships</h2>
-                <ul>
-                    <li class="fragment">Tempting to nest data</li>
-                    <li class="fragment">Data arrives at different times</li>
-                    <li class="fragment">Calculated values</li>
-                    <li class="fragment">Objective: do things in an observables/redux way</li>
-                </ul>
+            <section data-background="#000">
+                <h2>Nested Data</h2>
+                <img src="images/NestedData-NO.png" class="plain">
             </section>
 
             <section>
                 <h2>Viewing Complex Data</h2>
-                <ul>
-                    <li class="fragment">Display OrderId, Customer Name, and Total</li>
-                    <li class="fragment">All 4 Entities needed for view</li>
-                </ul>
-            </section>
-
-            <section>
-                <h2>Possible Solutions?</h2>
+                <img src="images/orders-view.png" class="plain">
             </section>
 
             <section>
                 <h2>First thoughts...</h2>
-                <ul>
-                    <li class="fragment">Enumerate over the orders</li>
-                    <li class="fragment">Select Customer, LineItems, and Products using Selectors</li>
-                    <li class="fragment">Calculate values</li>
-                    <li class="fragment">Problem: just doesn't work this way.</li>
-                    <li class="fragment">Selectors don't have parameters</li>
-                    <li class="fragment">HACK: getCustomerById = (id) => createSelector...</li>
-                </ul>
+                <p>This will be easy... enumerate, select, calculate...</p>
             </section>
 
-            <section data-background="#fff">
-                <img src="images/combineLatest.svg" class="plain">
+            <section data-background="#000">
+                <img src="images/frustrated.jpg" class="plain">
             </section>
 
-            <section>
-                <h2>2nd Attempt</h2>
-                <ul>
-                    <li class="fragment">Create a new model orderView with nested data</li>
-                    <li class="fragment">Use combineLatest to join streams</li>
-                    <li class="fragment">Add customer, lineItems, and products to orderView</li>
-                    <li class="fragment">Solves data issues,</li>
-                    <li class="fragment">Problem: nested data</li>
-                    <li class="fragment">Problem: display logic in container and component</li>
-                </ul>
+            <section data-background="#000">
+                <h2>2nd Pass</h2>
+                <img src="images/ComplexForms.png" class="plain">
             </section>
 
-            <section>
-                <h2>Solution</h2>
-                <ul>
-                    <li class="fragment">Create a new model orderView display fields</li>
-                    <li class="fragment">OrderId, Customer, Total</li>
-                    <li class="fragment">Use combineLatest to join streams</li>
-                    <li class="fragment">Add simple values to the model</li>
-                    <li class="fragment">Solves data issues and is easy</li>
-                    <li class="fragment">One set of logic to join the data and calculate the values</li>
-                </ul>
+            <section data-background="#000">
+                <h2>Orders View Model</h2>
+                <img src="images/CalculatedView.png" class="plain">
             </section>
 
-            <section>
-                <h2>Views are great...</h2>
-                <div class="fragment">But...</div>
-                <div class="fragment">How do I do forms in NgRx?</div>
+            <section data-background="#000">
+                <h2>Serentiy</h2>
+                <img src="images/serenity.jpg" class="plain">
             </section>
-
 
             <section>
                 <h2>Form Basics</h2>
-                <ul>
-                    <li class="fragment">Dispatch action to load data</li>
-                    <li class="fragment">Select data from store using selector</li>
-                    <li class="fragment">Pass data to presentation component</li>
-                    <li class="fragment">Pass events back up to container</li>
-                </ul>
+                <img src="images/EmitEvent.png" class="plain">
             </section>
 
             <section>
-                <h2>product-edit Container</h2>
-            </section>
-
-            <section data-background="#fff">
-                <img src="images/Container and Presentation Components.svg" class="plain">
+                <h2>Product Form</h2>
+                <img src="images/product-form.png" class="plain">
             </section>
 
             <section>
-                <h2>Product-Form Presentation</h2>
-                <ul>
-                    <li class="fragment">@Input() for product</li>
-                    <li class="fragment">@Output() for updating the product</li>
-                    <li class="fragment">Build the FormGroup</li>
-                    <li class="fragment">Watch valueChanges</li>
-                    <li class="fragment">Use OnChange to patch values to the formGroup</li>
-                </ul>
-            </section>
-
-            <section data-background="#fff">
-                <img src="images/FormGroup-diagram.svg" class="plain">
+                <h2>Container - Init</h2>
+                <img src="images/container-init.png" class="plain">
             </section>
 
             <section>
-                <h3>Order container</h3>
-                <ul>
-                    <li class="fragment">Get id param and dispatch action for loading order</li>
-                    <li class="fragment">Dispatch actions for loading customers, line items, and products</li>
-                    <li class="fragment">Clone the immutable objects from the store</li>
-                    <li class="fragment">Store form changes into local objects</li>
-                    <li class="fragment">Use local objects for dispatching updates to store</li>
-                </ul>
+                <h2>Container - Events</h2>
+                <img src="images/product-change.png" class="plain">
             </section>
 
             <section>
-                <h3>Reducers and Effects</h3>
-                <ul>
-                    <li class="fragment">Reducers fire first and syncronously</li>
-                    <li class="fragment">Effects use withLatestFrom to get updated value from store</li>
-                    <li class="fragment">forkJoin is like promise.all and emits values when all are done</li>
-                    <li class="fragment">mergeMap merges all emitted values into new observable</li>
-                </ul>
+                <h2>Presentation Component</h2>
+                <img src="images/product-form-component.png" class="plain">
+            </section>
+
+            <section>
+                <h2>Presentation - Build Form</h2>
+                <img src="images/build-form.png" class="plain">
+            </section>
+
+            <section>
+                <h2>Presentation - FormGroup Values</h2>
+                <img src="images/form-group-values.png" class="plain">
+            </section>
+
+            <section>
+                <h2>Form Basics</h2>
+                <img src="images/EmitEvent.png" class="plain">
+            </section>
+
+            <section data-background="#000">
+                <h2>Serentiy</h2>
+                <img src="images/serenity.jpg" class="plain">
+            </section>
+
+            <section>
+                <h3>Complex Forms</h3>
+                <img src="images/complexity.jpg" class="plain">
             </section>
 
             <section>
                 <h3>Order Form</h3>
-                <ul>
-                    <li class="fragment">Broken into 3 components</li>
-                    <li class="fragment">Customer</li>
-                    <li class="fragment">LineItems</li>
-                    <li class="fragment">Order Summary</li>
-                </ul>
+                <img src="images/order-form.png" class="plain">
             </section>
 
             <section>
-                <h3>Order Form Form Groups</h3>
-                <ul>
-                    <li class="fragment">One form group for Order</li>
-                    <li class="fragment">Array form group for line items</li>
-                    <li class="fragment">Each line item added to form group array</li>
-                </ul>
+                <h3>So now what?</h3>
+                <img src="images/head-scratcher.jpg" class="plain">
             </section>
 
             <section>
-                <h3>Order Form Save</h3>
-                <ul>
-                    <li class="fragment">Handled by parent container</li>
-                    <li class="fragment">Data could be saved by entity or transactionally</li>
-                </ul>
+                <h3>LineItems Form</h3>
+                <img src="images/order-form.png" class="plain">
+            </section>
+
+            <section>
+                <h3>LineItems Create FormGroup</h3>
+                <img src="images/line-items-create-form-group.png" class="plain">
+            </section>
+
+            <section>
+                <h3>LineItems Build FormGroup</h3>
+                <img src="images/line-items-build-form-group.png" class="plain">
+            </section>
+
+            <section data-background="#000">
+                <h2>Foundation Concept</h2>
+                <p>(cloning is a good idea)</p>
+                <img src="images/apples.jpeg" class="plain">
+            </section>
+
+            <section>
+                <img src="images/whats-the-big-deal-2.gif" class="plain">
+            </section>
+
+            <section data-background="#000">
+                <h2>Serentiy</h2>
+                <img src="images/serenity.jpg" class="plain">
             </section>
 
             <section>
@@ -289,8 +214,38 @@
                 </ul>
             </section>
 
-            <section>
-                <h3>Questions?</h3>
+            <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+                <h3>BrieBug - What We do</h3>
+                <ul>
+                    <li>Angular Training</li>
+                    <li>Architecture Reviews</li>
+                    <li>Complex Applications</li>
+                    <li>Upgrade old technology</li>
+                </ul>
+                <div class="logo">
+                    <img src="images/briebug-logo.svg" class="plain">
+                </div>
+            </section>
+
+            <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+                <div>
+                    <small>
+                        <a href="http://briebug.github.io/presentations/ng-meetup/2018/03/ngrx-complex-forms">http://briebug.github.io/presentations/ng-meetup/2018/03/ngrx-complex-forms</a>
+                    </small>
+                </div>
+                <div>
+                    <small>
+                        <a href="https://github.com/briebug/ngrx-complex-forms">https://github.com/briebug/ngrx-complex-forms</a>
+                    </small>
+                </div>
+                <div>
+                    Jesse Sanders
+                    <br> @JesseS_BrieBug
+                    <br> jesse.sanders@briebug.com
+                </div>
+                <div class="logo">
+                    <img src="images/briebug-logo.svg" class="plain">
+                </div>
             </section>
 
             <section>
@@ -302,6 +257,9 @@
                 </ul>
             </section>
 
+            <section>
+                <h3>Questions?</h3>
+            </section>
         </div>
     </div>
 
