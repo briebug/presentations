@@ -40,62 +40,17 @@
 <body>
     <div class="reveal">
         <div class="slides">
-            <!--INTRODUCTION-->
-            <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
-                <h3>NgRx Mobile</h3>
-                <div>
-                    <small>
-                        <a href="http://briebug.github.io/presentations/ng-meetup/2018/03/ngrx-mobile">http://briebug.github.io/presentations/ng-meetup/2018/03/ngrx-mobile</a>
-                    </small>
-                </div>
-                <div>
-                    Jesse Sanders
-                    <br> @JesseS_BrieBug
-                    <br> jesse.sanders@briebug.com
-                </div>
-                <div class="logo">
-                    <img src="images/briebug-logo.svg" class="plain">
-                </div>
+            <section data-background="./images/ngrx-mobile.jpg" data-background-color="#ffffff">
             </section>
 
-            <section data-background="images/BrieBugMeetup1.png" data-background-color="#ffffff">
-            </section>
-
-            <section data-background="images/AboutJesse.png" data-background-color="#ffffff">
-            </section>
-
-            <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
-                <h3>BrieBug - What We do</h3>
-                <ul>
-                    <li class="fragment">Angular Training</li>
-                    <li class="fragment">Architecture Reviews</li>
-                    <li class="fragment">Complex Applications</li>
-                    <li class="fragment">Upgrade old technology</li>
-                </ul>
-                <div class="logo">
-                    <img src="images/briebug-logo.svg" class="plain">
-                </div>
+            <section data-background="./images/ngrx-mobile-stanger-things.png" data-background-color="#ffffff">
             </section>
 
             <section>
-                <h3>Overview</h3>
-                <ul>
-                    <li class="fragment">Angular Ionic Overview</li>
-                    <li class="fragment">Mobile Challenges</li>
-                    <li class="fragment">angular-cli vs ionic-cli</li>
-                    <li class="fragment">Project setup</li>
-                    <li class="fragment">NgRx Mobile</li>
-                </ul>
+                <img style="height:200px; width:200px; border: none; background: none;" src="./images/ngrx-logo.png">
+                <img style="height:200px; border: none; background: none;" src="./images/logo-ionic-framework-thick.svg">
             </section>
 
-            <section>
-                <h2>Why Angular Ionic for Mobile</h2>
-                <ul>
-                    <li class="fragment">Rapid Development</li>
-                    <li class="fragment">Perfect for data</li>
-                    <li class="fragment">Cordova plugins</li>
-                </ul>
-            </section>
             <section>
                 <h2>Mobile Challenges</h2>
                 <ul>
@@ -140,19 +95,90 @@
                 </ul>
             </section>
 
+            <section>
+                <h2>.angular-cli.json</h2>
+                <pre>
+                    <code>{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "project": {
+    "name": "myApp"
+  },
+  "apps": [
+    {
+      "root": "src",
+      "outDir": "dist",
+      "assets": [
+        "assets",
+        "favicon.ico"
+      ],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
+      "test": "test.ts",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
+      "prefix": "app",
+      "styles": [
+        "styles.scss",
+        "theme.scss"
+      ],
+      "scripts": [],
+      "environmentSource": "environments/environment.ts",
+      "environments": {
+        "dev": "environments/environment.ts",
+        "prod": "environments/environment.prod.ts"
+      }
+    }
+  ],
+  "e2e": {
+    "protractor": {
+      "config": "./protractor.conf.js"
+    }
+  },
+  "lint": [
+    {
+      "project": "src/tsconfig.app.json",
+      "exclude": "**/node_modules/**"
+    },
+    {
+      "project": "src/tsconfig.spec.json",
+      "exclude": "**/node_modules/**"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json",
+      "exclude": "**/node_modules/**"
+    }
+  ],
+  "test": {
+    "karma": {
+      "config": "./karma.conf.js"
+    }
+  },
+  "defaults": {
+    "styleExt": "scss",
+    "component": {},
+    "schematics": {
+      "collection": "@ngrx/schematics"
+    }
+  }
+}
+
+                    </code>
+                </pre>
+            </section>
 
             <section>
-                <h2>Create our app</h2>
+                <h2>Add CLI and NgRx</h2>
                 <pre>
                     <code>
 /// install angular-cli
 npm i @angular/cli --save-dev
 
 // install ngrx
-npm i @ngrx/{store,entity,effects,schematics,store-devtools} --save-dev
+npm i @ngrx/{store,entity,effects,schematics}
 
 /// install store freeze
-npm i ngrx-store-freeze --save-dev
+npm i @ngrx/store-devtools ngrx-store-freeze --save-dev
                     </code>
                 </pre>
             </section>
@@ -196,135 +222,148 @@ ng set defaults.schematics.collection=@ngrx/schematics
             <section>
                 <h2>Paths still don't work</h2>
                 <ul>
-                    <li class="fragment">Angular CLI vs Ionic CLI</li>
-                    <li class="fragment">Locations are different</li>
                     <li class="fragment">Tell Webpack what to do...</li>
-                    <li class="fragment">Create 'config' folder in root</li>
-                    <li class="fragment">Add 'webpack.config'</li>
-                    <li class="fragment">Help webpack locate directories</li>
                 </ul>
             </section>
 
             <section>
-                <h2>2nd Attempt</h2>
+                <h2>webpack.config.js</h2>
+                <pre>
+                    <code>const chalk = require("chalk");
+const fs = require('fs');
+const path = require('path');
+const useDefaultConfig = require('@ionic/app-scripts/config/webpack.config.js');
+
+const env = process.env.IONIC_ENV;
+
+if (env === 'prod' || env === 'dev') {
+
+  useDefaultConfig[env].resolve.alias = {
+    "@app": path.resolve('./src/app/'),
+    "@state": path.resolve('./src/app/state/'),
+    "@core": path.resolve('./src/app/core/'),
+    "@assets": path.resolve('./src/assets/'),
+    "@pages": path.resolve('./src/pages/'),
+    "@theme": path.resolve('./src/theme/')
+  };
+
+} else {
+
+  // Default to dev config
+  useDefaultConfig[env] = useDefaultConfig.dev;
+  useDefaultConfig[env].resolve.alias = {
+    "@app": path.resolve('./src/app/'),
+    "@state": path.resolve('./src/app/state/'),
+    "@core": path.resolve('./src/app/core/'),
+    "@assets": path.resolve('./src/assets/'),
+    "@pages": path.resolve('./src/pages/'),
+    "@theme": path.resolve('./src/theme/')
+  };
+
+}
+
+module.exports = function () {
+  return useDefaultConfig;
+};
+
+                    </code>
+                </pre>
+            </section>
+
+            <section>
+                <h2>Jest</h2>
+                <pre>
+                    <code>
+/// install jest
+npm i jest-presets-angular --save-dev
+                    </code>
+                </pre>
+            </section>
+
+            <section>
+                <p>jest.config.js</p>
+                <pre>
+                    <code>
+module.exports = {
+  preset: 'jest-preset-angular',
+  roots: ['src'],
+  setupTestFrameworkScriptFile: '&lt;rootDir&gt;/src/setupJest.ts',
+  transformIgnorePatterns: ['node_modules/(?!@ngrx|@ionic-native|@ionic)']
+}
+                    </code>
+                </pre>
+            </section>
+
+
+            <section>
+                <p>setup-jest.ts</p>
+                <pre>
+              <code>
+    import "jest-preset-angular";
+    global["CSS"] = null;
+    
+    Object.defineProperty(document.body.style, "transform", {
+      value: () => {
+        return {
+          enumerable: true,
+          configurable: true
+        };
+      }
+    });
+              </code>
+            </pre>
+            </section>
+
+            <section>
+                <pre>
+                    <code>
+                        // run tests
+                        jest
+
+                        // generate entity
+                         ng g entity state/product --flat false
+
+                         // generate component
+                         ionic generate component products
+
+                         // generate pages
+                         ionic generate page products
+                    </code>
+                </pre>
+            </section>
+
+            <section>
+                <img src="./images/Container.png">
+            </section>
+
+            <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+                <h3>BrieBug - What We do</h3>
                 <ul>
-                    <li class="fragment">Create a new model orderView with nested data</li>
-                    <li class="fragment">Use combineLatest to join streams</li>
-                    <li class="fragment">Add customer, lineItems, and products to orderView</li>
-                    <li class="fragment">Solves data issues,</li>
-                    <li class="fragment">Problem: nested data</li>
-                    <li class="fragment">Problem: display logic in container and component</li>
+                    <li class="fragment">Architecture Reviews</li>
+                    <li class="fragment">Angular Training</li>
+                    <li class="fragment">Angular Consulting</li>
                 </ul>
+                <div class="logo">
+                    <img src="images/briebug-logo.svg" class="plain">
+                </div>
             </section>
 
-            <section>
-                <h2>Solution</h2>
-                <ul>
-                    <li class="fragment">Create a new model orderView display fields</li>
-                    <li class="fragment">OrderId, Customer, Total</li>
-                    <li class="fragment">Use combineLatest to join streams</li>
-                    <li class="fragment">Add simple values to the model</li>
-                    <li class="fragment">Solves data issues and is easy</li>
-                    <li class="fragment">One set of logic to join the data and calculate the values</li>
-                </ul>
-            </section>
-
-            <section>
-                <h2>Views are great...</h2>
-                <div class="fragment">But...</div>
-                <div class="fragment">How do I do forms in NgRx?</div>
-            </section>
-
-
-            <section>
-                <h2>Form Basics</h2>
-                <ul>
-                    <li class="fragment">Dispatch action to load data</li>
-                    <li class="fragment">Select data from store using selector</li>
-                    <li class="fragment">Pass data to presentation component</li>
-                    <li class="fragment">Pass events back up to container</li>
-                </ul>
-            </section>
-
-            <section>
-                <h2>product-edit Container</h2>
-            </section>
-
-            <section data-background="#fff">
-                <img src="images/Container and Presentation Components.svg" class="plain">
-            </section>
-
-            <section>
-                <h2>Product-Form Presentation</h2>
-                <ul>
-                    <li class="fragment">@Input() for product</li>
-                    <li class="fragment">@Output() for updating the product</li>
-                    <li class="fragment">Build the FormGroup</li>
-                    <li class="fragment">Watch valueChanges</li>
-                    <li class="fragment">Use OnChange to patch values to the formGroup</li>
-                </ul>
-            </section>
-
-            <section data-background="#fff">
-                <img src="images/FormGroup-diagram.svg" class="plain">
-            </section>
-
-            <section>
-                <h3>Order container</h3>
-                <ul>
-                    <li class="fragment">Get id param and dispatch action for loading order</li>
-                    <li class="fragment">Dispatch actions for loading customers, line items, and products</li>
-                    <li class="fragment">Clone the immutable objects from the store</li>
-                    <li class="fragment">Store form changes into local objects</li>
-                    <li class="fragment">Use local objects for dispatching updates to store</li>
-                </ul>
-            </section>
-
-            <section>
-                <h3>Reducers and Effects</h3>
-                <ul>
-                    <li class="fragment">Reducers fire first and syncronously</li>
-                    <li class="fragment">Effects use withLatestFrom to get updated value from store</li>
-                    <li class="fragment">forkJoin is like promise.all and emits values when all are done</li>
-                    <li class="fragment">mergeMap merges all emitted values into new observable</li>
-                </ul>
-            </section>
-
-            <section>
-                <h3>Order Form</h3>
-                <ul>
-                    <li class="fragment">Broken into 3 components</li>
-                    <li class="fragment">Customer</li>
-                    <li class="fragment">LineItems</li>
-                    <li class="fragment">Order Summary</li>
-                </ul>
-            </section>
-
-            <section>
-                <h3>Order Form Form Groups</h3>
-                <ul>
-                    <li class="fragment">One form group for Order</li>
-                    <li class="fragment">Array form group for line items</li>
-                    <li class="fragment">Each line item added to form group array</li>
-                </ul>
-            </section>
-
-            <section>
-                <h3>Order Form Save</h3>
-                <ul>
-                    <li class="fragment">Handled by parent container</li>
-                    <li class="fragment">Data could be saved by entity or transactionally</li>
-                </ul>
-            </section>
-
-            <section>
-                <h3>Summary</h3>
-                <ul>
-                    <li class="fragment">Create models to combine entities</li>
-                    <li class="fragment">Container/Presentation Pattern</li>
-                    <li class="fragment">Understand NgRx Forms Basics</li>
-                    <li class="fragment">NgRx makes complex forms easy</li>
-                </ul>
+            <!--INTRODUCTION-->
+            <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+                <h3>NgRx Mobile</h3>
+                <div>
+                    <small>
+                        <a href="http://briebug.github.io/presentations/ng-meetup/2018/03/ngrx-mobile">http://briebug.github.io/presentations/ng-meetup/2018/03/ngrx-mobile</a>
+                    </small>
+                </div>
+                <div>
+                    Jesse Sanders
+                    <br> @JesseS_BrieBug
+                    <br> jesse.sanders@briebug.com
+                </div>
+                <div class="logo">
+                    <img src="images/briebug-logo.svg" class="plain">
+                </div>
             </section>
 
             <section>

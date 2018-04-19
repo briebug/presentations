@@ -83,17 +83,14 @@
       </section>
 
       <section>
-        <h3>Angular Configuration</h3>
-        <p>package.json</p>
+        <p>jest.config.js</p>
         <pre>
           <code>
-"jest": {
-  "preset": "jest-preset-angular",
-  "setupTestFrameworkScriptFile": "&lt;rootDir&gt;/src/setupJest.ts",
-  "moduleNameMapper": {
-    "\\.(jpg|jpeg|png)$": "&lt;rootDir&gt;/__mocks__/image.js",
-    "@lib/(.*)": "&lt;rootDir&gt;/src/lib/$1"
-  }
+module.exports = {
+  preset: 'jest-preset-angular',
+  roots: ['src'],
+  setupTestFrameworkScriptFile: '&lt;rootDir&gt;/src/setup-jest.ts',
+  transformIgnorePatterns: ['node_modules/(?!@ngrx|@ionic-native|@ionic)']
 }
 
           </code>
