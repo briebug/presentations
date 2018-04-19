@@ -287,7 +287,7 @@ npm i jest-presets-angular --save-dev
 module.exports = {
   preset: 'jest-preset-angular',
   roots: ['src'],
-  setupTestFrameworkScriptFile: '&lt;rootDir&gt;/src/setupJest.ts',
+  setupTestFrameworkScriptFile: '&lt;rootDir&gt;/src/setup-jest.ts',
   transformIgnorePatterns: ['node_modules/(?!@ngrx|@ionic-native|@ionic)']
 }
                     </code>
@@ -315,45 +315,68 @@ module.exports = {
             </section>
 
             <section>
+                <h3>Commands</h3>
                 <pre>
                     <code>
-                        // run tests
-                        jest
+// run tests
+jest
 
-                        // generate entity
-                         ng g entity state/product --flat false
+// generate entity
+ng g entity state/product --flat false
 
-                         // generate component
-                         ionic generate component products
+// generate component
+ionic generate component products
 
-                         // generate pages
-                         ionic generate page products
+// generate pages
+ionic generate page products
                     </code>
                 </pre>
             </section>
 
             <section>
+                <h3>Container-Presentation</h3>
                 <img src="./images/Container.png">
+            </section>
+
+            <section>
+                <h3>Cordova Plugins</h3>
+                <ul>
+                    <li>Async</li>
+                    <li>Return a value or error</li>
+                    <li>Perfect for Effects</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>App & Code</h3>
             </section>
 
             <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
                 <h3>BrieBug - What We do</h3>
                 <ul>
-                    <li class="fragment">Architecture Reviews</li>
-                    <li class="fragment">Angular Training</li>
-                    <li class="fragment">Angular Consulting</li>
+                    <li>Architecture Reviews</li>
+                    <li>Angular Training</li>
+                    <li>Angular Consulting</li>
                 </ul>
                 <div class="logo">
                     <img src="images/briebug-logo.svg" class="plain">
                 </div>
             </section>
 
+            <section>
+                <h3>15" MacBook Pro Give Away</h3>
+            </section>
+
+            <section>
+                <h3>Questions?</h3>
+            </section>
+
             <!--INTRODUCTION-->
             <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
-                <h3>NgRx Mobile</h3>
+                <img style="width: 800px; background-color: none; border: none;" src="./images/ngrx-mobile-ascii.png">
                 <div>
                     <small>
-                        <a href="http://briebug.github.io/presentations/ng-meetup/2018/03/ngrx-mobile">http://briebug.github.io/presentations/ng-meetup/2018/03/ngrx-mobile</a>
+                        <a href="http://confsnap.com/#/event/ng-conf-18/145" target="_blank">http://confsnap.com/#/event/ng-conf-18/145</a>
                     </small>
                 </div>
                 <div>
@@ -364,19 +387,6 @@ module.exports = {
                 <div class="logo">
                     <img src="images/briebug-logo.svg" class="plain">
                 </div>
-            </section>
-
-            <section>
-                <h3>Questions?</h3>
-            </section>
-
-            <section>
-                <h3>References</h3>
-                <ul>
-                    <li>
-                        <a href="https://github.com/ngrx/platform">https://github.com/ngrx/platform</a>
-                    </li>
-                </ul>
             </section>
 
         </div>
