@@ -41,41 +41,7 @@
   <div class="reveal">
     <div class="slides">
 
-      <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
-        <h3>NgRx Jest Testing</h3>
-        <div>
-          <small>
-            <a href="http://briebug.github.io/presentations/ng-meetup/2018/02/ngrx-jest-testing" target="_blank">http://briebug.github.io/presentations/ng-meetup/2018/02/ngrx-jest-testing</a>
-          </small>
-        </div>
-        <div>
-          Jesse Sanders
-          <br> @JesseS_BrieBug
-          <br>
-          <a href="https://github.com/jessesanders">https://github.com/jessesanders</a>
-          <br> jesse.sanders@briebug.com
-        </div>
-        <div class="logo">
-          <img src="images/briebug-logo.svg" class="plain">
-        </div>
-      </section>
-
-      <section data-background="images/BrieBugMeetup1.png" data-background-color="#ffffff">
-      </section>
-
-      <section data-background="images/AboutJesse.png" data-background-color="#ffffff">
-      </section>
-
-      <section>
-        <h3>Agenda</h3>
-        <aside>
-          <ul>
-            <li class="fragment">What is Jest? Why use it?</li>
-            <li class="fragment">How do I install and configure it?</li>
-            <li class="fragment">How to write simple tests</li>
-            <li class="fragment">Testing NgRx</li>
-          </ul>
-        </aside>
+      <section data-background="images/jest-testing.jpg" data-background-color="#ffffff">
       </section>
 
       <section data-transition="slide-in fade-out">
@@ -88,53 +54,32 @@
 
       <section>
         <h3>Testing is hard</h3>
+        <img src="./images/frustrated.jpg">
+      </section>
+
+      <section>
+        <h3>What is Jest?</h3>
+        <img height="400" width="400" src="./images/jest-outline.svg">
+      </section>
+
+      <section>
+        <h3>Why use Jest?</h3>
         <aside>
           <ul>
-            <li class="fragment">Takes a lot of time</li>
-            <li class="fragment">E2E tests fragile/fail intermittently</li>
-            <li class="fragment">Refactors can break 100's of tests</li>
-            <li class="fragment">Not enough time</li>
+            <li>Super Fast</li>
+            <li>Snapshot Testing</li>
+            <li>Sandboxed</li>
+            <li>Error reporting</li>
+            <li>Zero Config</li>
           </ul>
+        </aside>
       </section>
 
       <section>
         <h3>Installation</h3>
         <code>
-          npm install --save-dev jest
+          npm install --save-dev jest-preset-angular
         </code>
-      </section>
-
-      <section>
-        <h3>Typical Configuration</h3>
-        <aside>
-          Karma
-          <br/> Jasmine/Mocha
-          <br/> Instanbul
-          <br/> Karma Chrome Launcher
-          <br/> karma.conf.js
-        </aside>
-      </section>
-
-      <section>
-        <h3>Jest Configuration</h3>
-        <code class="fragment">
-          (none)
-        </code>
-      </section>
-
-
-      <section>
-        <h3>Angular CLI</h3>
-        <h3>Configuration</h3>
-        <pre>
-          <code>
-  // typescript support
-  npm install --save-dev ts-jest @types/jest
-
-  // angular support
-  npm install --save-dev jest-preset-angular jest-zone-patch
-          </code>
-        </pre>
       </section>
 
       <section>
@@ -142,27 +87,15 @@
         <p>package.json</p>
         <pre>
           <code>
-"jest": { 
-  "setupTestFrameworkScriptFile": "&lt;rootDir&gt;/setup-jest.ts", 
-  "globals": { 
-    "ts-jest": { 
-      "tsConfigFile": "src/tsconfig.spec.json" 
-    }, 
-    "__TRANSFORM_HTML__": true 
-  }, 
-  "transform": { 
-    "^.+\\.(ts|js|html)$": "&lt;rootDir&gt;/node_modules/jest-preset-angular/preprocessor.js" 
-  }, 
-  "testMatch": ["&lt;rootDir&gt;/src/**/*.spec.ts"], 
-  "moduleFileExtensions": ["ts", "js", "html", "json"], 
-  "mapCoverage": true, 
-  "coveragePathIgnorePatterns": ["/node_modules/", "/modules/*.*/"], 
-  "moduleNameMapper": { 
-    "^@ngrx/(?!db)(.*)": "&lt;rootDir&gt;/modules/$1" 
-  }, 
-  "transformIgnorePatterns": ["node_modules/(?!@ngrx)"], 
-  "modulePathIgnorePatterns": ["dist"] 
+"jest": {
+  "preset": "jest-preset-angular",
+  "setupTestFrameworkScriptFile": "&lt;rootDir&gt;/src/setupJest.ts",
+  "moduleNameMapper": {
+    "\\.(jpg|jpeg|png)$": "&lt;rootDir&gt;/__mocks__/image.js",
+    "@lib/(.*)": "&lt;rootDir&gt;/src/lib/$1"
+  }
 }
+
           </code>
         </pre>
       </section>
@@ -174,10 +107,6 @@
 import "jest-preset-angular";
 global["CSS"] = null;
 
-/**
-* ISSUE: https://github.com/angular/material2/issues/7101
-* Workaround for JSDOM missing transform property
-*/
 Object.defineProperty(document.body.style, "transform", {
   value: () => {
     return {
@@ -186,32 +115,6 @@ Object.defineProperty(document.body.style, "transform", {
     };
   }
 });
-          </code>
-        </pre>
-      </section>
-
-      <section>
-        <h3>Simple Function</h3>
-        <pre>
-          <code>
-    function sum(a, b) { 
-      return a + b; 
-    } 
-    
-    module.exports = sum;
-          </code>
-        </pre>
-      </section>
-
-      <section>
-        <h3>My First Test</h3>
-        <pre>
-          <code>
-    const sum = require('./sum'); 
-    
-    test('adds 1 + 2 to equal 3', () => { 
-      expect(sum(1, 2)).toBe(3); 
-    });
           </code>
         </pre>
       </section>
@@ -230,19 +133,6 @@ Object.defineProperty(document.body.style, "transform", {
 npm test
           </code>
         </pre>>
-      </section>
-
-      <section>
-        <h3>Karma Test Output</h3>
-        <pre>
-                <code>
-   Chrome 63.0.3239 (Mac OS X 10.13.3): Executed 2 of 3 (1 FAILED) (0 secs / 0.258 secs) Chrome 63.0.3239 (Mac OS X 10.13.3)
-  AppComponent should have as title'app' FAILED Expected 'app' to equal 'app2'. at Object.
-  &lt;anonymous&gt; Users/jessesanders/repo/ng-test/src/app/app.component.spec.ts:24:25) at ZoneDelegate.webpackJsonp.../../../../zone.js/dist/zone.js.ZoneDelegate.invoke
-    Users/jessesanders/repo/ng-test/node_modules/zone.js/dist/zone.js:392:1) at AsyncTestZoneSpec.webpackJsonp.../../../../zone.js/dist/async-test.js.AsyncTestZoneSpec.onInvoke
-    Users/jessesanders/repo/ng-test/node_modules/zone.js/dist/async-test.js:49:1)
-                </code>
-              </pre>>
       </section>
 
       <section>
@@ -466,7 +356,6 @@ Watch Usage
         result = reducer(initialState, action);
 
       expect(result).toMatchSnapshot();
-      expect(fromCustomers.getSelectedId(result)).toEqual(customer.id);
     });
   });
           </code>
@@ -493,6 +382,11 @@ Watch Usage
       </section>
 
       <section>
+        <h3>RxJs Marbles</h3>
+        <img src="images/marbles.jpg">
+      </section>
+
+      <section>
         <h3>Testing the Effect</h3>
         <pre>
           <code>
@@ -508,55 +402,11 @@ Watch Usage
         // mock the load function to be the response
         customersService.load = jest.fn(() => response);
 
-        expect(effects.load$).toBeObservable(expected);
+        expect(effects.load$).toMatchSnapshot(expected);
       });
     });
           </code>
         </pre>
-      </section>
-
-      <section>
-        <h3>RxJs Marbles</h3>
-        <ul>
-          <li class="fragment">
-            Enables testing async operations in a synchronous and dependable manner
-          </li>
-          <li class="fragment">Control what is emitted and when</li>
-          <li class="fragment">hot creates a subject that behaves like its already running</li>
-          <li class="fragment">
-            cold creates an observable that "starts" when the tests start.
-          </li>
-          <li class="fragment">
-            hot('--a--b', { a: 1, b: 2 }) - emits values 1 and 2
-          </li>
-          <li class="fragment">
-            hot('---#') - will emit error
-          </li>
-        </ul>
-      </section>
-
-      <section>
-        <h3>RxJs Marbles Syntax</h3>
-        <ul>
-          <li class="fragment">
-            "-" time: 10 "frames" of time passage
-          </li>
-          <li class="fragment">
-            "|" complete: The successful completion of an observable
-          </li>
-          <li class="fragment">
-            "#" error: An error terminating the observable
-          </li>
-          <li class="fragment">
-            "a" any character: All other characters represent a value being emitted
-          </li>
-          <li class="fragment">
-            "()" sync groupings: multiple events emitted in the same frame
-          </li>
-          <li class="fragment">
-            "^" subscription point: (hot observables only)
-          </li>
-        </ul>
       </section>
 
 
@@ -575,10 +425,64 @@ Watch Usage
       // mock the load function to be the response
       customersService.load = jest.fn(() => response);
 
-      expect(effects.load$).toBeObservable(expected);
+      expect(effects.load$).toMatchSnapshot(expected);
     });
           </code>
         </pre>
+      </section>
+
+      <section>
+        <h3>Components</h3>
+        <pre>
+          <code>describe('CustomersComponent', () => {
+  let component: CustomersComponent,
+    fixture: ComponentFixture&lt;CustomersComponent&gt;;
+
+  const customers = [
+      { id: 1, name: 'test1' }
+    ];
+
+  test('renders customers markup to snapshot', () => {
+    component.customers = customers;
+    fixture.detectChanges();
+
+    expect(fixture).toMatchSnapshot();
+  });
+});
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <img src="./images/Jester.gif">
+      </section>
+
+      <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+        <h3>BrieBug - What We do</h3>
+        <ul>
+          <li>Architecture Reviews</li>
+          <li>Customized Training</li>
+          <li>Angular Consulting</li>
+        </ul>
+        <div class="logo">
+          <img src="images/briebug-logo.svg" class="plain">
+        </div>
+      </section>
+
+      <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+        <div>
+          <small>
+            <a href="http://confsnap.com/#/event/ng-conf-18/123" target="_blank">http://confsnap.com/#/event/ng-conf-18/123</a>
+          </small>
+        </div>
+        <div>
+          Jesse Sanders
+          <br> @JesseS_BrieBug
+          <br> jesse.sanders@briebug.com
+        </div>
+        <div class="logo">
+          <img src="images/briebug-logo.svg" class="plain">
+        </div>
       </section>
 
       <section>
@@ -603,11 +507,6 @@ Watch Usage
             <a href="https://www.ericponto.com/blog/2017/01/08/rxjs-marble-diagram-tests-with-qunit/" target="_blank">https://www.ericponto.com/blog/2017/01/08/rxjs-marble-diagram-tests-with-qunit/</a>
           </li>
         </ul>
-      </section>
-
-      <section data-background-color="#ffffff">
-        <img src="images/ng-conf.png">
-        </img>
       </section>
 
     </div>
