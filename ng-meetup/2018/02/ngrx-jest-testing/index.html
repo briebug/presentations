@@ -90,7 +90,6 @@ module.exports = {
   preset: 'jest-preset-angular',
   roots: ['src'],
   setupTestFrameworkScriptFile: '&lt;rootDir&gt;/src/setup-jest.ts',
-  transformIgnorePatterns: ['node_modules/(?!@ngrx|@ionic-native|@ionic)']
 }
 
           </code>
@@ -102,7 +101,6 @@ module.exports = {
         <pre>
           <code>
 import "jest-preset-angular";
-global["CSS"] = null;
 
 Object.defineProperty(document.body.style, "transform", {
   value: () => {
