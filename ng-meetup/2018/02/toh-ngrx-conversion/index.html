@@ -58,29 +58,6 @@
                 </div>
             </section>
 
-            <section data-background="images/BrieBugMeetup1.png" data-background-color="#ffffff">
-            </section>
-
-            <section data-background="images/AboutJesse.png" data-background-color="#ffffff">
-            </section>
-
-            <section data-background="images/PostMeetupLocation.png" data-background-color="#ffffff">
-            </section>
-
-            <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
-                <h3>BrieBug - What We do</h3>
-                <ul>
-                    <li class="fragment">Angular Training</li>
-                    <li class="fragment">Architecture Reviews</li>
-                    <li class="fragment">Complex Applications</li>
-                    <li class="fragment">Upgrade old technology</li>
-                    <li class="fragment">We have fun!</li>
-                </ul>
-                <div class="logo">
-                    <img src="images/briebug-logo.svg" class="plain">
-                </div>
-            </section>
-
             <section>
                 <h3>Overview</h3>
                 <ul>
@@ -96,50 +73,34 @@
             <section>
                 <h2>What is NgRx</h2>
                 <ul>
-                    <li class="fragment">State is a single immutable data structure</li>
-                    <li class="fragment">Actions describe state changes</li>
-                    <li class="fragment">Reducers are pure functions that take the previous state and the next action to compute the new state</li>
-                    <li class="fragment">State accessed through Store class, which is an observable of state and an observer of actions</li>
-                </ul>
-            </section>
-
-            <section>
-                <h2>What is NgRx, pt 2</h2>
-                <ul>
-                    <li class="fragment">Effects are an observer of actions, execute async processes, and may return a new action</li>
-                    <li class="fragment">Selectors are memoized and composable data queries</li>
+                    <li class="fragment">Actions</li>
+                    <li class="fragment">Reducers</li>
+                    <li class="fragment">Effects</li>
+                    <li class="fragment">Selectors</li>
                 </ul>
             </section>
 
             <section>
                 <h2>Why NgRx?</h2>
-                <ul>
-                    <li class="fragment">State managment is hard</li>
-                    <li class="fragment">Reduce Complexity</li>
-                    <li class="fragment">NgRx follows best practices from Redux</li>
-                    <li class="fragment">Easy to test</li>
-                    <li class="fragment">Who doesn't want to time travel?</li>
-                </ul>
             </section>
 
             <!--NGRX-->
             <section>
                 <h2>NgRx Packages</h2>
                 <ul>
-                    <li class="fragment">@ngrx/store: RxJS powered state management for Angular applications, inspired by Redux</li>
-                    <li class="fragment">@ngrx/effects: Side Effect model for @ngrx/store to model event sources as actions</li>
-                    <li class="fragment">@ngrx/entity: Entity State adapter for managing record collections</li>
-                    <li class="fragment">@ngrx/router-store: Bindings to connect the Angular Router to @ngrx/store</li>
+                    <li class="fragment">@ngrx/store</li>
+                    <li class="fragment">@ngrx/effects</li>
+                    <li class="fragment">@ngrx/entity</li>
+                    <li class="fragment">@ngrx/router-store</li>
                 </ul>
             </section>
 
             <section>
                 <h2>Optional/Dev-only NgRx Packages</h2>
                 <ul>
-                    <li class="fragment">@ngrx/store-devtools: Store instrumentation that enables a powerful time-travelling debugger</li>
-                    <li class="fragment">ngrx-store-freeze: A meta-reducer that prevents state from being mutated, and if state is mutated an
-                        exception will be thrown</li>
-                    <li class="fragment">@ngrx/schematics: CLI templates for implementing NgRx</li>
+                    <li class="fragment">@ngrx/store-devtools</li>
+                    <li class="fragment">ngrx-store-freeze</li>
+                    <li class="fragment">@ngrx/schematics</li>
                 </ul>
             </section>
 
@@ -152,6 +113,13 @@ npm install --save @ngrx/{store,effects,entity,router-store}
 
 # Optional Packages
 npm install --save-dev @ngrx/{store-devtools,schematics} ngrx-store-freeze
+
+# .angular.cli.json - set schematics default
+"defaults": {
+    "schematics": {
+        "collection": "@ngrx/schematics"
+    }
+}
                 </code>
             </pre>
             </section>
@@ -253,67 +221,10 @@ ng g en Hero --flat false
             </section>
 
             <section>
-                <h2>Redux Dev Tools</h2>
-                <ul>
-                    <li class="fragment">Inspect current and past states</li>
-                    <li class="fragment">Step through each state - time travel</li>
-                </ul>
-            </section>
-
-            <section>
-                <h2>Dashboard Refactor</h2>
-                <ul>
-                    <li class="fragment">Replace service calls with dispatching actions to the store</li>
-                    <li class="fragment">Dispatch LoadHeros Action</li>
-                    <li class="fragment">Use selectors to get data from store</li>
-                </ul>
-            </section>
-
-            <section>
-                <h3>Heros List Refactor</h3>
-                <ul>
-                    <li class="fragment">Replace service calls with dispatching actions to the store</li>
-                    <li class="fragment">Dispatch LoadHeros Action</li>
-                    <li class="fragment">Use selectors to get data from store</li>
-                </ul>
-            </section>
-
-            <section>
-                <h3>We still have issues</h3>
-                <ul>
-                    <li class="fragment">Containers vs Presentation components</li>
-                    <li class="fragment">Heroes list - funky local variable for heroes</li>
-                    <li class="fragment">App state still exists - addingHero, selectedHero</li>
-                    <li class="fragment">git checkout ngrx-complete</li>
-                </ul>
-            </section>
-
-            <section>
-                <h3>NgRx Wireup</h3>
-                <ul>
-                    <li class="fragment">We now have actions, reducers, effects... </li>
-                    <li class="fragment">Components use the store</li>
-                    <li class="fragment">Now what?</li>
-                    <li class="fragment">Register reducers and effects</li>
-                </ul>
-            </section>
-
-            <section>
                 <h3>Simple Wireup</h3>
                 <ul>
                     <li class="fragment">Import all reducers and effects into app.module</li>
                     <li class="fragment">Register reducers and effects</li>
-                </ul>
-            </section>
-
-            <section>
-                <h3>Simple Wireup Issues</h3>
-                <ul>
-                    <li class="fragment">No longer modular</li>
-                    <li class="fragment">No ability to lazy load</li>
-                    <li class="fragment">app.module becomes a big mess</li>
-                    <li class="fragment">Solution?</li>
-                    <li class="fragment">Modules</li>
                 </ul>
             </section>
 
@@ -351,8 +262,32 @@ ng g en Hero --flat false
             </section>
 
             <section>
-                <h3>Utils.ts</h3>
-                <span>RouterStateSerializer - improved dev tools performance</span>
+                <h2>Redux Dev Tools</h2>
+                <ul>
+                    <li class="fragment">Inspect current and past states</li>
+                    <li class="fragment">Step through each state - time travel</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Dashboard Refactor</h2>
+                <ul>
+                    <li class="fragment">Replace service calls with dispatching actions to the store</li>
+                    <li class="fragment">Dispatch LoadHeros Action</li>
+                    <li class="fragment">Use selectors to get data from store</li>
+                </ul>
+            </section>
+
+            <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+                <h3>BrieBug - What We do</h3>
+                <ul>
+                    <li class="fragment">Angular Training</li>
+                    <li class="fragment">Architecture Reviews</li>
+                    <li class="fragment">Angular Consulting</li>
+                </ul>
+                <div class="logo">
+                    <img src="images/briebug-logo.svg" class="plain">
+                </div>
             </section>
 
             <section>
