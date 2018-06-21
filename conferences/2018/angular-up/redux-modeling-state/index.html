@@ -1,0 +1,508 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Redux: Modeling State</title>
+
+  <link rel="stylesheet" href="css/reveal.css">
+  <link rel="stylesheet" href="css/theme/black.css">
+
+  <!-- Theme used for syntax highlighting of code -->
+  <link rel="stylesheet" href="lib/css/zenburn.css">
+
+  <!-- Theme additions -->
+  <style>
+    img.plain {
+      box-shadow: none;
+      border: 0;
+      background: transparent !important;
+    }
+
+    div.logo {
+      height: 100px;
+      margin-top: 30px;
+    }
+  </style>
+
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+    document.getElementsByTagName('head')[0].appendChild(link);
+  </script>
+</head>
+
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+        <h3>Redux: Modeling State</h3>
+        <div>
+          <small>
+            <a href="http://briebug.github.io/presentations/conferences/2018/angular-up/redux-modeling-state" target="_blank">http://briebug.github.io/presentations/conferences/2018/angular-up/redux-modeling-state</a>
+          </small>
+        </div>
+
+        <div class="logo">
+          <img src="images/briebug-logo.svg" class="plain">
+        </div>
+      </section>
+
+      <section>
+        <p>To be or not to be (in the store)</p>
+        <ul>
+          <li class="fragment">Shared</li>
+          <li class="fragment">Derived</li>
+          <li class="fragment">Restored</li>
+          <li class="fragment">Cached</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Types of store data</h3>
+        <ul>
+          <li class="fragment">Application</li>
+          <li class="fragment">UI</li>
+          <li class="fragment">Entity</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Store Example</h3>
+        <pre>
+          <code>
+  {
+    domainData1 : {},
+    domainData2 : {},
+    appState1 : {},
+    appState2 : {},
+    ui : {
+      uiState1 : {},
+      uiState2 : {},
+    }
+  }
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Store Antipatterns</h3>
+        <ul>
+          <li class="fragment">UI/Entity</li>
+          <li class="fragment">Keeping Data</li>
+          <li class="fragment">Nesting</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Nested Data</h3>
+        <pre>
+          <code>
+const blogPosts = [
+  {
+    id: 'post1',
+    author: { name: 'User One' },
+    body: '...',
+    comments: [
+      { author: { name: 'User Two' }, comment: '...' },
+      { author: { name: 'User Three' }, comment: '...' },
+      { author: { name: 'User One' }, comment: '...' }
+    ]
+  }
+];
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Problems</h3>
+        <ul>
+          <li class="fragment">Complex</li>
+          <li class="fragment">Duplicates</li>
+          <li class="fragment">Reducer Logic</li>
+          <li class="fragment">Renders</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Solution?</h3>
+      </section>
+
+      <section data-background="images/database.jpg">
+      </section>
+
+      <section>
+        <h3>Each type of data gets its own "table"</h3>
+        <pre>
+          <code>
+{
+  posts: { ... },
+  comments: { ... },
+  users: { ... }
+}
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Redux Normalization Spec</h3>
+        <ul>
+          <li class="fragment">Normalized Data</li>
+          <li class="fragment">Dictionaries over Arrays</li>
+          <li class="fragment">entities/ids</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Example</h3>
+        <pre>
+          <code>
+{
+  posts: {
+    entities: {
+      1: { id: 1, name: ... },
+      2: { id: 2, name: ... }
+    },
+    ids: [1, 2]
+  },
+  ...
+}
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Relationships</h3>
+        <pre>
+          <code>
+{
+  posts: {
+    entities: {
+      post1: { id: 'post1', author: 'user1' }
+    }
+  },
+  users: {
+    entities: {
+      user1: { id: 'user1', name: 'User One' }
+    }
+  }
+}
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Nice idea</h3>
+        <h3 class="fragment">Seems like a lot of work...</h3>
+        <a class="fragment" href="https://github.com/ngrx/platform/tree/master/docs/entity" target="_blank">@ngrx/entity</a>
+      </section>
+
+      <section>
+        <h3>NgRx Entity</h3>
+        <ul>
+          <li class="fragment">Handles Heavy Lifting</li>
+          <li class="fragment">Selectors</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Adapter</h3>
+        <ul>
+          <li class="fragment">Defines properties</li>
+          <li class="fragment">Add, Update, Remove</li>
+          <li class="fragment">Select Arrays</li>
+        </ul>
+      </section>
+
+      <section>
+        <h3>Interface: EntityState</h3>
+        <pre>
+          <code>
+interface EntityState&lt;V&gt; {
+  ids: string[];
+  entities: { [id: string]: V };
+}
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Define Entity State</h3>
+        <pre>
+          <code>
+// user.model.ts
+export interface User {
+  id: string;
+  name: string;
+}
+
+// user.reducer.ts
+export interface UserState extends EntityState&lt;User&gt; {
+  // additional user state properties
+  selectedId: number | null;
+  loading: boolean;
+  error: string;
+}
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Create Adapter</h3>
+        <pre>
+          <code>
+export const userAdapter: EntityAdapter&lt;User&gt; =
+  createEntityAdapter&lt;User&gt;();
+          </code>
+        </pre>
+      </section>
+
+
+      <section>
+        <h3>Set initial state</h3>
+        <pre>
+          <code>
+export const initialState: UserState = 
+  userAdapter.getInitialState({ 
+    // set defaults on additional properties
+    selectedId: null, 
+    loading: false, 
+    error: '' 
+  });
+          </code>
+        </pre>
+      </section>
+
+      <section data-transition="fade">
+        <h3>Reducer Example (old)</h3>
+        <pre>
+          <code>
+             
+export function userReducer( 
+  state = initialState, action: UserActions ): UserState { 
+    switch (action.type) {
+      case UserActionTypes.LoadByIdSuccess:
+        return [
+          ...state,
+          action.payload
+        ];
+          </code>
+        </pre>
+      </section>
+
+      <section data-transition="fade">
+        <h3>Adapter Usage</h3>
+        <pre>
+          <code>
+export function userReducer( 
+  state = initialState, action: UserActions ): UserState { 
+    switch (action.type) {
+      case UserActionTypes.LoadByIdSuccess:
+        return { 
+          ...userAdapter.addAll(action.payload, state), 
+          loading: false
+        };
+                </code>
+              </pre>
+      </section>
+
+      <section>
+        <h3>Adapter Usage (error)</h3>
+        <pre>
+          <code>
+case UserActionTypes.LoadByIdFail:
+  return { 
+    ...userAdapter.removeAll(state), 
+    loading: false,
+    error: 'Error while loading users'
+  };
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Selectors</h3>
+        <p class="fragment">If the store is like a database&hellip;</p>
+        <p class="fragment">&hellip;selectors are like queries.</p>
+      </section>
+
+      <section data-transition="fade">
+        <h3>Selector Benefits</h3>
+        <ul>
+          <li class="fragment">Composable</li>
+          <li class="fragment">Memoized</li>
+        </ul>
+      </section>
+
+
+      <section>
+        <h3>Adapter Selectors</h3>
+        <pre>
+          <code>
+import { UsersState, userReducer, userAdapter } from "./user.reducer";
+
+export const selectUserState = 
+  createFeatureSelector&lt;UsersState&gt;("users");
+
+// destructuring
+export const { 
+   selectIds: selectUserIds, 
+   selectEntities: selectUserEntities, 
+   selectAll: selectAllUsers, 
+   selectTotal: selectUserTotal
+} = userAdapter.getSelectors(selectUserState);
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Select State Properties</h3>
+        <pre>
+                <code>
+// select additional user state properties
+export const getSelectedId = 
+  (state: UsersState) => state.selectedId; 
+
+export const getError = 
+  (state: UsersState) => state.error; 
+
+export const getLoading = 
+  (state: UsersState) => state.loading;
+                </code>
+              </pre>
+      </section>
+
+      <section>
+        <h3>Create Selectors</h3>
+        <pre>
+                      <code>
+// select additional user state properties
+export const selectError = 
+  createSelector(selectUserState, getError); 
+
+export const selectLoading = 
+  createSelector(selectUserState, getLoading);
+                      </code>
+                    </pre>
+      </section>
+
+      <section>
+        <h3>Using a selector with a component</h3>
+
+        <pre>
+          <code>
+import ( selectAllUsers, selectError, selectLoading } from '@state/user';
+
+class MyComponent {
+  users$: Observable&lt;User&gt;;
+  loading$: Observable&lt;boolean&gt;;
+  error$: Observable&lt;string&gt;;
+
+  constructor(private store: Store&lt;AppState&gt;) {
+    // select all users
+    this.users$ = this.store.pipe(select(selectAllUsers));
+
+    // select loading and error
+    this.loading$ = this.store.pipe(select(selectLoading));
+    this.error$ = this.store.pipe(select(selectError));
+  }
+}
+          </code>
+        </pre>
+      </section>
+
+
+      <section>
+        <h3>Component Template</h3>
+        <pre>
+          <code>
+<p *ngIf="loading$ | async">Users are Loading</p>
+
+<ul *ngFor="let user in users$ | async">
+  <li>{{user.name}}</li>
+</ul>
+
+<p *ngIf="error$ | async">Error loading users</p>    
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h3>Relational Data</h3>
+        <pre>
+          <code>
+import ( selectUserEntities } from '@state/user';
+
+class MyComponent {
+  @Input() userId: number;
+  selectedUser: User;
+
+  constructor(private store: Store&lt;AppState&gt;) {
+     // use dictionary to find by id
+    this.store.pipe(select(selectUserEntities))
+      .subscribe((users)=> {
+        this.selectedUser = this.users$[this.userId];
+      })
+  }
+}
+          </code>
+        </pre>
+      </section>
+
+      <section>
+        <h4>References</h4>
+        <ul>
+          <li>
+            <a href="http://redux.js.org/docs/recipes/reducers/NormalizingStateShape.html" target="_blank">Normalizing State Shape</a>
+          </li>
+          <li>
+            <a href="https://github.com/ngrx/platform" target="_blank">@ngrx/platform</a>
+          </li>
+        </ul>
+      </section>
+
+      <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+        <h3>Redux: Modeling State</h3>
+        <p>
+          Follow: @JesseS_BrieBug </p>
+        <p>
+          Email: jesse.sanders@briebug.com
+        </p>
+        <p>
+          Watch: BrieBug YouTube Channel
+        </p>
+
+        <div class="logo">
+          <img src="images/briebug-logo.svg" class="plain">
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="lib/js/head.min.js"></script>
+  <script src="js/reveal.js"></script>
+
+  <script>
+    // More info https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+      history: true,
+
+      // More info https://github.com/hakimel/reveal.js#dependencies
+      dependencies: [
+        { src: 'plugin/markdown/marked.js' },
+        { src: 'plugin/markdown/markdown.js' },
+        { src: 'plugin/notes/notes.js', async: true },
+        { src: 'plugin/highlight/highlight.js', async: true, callback: function () { hljs.initHighlightingOnLoad(); } }
+      ]
+    });
+  </script>
+</body>
+
+</html>
