@@ -25,9 +25,7 @@ A collection of BrieBug presentations. Looking for an older presentation? Check 
 
 - [NgRx Mobile](https://briebug.github.io/presentations/conferences/2017/ng-mix/redux-modeling-state)
 
-#### September 10: [Angular Boulder]
-
-(https://www.meetup.com/angular-boulder/events/254164248/)
+#### September 10: [Angular Boulder](https://www.meetup.com/angular-boulder/events/254164248/)
 
 - [I'm not ready for NgRx!](https://briebug.github.io/presentations/ng-meetup/2018/09/service-with-subject)
 
