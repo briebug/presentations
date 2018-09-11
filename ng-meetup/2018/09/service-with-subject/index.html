@@ -1,0 +1,237 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Service With a Subject</title>
+
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/black.css">
+
+    <!--&lt;!&ndash; Theme used for syntax highlighting of code &ndash;&gt;-->
+    <link rel="stylesheet" href="lib/css/darcula.css">
+
+    <!-- Theme additions -->
+    <style>
+        img.plain {
+            box-shadow: none;
+            border: 0;
+            background: transparent !important;
+        }
+
+        div.logo {
+            height: 100px;
+            margin-top: 30px;
+        }
+    </style>
+
+    <!-- Printing and PDF exports -->
+    <script>
+        var link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    </script>
+</head>
+
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!--INTRODUCTION-->
+            <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+                <h3>I'm not ready for NgRx!</h3>
+
+                <div class="logo">
+                    <img src="images/briebug-logo.svg" class="plain">
+                </div>
+            </section>
+
+            <section>
+                <h3>So Many coding options</h3>
+                <ul>
+                    <li>NgRx</li>
+                    <li>NgRx Actions</li>
+                    <li>NgXs</li>
+                    <li>NgRx Data</li>
+                    <li>MobX</li>
+                    <li>?</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>There is a lot to learn with NgRx</h3>
+                <ul>
+                    <li>Actions</li>
+                    <li>Reducers</li>
+                    <li>Effects</li>
+                    <li>Selectors</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Do I even need NgRx?</h3>
+                <ul>
+                    <li class="fragment">So much planning</li>
+                    <li class="fragment">Is my application complex enough?</li>
+                    <li class="fragment">I want to start simple</li>
+                    <li class="fragment">But what if I want to upgrade later?</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Architecture Goals</h3>
+                <ul>
+                    <li class="fragment">Maximize Code Reuse</li>
+                    <li class="fragment">Share data</li>
+                    <li class="fragment">Stream data</li>
+                    <li class="fragment">Reduce complexity</li>
+                    <li class="fragment">Scalability</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Core Concepts</h3>
+                <ul>
+                    <li class="fragment">Container/Presenter</li>
+                    <li class="fragment">Service with a Subject</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Container Components</h3>
+                <ul>
+                    <li class="fragment">Top level features/pages</li>
+                    <li class="fragment">Contain child components</li>
+                    <li class="fragment">Can contain other containers</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>What do Containers Do?</h3>
+                <ul>
+                    <li class="fragment">Controls page flow</li>
+                    <li class="fragment">Responsible for loading/saving data</li>
+                    <li class="fragment">Handles all events from child components</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Presentation Components</h3>
+                <ul>
+                    <li class="fragment">Primary job - present data</li>
+                    <li class="fragment">Make things pretty</li>
+                    <li class="fragment">Know nothing about services/stores/etc</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>What do Presenters do?</h3>
+                <ul>
+                    <li class="fragment">Defer, defer, defer</li>
+                    <li class="fragment">Simple components</li>
+                    <li class="fragment">Receive data via inputs</li>
+                    <li class="fragment">Raise events to the parent container</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>What if my page is simple?</h3>
+                <ul>
+                    <li class="fragment">Do it anyway</li>
+                    <li class="fragment">Avoid subscriptions</li>
+                    <li class="fragment">Async Pipe</li>
+                    <li class="fragment">Consistency</li>
+                    <li class="fragment">KISS</li>
+                </ul>
+            </section>
+
+            <section data-background="#000">
+                <h2>Container - Presentation</h2>
+                <img src="images/Container.png" class="plain">
+            </section>
+
+            <section>
+                <h2>Let's get started...</h2>
+                <p>Let's create a dashboard page</p>
+            </section>
+
+            <section>
+                <h3>What will we create?</h3>
+                <ul>
+                    <li class="fragment">Dashboard Component</li>
+                    <li class="fragment">Navbar with role control</li>
+                    <li class="fragment">Users list presenter</li>
+                    <li class="fragment">Permissions presenter</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3>Summary</h3>
+                <ul>
+                    <li class="fragment">Container/Presenter maximizes reusability</li>
+                    <li class="fragment">Service w/ Subject to share data</li>
+                    <li class="fragment">Easy to upgrade to NgRx</li>
+                    <li class="fragment">GitHub:
+                        <a href="https://github.com/briebug/service-with-subject">https://github.com/briebug/service-with-subject</a>
+                    </li>
+                </ul>
+            </section>
+
+            <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+                <h3>BrieBug - What We do</h3>
+                <ul>
+                    <li>Architecture Reviews</li>
+                    <li>Customized Training</li>
+                    <li>Angular Consulting</li>
+                    <li>Staff Augmentation</li>
+                </ul>
+                <div class="logo">
+                    <img src="images/briebug-logo.svg" class="plain">
+                </div>
+            </section>
+
+            <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
+                <div>
+                    Jesse Sanders
+                    <br> @JesseS_BrieBug
+                    <br> jesse.sanders@briebug.com
+                </div>
+                <div class="logo">
+                    <img src="images/briebug-logo.svg" class="plain">
+                </div>
+            </section>
+
+            <section>
+                <h3>Questions?</h3>
+            </section>
+        </div>
+    </div>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+
+    <script>
+        // More info https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            history: true,
+
+            // More info https://github.com/hakimel/reveal.js#dependencies
+            dependencies: [
+                { src: 'plugin/markdown/marked.js' },
+                { src: 'plugin/markdown/markdown.js' },
+                { src: 'plugin/notes/notes.js', async: true },
+                {
+                    src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+                        hljs.initHighlightingOnLoad();
+                    }
+                }
+            ]
+        });
+    </script>
+</body>
+
+</html>
