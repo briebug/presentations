@@ -29,6 +29,10 @@ A collection of BrieBug presentations. Looking for an older presentation? Check 
 
 - [I'm not ready for NgRx!](https://briebug.github.io/presentations/ng-meetup/2018/09/service-with-subject)
 
+#### September 26: [Indy.js](https://www.meetup.com/indyjs/events/ljvvdpyxmbzb/)
+
+- [I'm so done with E2E testing... until now](https://briebug.github.io/presentations/ng-meetup/2018/10/cypress)
+
 ### 2017
 
 #### November 28: [Rocky Mountain Angular Meetup](https://www.meetup.com/RockyMountainAngular/events/242254468/)
