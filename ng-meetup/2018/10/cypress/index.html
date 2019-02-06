@@ -1,171 +1,195 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
 
     <title>cypress.io</title>
 
-    <link rel="stylesheet" href="css/reveal.css">
-    <link rel="stylesheet" href="css/theme/black.css">
+    <link rel="stylesheet" href="css/reveal.css" />
+    <link rel="stylesheet" href="css/theme/black.css" />
 
-    <!--&lt;!&ndash; Theme used for syntax highlighting of code &ndash;&gt;-->
-    <link rel="stylesheet" href="lib/css/darcula.css">
+    <!-- &lt;!&ndash; Theme used for syntax highlighting of code &ndash;&gt; -->
+    <link rel="stylesheet" href="lib/css/darcula.css" />
 
     <!-- Theme additions -->
     <style>
-        img.plain {
-            box-shadow: none;
-            border: 0;
-            background: transparent !important;
-        }
+      img.plain {
+        box-shadow: none;
+        border: 0;
+        background: transparent !important;
+      }
 
-        div.logo {
-            height: 100px;
-            margin-top: 30px;
-        }
+      div.logo {
+        height: 100px;
+        margin-top: 30px;
+      }
     </style>
 
     <!-- Printing and PDF exports -->
     <script>
-        var link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.type = 'text/css';
-        link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
-        document.getElementsByTagName('head')[0].appendChild(link);
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      link.href = window.location.search.match(/print-pdf/gi)
+        ? "css/print/pdf.css"
+        : "css/print/paper.css";
+      document.getElementsByTagName("head")[0].appendChild(link);
     </script>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="reveal">
-        <div class="slides">
+      <div class="slides">
+        <!-- INTRODUCTION -->
+        <section
+          data-background="images/briebug-bg.jpg"
+          data-background-color="#ffffff"
+        >
+          <h3>I'm so done with E2E testing... until now</h3>
+          <h5>(An introduction to cypress.io)</h5>
 
-            <!--INTRODUCTION-->
-            <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
-                <h3>I'm so done with E2E testing... until now</h3>
-                <h5>(An introduction to cypress.io)</h5>
+          <div class="logo">
+            <img src="images/briebug-logo.svg" class="plain" />
+          </div>
+        </section>
 
-                <div class="logo">
-                    <img src="images/briebug-logo.svg" class="plain">
-                </div>
-            </section>
+        <section data-background="#000">
+          <h3>Who am I?</h3>
+          <img src="images/jesse-drawing.jpg" width="33%" class="plain" />
+        </section>
 
-            <section data-background="#000">
-                <h3>Who am I?</h3>
-                <img src="images/Jesse-drawing.jpg" width="33%" class="plain">
-            </section>
+        <section>
+          <h3>Who is writing E2E Tests?</h3>
+        </section>
 
+        <section>
+          <h3>Test tools</h3>
+          <ul>
+            <li class="fragment">Selenium</li>
+            <li class="fragment">WebDriver</li>
+            <li class="fragment">Protractor</li>
+            <li class="fragment">Nighthwatch</li>
+            <li class="fragment">(Others)</li>
+          </ul>
+          <div class="fragment">
+            <img src="images/selenium.png" width="20%" class="plain" />
+            <img src="images/protractor.png" width="20%" class="plain" />
+            <img src="images/nightwatch.svg" width="20%" class="plain" />
+          </div>
+        </section>
 
-            <section>
-                <h3>E2E is Hard</h3>
-                <ul>
-                    <li class="fragment">Take too long to run</li>
-                    <li class="fragment">Fail intermittenty/flakey</li>
-                    <li class="fragment">Timing issues/hacks</li>
-                    <li class="fragment">Developers give up</li>
-                </ul>
-            </section>
+        <section>
+          <h3>E2E is Hard</h3>
+          <ul>
+            <li class="fragment">Take too long to run</li>
+            <li class="fragment">Fail intermittently/flakey</li>
+            <li class="fragment">Timing issues/hacks</li>
+            <li class="fragment">Developers give up</li>
+          </ul>
+        </section>
 
-            <section>
-                <h3>Test tools</h3>
-                <ul>
-                    <li class="fragment">Selenium</li>
-                    <li class="fragment">WebDriver</li>
-                    <li class="fragment">Protractor</li>
-                    <li class="fragment">Nighthwatch</li>
-                    <li class="fragment">(Others)</li>
-                </ul>
-            </section>
+        <section data-background="images/books-chaos.jpg"></section>
 
-            <section>
-                <h3>Web Applications have evolved</h3>
-                <ul>
-                    <li class="fragment">Server Side Rendering</li>
-                    <li class="fragment">Full Page Refresh</li>
-                    <li class="fragment">Ajax</li>
-                    <li class="fragment">JQuery</li>
-                    <li class="fragment">Client Side MVCs</li>
-                </ul>
-            </section>
+        <section>
+          <h3>Web Applications have evolved</h3>
+          <img src="images/geocities.png" class="plain" />
+        </section>
 
-            <section>
-                <h3>Challenges</h3>
-                <ul>
-                    <li class="fragment">Blackbox Commands</li>
-                    <li class="fragment">Snapshot at moment in time</li>
-                    <li class="fragment">Magic/Seed data</li>
-                    <li class="fragment">Speed</li>
-                    <li class="fragment">No dev tools during tests</li>
-                    <li class="fragment">Cryptic errors/stack traces</li>
-                </ul>
-            </section>
+        <section>
+          <h3>Web Applications have evolved</h3>
+          <ul>
+            <li class="fragment">Server Side Rendering</li>
+            <li class="fragment">Full Page Refresh</li>
+            <li class="fragment">Ajax</li>
+            <li class="fragment">JQuery</li>
+            <li class="fragment">Client Side MVCs</li>
+          </ul>
+          <img src="images/geocities.png" width="33%" class="plain" />
+        </section>
 
-            <section>
-                <h3>E2E Testing Sucks</h3>
-            </section>
+        <section data-background="images/amazon.png"></section>
 
-            <section>
-                <h3>Cypress.io</h3>
-                <ul>
-                    <li class="fragment">Easy setup</li>
-                    <li class="fragment">Simple to write tests</li>
-                    <li class="fragment">Easy to run tests</li>
-                    <li class="fragment">Easy to debug tests</li>
-                </ul>
-            </section>
+        <section>
+          <h3>Challenges</h3>
+          <ul>
+            <li class="fragment">Speed</li>
+            <li class="fragment">No dev tools during tests</li>
+            <li class="fragment">Cryptic errors/stack traces</li>
+            <li class="fragment">Snapshot at moment in time</li>
+            <li class="fragment">Magic/Seed data</li>
+          </ul>
+        </section>
 
-            <section>
-                <h3>Setup</h3>
-                <pre>
+        <section data-background="images/stacktrace.png"></section>
+
+        <section>
+          <h3>E2E Testing Sucks</h3>
+          <img src="images/telephone-wires.jpg" class="plain" />
+        </section>
+
+        <section>
+          <img src="images/cypress-logo.png" class="plain" />
+          <h3 class="fragment">is so easy...</h3>
+          <ul>
+            <li class="fragment">Setup</li>
+            <li class="fragment">Authoring</li>
+            <li class="fragment">Running</li>
+            <li class="fragment">Debugging</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Setup</h3>
+          <pre>
                     <code>
 npm install cypress --save-dev
 
 npx cypress open  // npm >v5.2
                     </code>
                 </pre>
-            </section>
+        </section>
 
-            <section data-background="#000">
-                <img src="images/cypress-window.png" class="plain">
-            </section>
+        <section data-background="images/cypress-window.png"></section>
 
-            <section data-background="#000">
-                <img src="images/cypress-tests.gif" width="100%" class="plain">
-            </section>
+        <section data-background="images/cypress-tests.gif"></section>
 
-            <section>
-                <h3>Simple to write tests</h3>
-                <ul>
-                    <li class="fragment">https://example.cypress.io/</li>
-                    <li class="fragment">Simple to write tests</li>
-                    <li class="fragment">visit->query->action->should</li>
-                    <li class="fragment">Actions: type|click|select|focus</li>
-                </ul>
-            </section>
+        <section>
+          <h3>Authoring</h3>
+          <ul>
+            <li class="fragment">Examples: https://example.cypress.io/</li>
+            <li class="fragment">Easy and logical</li>
+            <li class="fragment">visit->query->action->should</li>
+            <li class="fragment">Actions: type|click|select|focus</li>
+          </ul>
+        </section>
 
-            <section>
-                <h3>Writing Tests</h3>
-                <pre>
-                    <code>context('Actions', () => {
+        <section>
+          <h3>Visit -> Query -> Action -> Should</h3>
+          <pre>
+                    <code>describe('My actions tests', () => {
   beforeEach(() => {
     cy.visit('https://example.cypress.io/commands/actions')
   })
 
   it('.focus() - focus on a DOM element', () => {
     // https://on.cypress.io/focus
-    cy.get('.action-focus').focus()
+    cy.get('.action-focus')
+      .focus()
       .should('have.class', 'focus')
       .prev().should('have.attr', 'style', 'color: orange;')
   })
 });
                     </code>
                 </pre>
-            </section>
-            <section>
-                <h3>Writing Tests Pt 2</h3>
-                <pre>
-                    <code>context('Actions', () => {
+        </section>
+        <section>
+          <h3>Nested Selects</h3>
+          <pre>
+                    <code>describe('My actions tests', () => {
   beforeEach(() => {
     cy.visit('https://example.cypress.io/commands/actions')
   })
@@ -180,23 +204,21 @@ npx cypress open  // npm >v5.2
 });
                     </code>
                 </pre>
-            </section>
-            <section>
-                <h3>Handling errors</h3>
-                <ul>
-                    <li class="fragment">No more cyptic errors</li>
-                    <li class="fragment">Easy to read output</li>
-                    <li class="fragment">Hints about why</li>
-                </ul>
-            </section>
+        </section>
+        <section>
+          <h3>Handling errors</h3>
+          <ul>
+            <li class="fragment">No more cyptic errors</li>
+            <li class="fragment">Easy to read output</li>
+            <li class="fragment">Hints about why</li>
+          </ul>
+        </section>
 
-            <section data-background="#000">
-                <img src="images/cypress-error.png" width="100%" class="plain">
-            </section>
+        <section data-background="images/cypress-error.png"></section>
 
-            <section>
-                <h3>Our first test</h3>
-                <pre>
+        <section>
+          <h3>Our first test</h3>
+          <pre>
                     <code>rm -fr cypress/integration/examples
 
 touch cypress/integration/home-page-spec.js
@@ -208,46 +230,60 @@ describe('The Home Page', function() {
 })
                     </code>
                 </pre>
-            </section>
+        </section>
 
-            <section>
-                <h3>Start the server</h3>
-                <pre>
+        <section>
+          <h3>Start the server</h3>
+          <pre>
                                 <code>
 ng serve
                                 </code>
                             </pre>
-            </section>
+        </section>
 
-            <section>
-                <h3>Let's have Cypress start the server!</h3>
-                <ul>
-                    <li class="fragment">NO!</li>
-                    <li class="fragment">Antipattern</li>
-                    <li class="fragment">`cy.exec` can only run tasks that eventually exit</li>
-                    <li class="fragment">Port conflicts</li>
-                </ul>
-            </section>
+        <section>
+          <h3>Let's have Cypress start the server!</h3>
+          <ul>
+            <li class="fragment">NO!</li>
+            <li class="fragment">Antipattern</li>
+            <li class="fragment">
+              `cy.exec` can only run tasks that eventually exit
+            </li>
+            <li class="fragment">Port conflicts</li>
+          </ul>
+        </section>
 
-            <section>
-                <h3>Cypress Features</h3>
-                <ul>
-                    <li class="fragment">Test Status Menu</li>
-                    <li class="fragment">Command Log</li>
-                    <li class="fragment">App Preview</li>
-                </ul>
-            </section>
+        <section>
+          <h3>Cypress Features</h3>
+          <ul>
+            <li class="fragment">Test Status Menu</li>
+            <li class="fragment">Command Log</li>
+            <li class="fragment">App Preview</li>
+          </ul>
+        </section>
 
-            <section>
-                <h3>Best Practice Tip</h3>
-                <ul>
-                    <li class="fragment">cypress.json - set baseurl</li>
-                    <li class="fragment">warns when server not running</li>
-                    <li class="fragment">can be overriden using --config</li>
-                    <li class="fragment">Eliminates hardcoded urls</li>
-                </ul>
-                <p></p>
-                <pre>
+        <section>
+          <h3>Built in Libraries</h3>
+          <ul>
+            <li>Sinon</li>
+            <li>jQuery</li>
+            <li>Underscore</li>
+            <li>Underscore</li>
+            <li>Blog, minimatch, moment</li>
+            <li>Promise</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Best Practice Tip</h3>
+          <ul>
+            <li class="fragment">cypress.json - set baseurl</li>
+            <li class="fragment">warns when server not running</li>
+            <li class="fragment">can be overriden using --config</li>
+            <li class="fragment">Eliminates hardcoded urls</li>
+          </ul>
+          <p></p>
+          <pre>
         <code class="fragment">{
   "baseUrl": "http://localhost:4200"
 }
@@ -256,48 +292,46 @@ ng serve
 npx cypress open --config baseUrl=http://localhost:4300
         </code>
     </pre>
-            </section>
+        </section>
 
-            <section>
-                <h3>Is that it?</h3>
-            </section>
+        <section><h3>Is that it?</h3></section>
 
-            <section>
-                <h3>Where E2E fails</h3>
-                <ul>
-                    <li class="fragment">Seed data</li>
-                    <li class="fragment">So slow - can be hours</li>
-                    <li class="fragment">Tough to test edge cases</li>
-                </ul>
-            </section>
+        <section>
+          <h3>Where E2E fails</h3>
+          <ul>
+            <li class="fragment">So slow - can be hours</li>
+            <li class="fragment">Seed data</li>
+            <li class="fragment">Tough to test edge cases</li>
+          </ul>
+        </section>
 
-            <section>
-                <h3>Magic Data</h3>
-                <ul>
-                    <li class="fragment">Required for edge cases</li>
-                    <li class="fragment">A pain to seed/create</li>
-                    <li class="fragment">Fragile tests</li>
-                </ul>
-            </section>
+        <section>
+          <h3>Magic Data</h3>
+          <ul>
+            <li class="fragment">Required for edge cases</li>
+            <li class="fragment">A pain to seed/create</li>
+            <li class="fragment">Fragile tests</li>
+          </ul>
+        </section>
 
+        <section>
+          <h3>Introducing Stubbed Responses</h3>
+          <img src="images/streets.jpg" class="plain" />
+        </section>
 
-            <section>
-                <h3>Introducing Stubbed Responses</h3>
-            </section>
+        <section>
+          <h3>Stubbing Responses</h3>
+          <ul>
+            <li class="fragment">Recommended for most tests</li>
+            <li class="fragment">Have one true E2E, stub the rest</li>
+            <li class="fragment">Tests are way faster</li>
+            <li class="fragment">No magic data seed/setup</li>
+          </ul>
+        </section>
 
-            <section>
-                <h3>Stubbing Responses</h3>
-                <ul>
-                    <li class="fragment">Recommended for most tests</li>
-                    <li class="fragment">Have one true E2E, stub the rest</li>
-                    <li class="fragment">Tests are way faster</li>
-                    <li class="fragment">No magic data seed/setup</li>
-                </ul>
-            </section>
-
-            <section>
-                <h3>Stubbing is Easy</h3>
-                <pre>
+        <section>
+          <h3>Stubbing is Easy</h3>
+          <pre>
                     <code>cy.server(); // start the server
 cy.route({
   method: 'GET',      // Route all GET requests
@@ -306,25 +340,22 @@ cy.route({
 })
                     </code>
                 </pre>
-            </section>
+        </section>
 
+        <section>
+          <h3>Stubbing solves a lot of problems</h3>
+          <ul>
+            <li class="fragment">Fast Tests</li>
+            <li class="fragment">Consistent results</li>
+            <li class="fragment">True E2E can be smoke tests</li>
+          </ul>
+        </section>
 
-            <section>
-                <h3>Stubbing solves a lot of problems</h3>
-                <ul>
-                    <li class="fragment">Fast Tests</li>
-                    <li class="fragment">Consistent results</li>
-                    <li class="fragment">True E2E can be smoke tests</li>
-                </ul>
-            </section>
+        <section><h3>But there's more!</h3></section>
 
-            <section>
-                <h3>But there's more!</h3>
-            </section>
-
-            <section>
-                <h3>Fixtures</h3>
-                <pre>
+        <section>
+          <h3>Fixtures</h3>
+          <pre>
                         <code>cy.server()
 
 // we set the response to be the activites.json fixture
@@ -335,34 +366,35 @@ cy.fixture('users.json').as('usersJSON');
 cy.route('GET', 'users/*', '@usersJSON');
                         </code>
                     </pre>
-            </section>
+        </section>
 
+        <section>
+          <h3>Waiting for calls to return</h3>
+          <pre>
+                    <code>cy.server();
 
-            <section>
-                <h3>Waiting for calls to return</h3>
-                <pre>
-                    <code>cy.server()
-cy.route('activities/*', 'fixture:activities').as('getActivities')
-cy.route('messages/*', 'fixture:messages').as('getMessages')
+// create aliases
+cy.route('activities/*', 'fixture:activities').as('getActivities');
+cy.route('messages/*', 'fixture:messages').as('getMessages');
 
 // visit the dashboard, which should make requests that match
 // the two routes above
-cy.visit('http://localhost:8888/dashboard')
+cy.visit('http://localhost:8888/dashboard');
 
 // pass an array of Route Aliases that forces Cypress to wait
 // until it sees a response for each request that matches
 // each of these aliases
-cy.wait(['@getActivities', '@getMessages'])
+cy.wait(['@getActivities', '@getMessages']);
 
 // these commands will not run until the wait command resolves above
-cy.get('h1').should('contain', 'Dashboard')
+cy.get('h1').should('contain', 'Dashboard');
                     </code>
                 </pre>
-            </section>
+        </section>
 
-            <section>
-                <h3>Waiting for calls to return</h3>
-                <pre>
+        <section>
+          <h3>Waiting for calls to return</h3>
+          <pre>
                     <code>cy.server()
 cy.route('search/*', [{item: 'Book 1'}, {item: 'Book 2'}]).as('getSearch')
 
@@ -378,69 +410,74 @@ cy.get('#results')
   .and('contain', 'Book 2')
                     </code>
                 </pre>
-            </section>
+        </section>
 
-            <section>
-                <h3>Summary</h3>
-                <ul>
-                    <li class="fragment">UI Tests can be dependable</li>
-                    <li class="fragment">E2E in small amounts OK</li>
-                    <li class="fragment">Stubbing is the way to go!</li>
-                    <li class="fragment">Complex interactions manageable</li>
-                </ul>
-            </section>
+        <section>
+          <h3>Summary</h3>
+          <ul>
+            <li class="fragment">UI Tests can be dependable</li>
+            <li class="fragment">E2E in small amounts OK</li>
+            <li class="fragment">Stubbing is the way to go!</li>
+            <li class="fragment">Complex interactions manageable</li>
+          </ul>
+        </section>
 
-            <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
-                <h3>BrieBug - What We do</h3>
-                <ul>
-                    <li>Architecture Reviews</li>
-                    <li>Customized Training</li>
-                    <li>Angular Consulting</li>
-                    <li>Staff Augmentation</li>
-                </ul>
-                <div class="logo">
-                    <img src="images/briebug-logo.svg" class="plain">
-                </div>
-            </section>
+        <section
+          data-background="images/briebug-bg.jpg"
+          data-background-color="#ffffff"
+        >
+          <h3>BrieBug - What We do</h3>
+          <ul>
+            <li>Architecture Reviews</li>
+            <li>Customized Training</li>
+            <li>Angular Consulting</li>
+            <li>Staff Augmentation</li>
+          </ul>
+          <div class="logo">
+            <img src="images/briebug-logo.svg" class="plain" />
+          </div>
+        </section>
 
-            <section data-background="images/briebug-bg.jpg" data-background-color="#ffffff">
-                <div>
-                    Jesse Sanders
-                    <br> @JesseS_BrieBug
-                    <br> jesse.sanders@briebug.com
-                </div>
-                <div class="logo">
-                    <img src="images/briebug-logo.svg" class="plain">
-                </div>
-            </section>
+        <section
+          data-background="images/briebug-bg.jpg"
+          data-background-color="#ffffff"
+        >
+          <div>
+            Jesse Sanders <br />
+            @JesseS_BrieBug <br />
+            jesse.sanders@briebug.com
+          </div>
+          <div class="logo">
+            <img src="images/briebug-logo.svg" class="plain" />
+          </div>
+        </section>
 
-            <section>
-                <h3>Questions?</h3>
-            </section>
-        </div>
+        <section><h3>Questions?</h3></section>
+      </div>
     </div>
 
     <script src="lib/js/head.min.js"></script>
     <script src="js/reveal.js"></script>
 
     <script>
-        // More info https://github.com/hakimel/reveal.js#configuration
-        Reveal.initialize({
-            history: true,
+      // More info https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        history: true,
 
-            // More info https://github.com/hakimel/reveal.js#dependencies
-            dependencies: [
-                { src: 'plugin/markdown/marked.js' },
-                { src: 'plugin/markdown/markdown.js' },
-                { src: 'plugin/notes/notes.js', async: true },
-                {
-                    src: 'plugin/highlight/highlight.js', async: true, callback: function () {
-                        hljs.initHighlightingOnLoad();
-                    }
-                }
-            ]
-        });
+        // More info https://github.com/hakimel/reveal.js#dependencies
+        dependencies: [
+          { src: "plugin/markdown/marked.js" },
+          { src: "plugin/markdown/markdown.js" },
+          { src: "plugin/notes/notes.js", async: true },
+          {
+            src: "plugin/highlight/highlight.js",
+            async: true,
+            callback: function() {
+              hljs.initHighlightingOnLoad();
+            }
+          }
+        ]
+      });
     </script>
-</body>
-
+  </body>
 </html>
