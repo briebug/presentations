@@ -57,6 +57,21 @@
           </div>
         </section>
 
+        <section
+          data-background="images/briebug-bg.jpg"
+          data-background-color="#ffffff"
+        >
+          <div>
+            Jesse Sanders
+            <br />
+            @JesseS_BrieBug <br />
+            jesse.sanders@briebug.com
+          </div>
+          <div class="logo">
+            <img src="images/briebug-logo.svg" class="plain" />
+          </div>
+        </section>
+
         <section data-background="#000">
           <h3>Who am I?</h3>
           <img src="images/jesse-drawing.jpg" width="33%" class="plain" />
@@ -95,17 +110,17 @@
         <section data-background="images/books-chaos.jpg"></section>
 
         <section>
-          <h3>Web Applications have evolved</h3>
+          <h3>Web Applications in the old days</h3>
           <img src="images/geocities.png" class="plain" />
         </section>
 
         <section>
           <h3>Web Applications have evolved</h3>
           <ul>
-            <li class="fragment">Server Side Rendering</li>
-            <li class="fragment">Full Page Refresh</li>
-            <li class="fragment">Ajax</li>
+            <li>Server Side Rendering</li>
+            <li>Full Page Refresh</li>
             <li class="fragment">JQuery</li>
+            <li class="fragment">Ajax</li>
             <li class="fragment">Client Side MVCs</li>
           </ul>
           <img src="images/geocities.png" width="33%" class="plain" />
@@ -116,11 +131,14 @@
         <section>
           <h3>Challenges</h3>
           <ul>
-            <li class="fragment">Speed</li>
-            <li class="fragment">No dev tools during tests</li>
-            <li class="fragment">Cryptic errors/stack traces</li>
             <li class="fragment">Snapshot at moment in time</li>
             <li class="fragment">Magic/Seed data</li>
+            <li class="fragment">
+              Cryptic errors/stack traces
+            </li>
+            <li class="fragment">
+              No dev tools during tests
+            </li>
           </ul>
         </section>
 
@@ -149,21 +167,41 @@
 npm install cypress --save-dev
 
 npx cypress open  // npm >v5.2
+
+// or use our schematic
+// install it globally
+npm install -g @briebug/cypress-schematic
+
+// add it to my project
+ng g @briebug/cypress-schematic:add
                     </code>
                 </pre>
         </section>
 
         <section data-background="images/cypress-window.png"></section>
 
-        <section data-background="images/cypress-tests.gif"></section>
+        <section data-background="images/cypress-tests.png"></section>
+
+        <section>
+          <h3>Built in Libraries</h3>
+          <ul>
+            <li>Sinon</li>
+            <li>jQuery</li>
+            <li>Underscore</li>
+            <li>Blob, minimatch, moment, Promise</li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>Screenshots and Videos</h3>
+        </section>
 
         <section>
           <h3>Authoring</h3>
           <ul>
-            <li class="fragment">Examples: https://example.cypress.io/</li>
+            <li class="fragment">Examples are added to every project</li>
+            <li class="fragment">https://example.cypress.io/</li>
             <li class="fragment">Easy and logical</li>
-            <li class="fragment">visit->query->action->should</li>
-            <li class="fragment">Actions: type|click|select|focus</li>
           </ul>
         </section>
 
@@ -186,25 +224,47 @@ npx cypress open  // npm >v5.2
                     </code>
                 </pre>
         </section>
+
         <section>
-          <h3>Nested Selects</h3>
+          <h3>Actions</h3>
           <pre>
                     <code>describe('My actions tests', () => {
   beforeEach(() => {
     cy.visit('https://example.cypress.io/commands/actions')
   })
 
-  it('.within() - query DOM elements within a specific element', () => {
-    // https://on.cypress.io/within
-    cy.get('.query-form').within(() => {
-      cy.get('input:first').should('have.attr', 'placeholder', 'Email')
-      cy.get('input:last').should('have.attr', 'placeholder', 'Password')
-    })
+  it('actions', () => {
+    cy.get('button').click().dblclick();
+
+    cy.get('input#keyword').type('redux{enter}').clear();
+
+    cy.get('input#firstName').focus().blur();
+
+    cy.get('#iAgree').check().uncheck();
   })
 });
                     </code>
                 </pre>
         </section>
+
+        <section>
+          <h3>Assertions</h3>
+          <pre>
+            <code>
+  // implicit subjects            
+  cy.get('#header a') 
+    .should('have.class', 'active') 
+    .and('have.attr', 'href', '/users')
+
+  // or explicit subjects
+  cy.get('tbody tr:first').should(($tr) => { 
+    expect($tr).to.have.class('active') 
+    expect($tr).to.have.attr('href', '/users')
+  })
+            </code>
+                        </pre>
+        </section>
+
         <section>
           <h3>Handling errors</h3>
           <ul>
@@ -219,10 +279,14 @@ npx cypress open  // npm >v5.2
         <section>
           <h3>Our first test</h3>
           <pre>
-                    <code>rm -fr cypress/integration/examples
+                    <code>
+// remove example tests
+rm -fr cypress/integration/examples
 
+// create a new file
 touch cypress/integration/home-page-spec.js
 
+// paste this into the new spec
 describe('The Home Page', function() {
   it('successfully loads', function() {
     cy.visit('http://localhost:4200')
@@ -243,34 +307,13 @@ ng serve
 
         <section>
           <h3>Let's have Cypress start the server!</h3>
-          <ul>
-            <li class="fragment">NO!</li>
-            <li class="fragment">Antipattern</li>
-            <li class="fragment">
+          <ul class="fragment">
+            <li>NO!</li>
+            <li>Antipattern</li>
+            <li>
               `cy.exec` can only run tasks that eventually exit
             </li>
-            <li class="fragment">Port conflicts</li>
-          </ul>
-        </section>
-
-        <section>
-          <h3>Cypress Features</h3>
-          <ul>
-            <li class="fragment">Test Status Menu</li>
-            <li class="fragment">Command Log</li>
-            <li class="fragment">App Preview</li>
-          </ul>
-        </section>
-
-        <section>
-          <h3>Built in Libraries</h3>
-          <ul>
-            <li>Sinon</li>
-            <li>jQuery</li>
-            <li>Underscore</li>
-            <li>Underscore</li>
-            <li>Blog, minimatch, moment</li>
-            <li>Promise</li>
+            <li>Port conflicts</li>
           </ul>
         </section>
 
@@ -289,27 +332,22 @@ ng serve
 }
         </code>
         <code class="fragment">
-npx cypress open --config baseUrl=http://localhost:4300
+npx cypress run --config baseUrl=http://localhost:4300
         </code>
     </pre>
         </section>
 
-        <section><h3>Is that it?</h3></section>
+        <section>
+          <h3>Is that it?</h3>
+          <img src="images/iwantsomemore.gif" class="plain" />
+        </section>
 
         <section>
           <h3>Where E2E fails</h3>
           <ul>
             <li class="fragment">So slow - can be hours</li>
-            <li class="fragment">Seed data</li>
+            <li class="fragment">Seed/Magic data</li>
             <li class="fragment">Tough to test edge cases</li>
-          </ul>
-        </section>
-
-        <section>
-          <h3>Magic Data</h3>
-          <ul>
-            <li class="fragment">Required for edge cases</li>
-            <li class="fragment">A pain to seed/create</li>
             <li class="fragment">Fragile tests</li>
           </ul>
         </section>
@@ -351,7 +389,10 @@ cy.route({
           </ul>
         </section>
 
-        <section><h3>But there's more!</h3></section>
+        <section>
+          <h3>But there's more!</h3>
+          <img src="images/ginsu.jpg" class="plain" />
+        </section>
 
         <section>
           <h3>Fixtures</h3>
@@ -393,7 +434,7 @@ cy.get('h1').should('contain', 'Dashboard');
         </section>
 
         <section>
-          <h3>Waiting for calls to return</h3>
+          <h3>Autocomplete - wait for call</h3>
           <pre>
                     <code>cy.server()
 cy.route('search/*', [{item: 'Book 1'}, {item: 'Book 2'}]).as('getSearch')
